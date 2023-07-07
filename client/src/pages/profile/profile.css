@@ -1,0 +1,169 @@
+.profile {
+  height: calc(100vh - 191px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  direction: rtl;
+}
+.profile-top {
+  height: 300px;
+  background-color: var(--main-color);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-bottom {
+  display: flex;
+  width: 100%;
+}
+.profile-bottom-right {
+  flex: 1;
+}
+.profile-bottom-left {
+  flex: 1;
+}
+
+/* workshop Owner profile */
+
+.workshopOwner-profile {
+  direction: rtl;
+  text-align: right;
+  padding: 20px 60px;
+  min-height: calc(100vh - 191px);
+}
+
+.workshopOwner-profile-top {
+  height: 300px;
+  background-color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.edit-profile {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.workshopOwner-profile-image-wrapper {
+  position: relative;
+}
+
+.edit-profile-pic {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: -5px;
+  right: -5px;
+  background-color: var(--white-color);
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--dark-color);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.workshopOwner-profile-image {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+}
+
+.workshopOwner-profile-top-info {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.workshopOwner-profile-info-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.workshopOwner-profile-info {
+  flex: 9;
+  margin-left: 40px;
+  font-size: 18px;
+}
+
+.workshopOwner-profile-info-title {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.workshopOwner-profile-info-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: var(--main-color);
+  border-radius: 10px;
+}
+
+.workshopOwner-profile-contact {
+  flex: 3;
+  border-radius: 10px;
+  background-color: var(--main-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.workshopOwner-profile-contact h4 {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.workshopOwner-profile-contact-item {
+  padding: 10px;
+}
+
+.workshopOwner-profile-contact-button {
+  padding: 10px 15px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 90%;
+  margin-bottom: 10px;
+  align-self: center;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  text-align: center;
+  text-decoration: none;
+}
+
+.user-profile-settings {
+  min-height: calc(100vh - 191px);
+}
+
+.workshopOwner-profile-info-services {
+  display: flex;
+}
+.workshopOwner-profile-info-services .service-tag {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

@@ -1,0 +1,25 @@
+.switch-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  width: 100%;
+}
+.switch-bar .divider {
+  width: 1px;
+  height: 60px;
+  background-color: black;
+}
+
+.switch-bar .option1,
+.switch-bar .option2 {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.switch-bar .option1:hover,
+.switch-bar .option2:hover {
+  background-color: rgba(254, 94, 80, 0.2);
+}

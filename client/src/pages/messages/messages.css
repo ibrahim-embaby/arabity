@@ -1,0 +1,28 @@
+.messages {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100vh - 191px);
+}
+.container {
+  width: 1300px;
+}
+
+.message-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid var(--primary-color);
+}
+
+.message-item-sender {
+  font-size: 18px;
+  font-weight: bold;
+}
+.message-item-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 50%;
+}

@@ -1,0 +1,115 @@
+.search-results {
+  min-height: calc(100vh - 190px);
+  background-color: #fe5e5033;
+  padding: 1px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.search-results-sidebar {
+  flex: 2;
+  padding: 10px;
+  position: relative;
+}
+
+.search-results-sidebar-wrapper {
+  border-radius: 10px;
+  background-color: var(--white-color);
+  position: fixed;
+  width: 16%;
+}
+.search-results-sidebar-wrapper h4 {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+  padding: 5px 0;
+}
+.search-results-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results-form select {
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid var(--primary-color);
+  text-align: right;
+}
+
+.search-results-form button {
+  padding: 10px 15px;
+  margin: 0 10px 10px 10px;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+}
+
+.search-results-main {
+  flex: 10;
+}
+
+/* Search Item */
+.search-item {
+  margin: 10px;
+  /* border: 1px solid var(--dark-color); */
+  display: flex;
+  flex-direction: row-reverse;
+  text-align: right;
+  align-items: center;
+  border-radius: 15px;
+  background-color: var(--white-color);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--dark-color);
+}
+.search-item:hover {
+  background-color: #f8f9fa;
+}
+
+.search-item-title {
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-left: 5px;
+}
+.image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 15px;
+}
+
+.workshop-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+}
+
+.info-wrapper {
+  height: 100%;
+  direction: rtl;
+  padding: 10px 0px;
+  line-height: 1.6;
+}
+
+.workshop-name {
+  font-size: 25px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.no-results-found {
+  font-size: 20px;
+  color: var(--dark-color);
+  font-weight: bold;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

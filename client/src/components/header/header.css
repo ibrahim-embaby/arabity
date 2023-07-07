@@ -1,0 +1,94 @@
+.header {
+  background-color: var(--primary-color);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  flex: 4;
+  font-size: 30px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+
+.header-left a {
+  text-decoration: none;
+  color: var(--white-color);
+}
+
+.navbar {
+  flex: 4;
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+.navbar ul a {
+  padding: 5px;
+  cursor: pointer;
+  color: var(--white-color);
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.navbar ul a:hover {
+  color: var(--main-color);
+}
+
+.header-right {
+  flex: 4;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.header-right .auth-link {
+  padding: 5px;
+  background-color: var(--white-color);
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 5px;
+  border: none;
+  background-color: transparent;
+  color: var(--white-color);
+}
+
+.header-right a:hover {
+  color: var(--dark-color);
+}
+
+.user-settings {
+  color: var(--white-color);
+  font-size: 20px;
+  cursor: pointer;
+}
+.user-menu {
+  padding: 5px;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  position: absolute;
+  top: 30px;
+  right: 85px;
+  display: none;
+  z-index: 10;
+}
+
+.user-menu .user-menu-item {
+  color: var(--dark-color);
+  padding: 5px;
+  text-align: center;
+  display: block;
+  border-bottom: 1px solid var(--dark-color);
+  cursor: pointer;
+  text-decoration: none;
+}
