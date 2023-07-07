@@ -1,4 +1,8 @@
 {
+  "main": "index.js",
+  "scripts": {
+    "build": "npm i"
+  },
   "dependencies": {
     "async-handler": "^0.0.3",
     "bcrypt": "^5.1.0",
