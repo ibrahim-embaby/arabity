@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: "http://localhost:8000", //"https://arabity.onrender.com",
+  baseURL: "https://arabity.onrender.com", // "http://localhost:8000",
 });
 
 export default request;
