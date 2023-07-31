@@ -10,6 +10,15 @@ const workshopOwnerSlice = createSlice({
     setWorkshopOwner(state, action) {
       state.workshopOwner = action.payload;
     },
+    addRatingToWorkshopOwner(state, action) {
+      state.workshopOwner.workshopRatings.push(action.payload);
+    },
+    clearRatingFromWorkshopOwner(state, action) {
+      state.workshopOwner.workshopRatings =
+        state.workshopOwner.workshopRatings.filter(
+          (rate) => rate._id !== action.payload
+        );
+    },
     setLoading(state) {
       state.loading = true;
     },

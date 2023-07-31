@@ -1,32 +1,35 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
-const WorkshopRatingsSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const WorkshopRatingsSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    workshopOwner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "WorkshopOwner",
+      required: true,
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
   },
-  workshopOwner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "WorkshopOwner",
-    required: true,
-  },
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
-    required: true,
-  },
-  text: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 const WorkshopRatings = mongoose.model(
   "WorkshopRatings",

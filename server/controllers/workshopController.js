@@ -31,5 +31,26 @@ module.exports.deleteWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "هذا المستخدم غير موجود" });
   }
   await WorkshopOwner.deleteOne({ _id: workshopOwner._id });
+  await WorkshopRatings.deleteMany({ workshopOwner: workshopOwner._id });
   return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
+});
+
+/**
+ * @desc report workshop owner
+ * @route /api/workshop-owner/:id
+ * @method PUT
+ * @access private (only logged user)
+ */
+module.exports.reportWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { text } = req.body;
+  const workshopOwner = await WorkshopOwner.findById(id);
+  if (!workshopOwner) {
+    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+  }
+
+  await WorkshopOwner.findByIdAndUpdate(id, {
+    reports: { $push: { user: req.user.id, text } },
+  });
+  res.status(200).json({ workshop: workshopOwner, message: "تم ارسال بلاغك" });
 });

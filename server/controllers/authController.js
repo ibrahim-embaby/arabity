@@ -120,7 +120,6 @@ module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
  * @method POST
  * @access public
  */
-
 module.exports.loginWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   const { error } = validateLoginWorkshopOwner(req.body);
   if (error) {

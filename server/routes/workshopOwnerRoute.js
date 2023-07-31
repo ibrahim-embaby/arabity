@@ -1,9 +1,13 @@
 const {
   deleteWorkshopOwnerCtrl,
   getWorkshopOwnerCtrl,
+  reportWorkshopOwnerCtrl,
 } = require("../controllers/workshopController");
 const validateObjectId = require("../middlewares/validateObjectId");
-const { verifyTokenAndAuthorization } = require("../middlewares/verifyToken");
+const {
+  verifyTokenAndAuthorization,
+  verifyToken,
+} = require("../middlewares/verifyToken");
 
 const router = require("express").Router();
 
@@ -15,6 +19,7 @@ router
     verifyTokenAndAuthorization,
     deleteWorkshopOwnerCtrl
   )
-  .get(validateObjectId, getWorkshopOwnerCtrl);
+  .get(validateObjectId, getWorkshopOwnerCtrl)
+  .put(validateObjectId, verifyToken, reportWorkshopOwnerCtrl);
 
 module.exports = router;

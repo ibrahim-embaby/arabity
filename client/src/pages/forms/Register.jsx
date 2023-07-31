@@ -68,7 +68,6 @@ function Register() {
         branchMobile: branch.branchMobile,
       };
     });
-    console.log(workshopServices);
     if (workshopOwnerUsername.trim() === "") return toast.error("ادخل الاسم");
     if (workshopOwnerEmail.trim() === "")
       return toast.error("ادخل البريد الالكتروني");

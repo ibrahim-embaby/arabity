@@ -24,6 +24,27 @@
   flex: 1;
 }
 
+.user-ratings-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.user-rating {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  padding: 10px;
+  background-color: var(--main-color);
+}
+
+.user-rating a {
+  text-decoration: none;
+  color: var(--dark-color);
+}
+
 /* workshop Owner profile */
 
 .workshopOwner-profile {

@@ -1,6 +1,7 @@
 .search-results {
   min-height: calc(100vh - 190px);
-  background-color: #fe5e5033;
+  /* background-color: #fe5e5033; */
+  background-image: linear-gradient(180deg, #e4fdf7, #d8dceb);
   padding: 1px;
   display: flex;
   flex-direction: row-reverse;

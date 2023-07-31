@@ -4,10 +4,17 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profile: null,
+    users: [],
   },
   reducers: {
     setProfile(state, action) {
       state.profile = action.payload;
+    },
+    setUsers(state, action) {
+      state.users = action.payload;
+    },
+    clearUser(state, action) {
+      state.users = state.users.filter((user) => user._id !== action.payload);
     },
   },
 });

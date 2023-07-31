@@ -10,6 +10,11 @@ const searchSlice = createSlice({
     setSearchResults(state, action) {
       state.searchResults = action.payload;
     },
+    deleteSearchResult(state, action) {
+      state.searchResults = state.searchResults.filter(
+        (res) => res.id !== action.payload
+      );
+    },
     setLoading(state) {
       state.loading = true;
     },

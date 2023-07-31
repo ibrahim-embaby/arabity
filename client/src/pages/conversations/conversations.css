@@ -1,28 +1,38 @@
-.messages {
+.conversations {
   display: flex;
   justify-content: center;
   min-height: calc(100vh - 191px);
+  padding: 0 20px;
 }
 .container {
-  width: 1300px;
+  width: 100%;
 }
 
-.message-item {
+.conversation-item {
+  direction: rtl;
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid var(--primary-color);
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-color);
 }
 
-.message-item-sender {
+.conversation-item-sender {
   font-size: 18px;
   font-weight: bold;
 }
-.message-item-text {
+.conversation-item-text {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   width: 50%;
+}
+
+.conversation-item-time {
+  font-size: 14px;
+  color: #444;
 }

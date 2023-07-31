@@ -1,7 +1,10 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { workshopOwnerActions } from "../slices/workshopOwnerSlice";
+import { searchActions } from "../slices/searchSlice";
+import { ratingActions } from "../slices/ratingSlice";
 
+// /api/workshop-owner/:id
 export function fetchWorkshopOwner(id) {
   return async (dispatch) => {
     try {
@@ -13,6 +16,24 @@ export function fetchWorkshopOwner(id) {
     } catch (err) {
       toast.error(err.response.data.message);
       dispatch(workshopOwnerActions.setLoading());
+    }
+  };
+}
+
+// /api/workshop-owner/:id
+export function deleteWorkshop(id) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.delete(`/api/workshop-owner/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+      dispatch(searchActions.deleteSearchResult(id));
+      dispatch(ratingActions.deleteRatingsRelatedToWorkshop(id));
+      toast.success(data.message);
+    } catch (err) {
+      toast.error(err.response.data.message);
     }
   };
 }

@@ -10,7 +10,7 @@ function AddRating({ id }) {
   const [text, setText] = useState("");
   const dispatch = useDispatch();
 
-  const reteFormHandler = (e) => {
+  const rateFormHandler = (e) => {
     e.preventDefault();
     if (text.trim() === "") return toast.error("من فضلك اكتب سبب تقييمك");
     if (rate === 0) return toast.error("من فضلك اختر تقييما");
@@ -20,7 +20,7 @@ function AddRating({ id }) {
     setText("");
   };
   return (
-    <form className="add-rating-form" onSubmit={reteFormHandler}>
+    <form className="add-rating-form" onSubmit={rateFormHandler}>
       <label htmlFor="addRating">أضف تقييم</label>
       <Rating
         name="simple-controlled"

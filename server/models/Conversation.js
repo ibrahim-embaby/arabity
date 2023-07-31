@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const ConversationSchema = mongoose.Schema(
+const ConversationSchema = new mongoose.Schema(
   {
     id: {
       type: String,
@@ -8,30 +8,18 @@ const ConversationSchema = mongoose.Schema(
       required: true,
     },
     userId: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    workshopOwnerId: {
-      type: String,
-      required: true,
+    WorkshopOwnerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "WorkshopOwner",
     },
-    readByUser: {
-      type: Boolean,
-      required: true,
-    },
-    readByWorkshopOwner: {
-      type: Boolean,
-      required: true,
-    },
-    lastMessage: {
-      type: String,
-    },
+    lastMessage: String,
   },
   { timestamps: true }
 );
 
 const Conversation = mongoose.model("Conversation", ConversationSchema);
 
-module.exports = {
-  Conversation,
-};
+module.exports = { Conversation };

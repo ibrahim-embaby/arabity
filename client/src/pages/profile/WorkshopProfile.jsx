@@ -7,6 +7,7 @@ import RatingC from "../../components/rating/Rating";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
 import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
+import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -21,20 +22,33 @@ function WorkshopProfile() {
 
   useEffect(() => {
     dispatch(fetchWorkshopOwner(id));
-    if (workshopOwner?.workshopRatings.length) {
+    if (workshopOwner?.workshopRatings?.length) {
       let sum = 0;
-      for (let i = 0; i < workshopOwner?.workshopRatings.length; i++) {
+      for (let i = 0; i < workshopOwner?.workshopRatings?.length; i++) {
         sum += workshopOwner?.workshopRatings[i].rating;
       }
-      setAvgRating(sum / workshopOwner?.workshopRatings.length);
+      setAvgRating(sum / workshopOwner?.workshopRatings?.length);
+    } else {
+      setAvgRating(0);
     }
-  }, [id, workshopOwner?.workshopRatings.length]);
+  }, [id, workshopOwner?.workshopRatings?.length, dispatch]);
 
   const searchTagHandler = (service) => {
     dispatch(fetchAllWorkshops("", service, ""));
     navigate("/search/workshops");
   };
 
+  const handleCreateConversation = () => {
+    try {
+      const conversationInfo = {
+        userId: user.id,
+        WorkshopOwnerId: id,
+      };
+      dispatch(createConversation(conversationInfo));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return loading ? (
     <div className="loading-page">
       <CircularProgress color="primary" />
@@ -142,8 +156,9 @@ function WorkshopProfile() {
 
           {user?.id !== id && (
             <Link
-              to={"/message/123"}
+              to={`/message/${user.id + id}`}
               className="workshopOwner-profile-contact-button"
+              onClick={handleCreateConversation}
             >
               مراسلة
             </Link>

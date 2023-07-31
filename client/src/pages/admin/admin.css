@@ -1,0 +1,88 @@
+.admin {
+  display: flex;
+  min-height: calc(100vh - 191px);
+}
+
+.admin-sidebar {
+  flex: 2;
+  background-color: #ffdfdc;
+}
+
+.admin-sidebar-component {
+  display: flex;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--black-color);
+}
+
+.admin-sidebar-component:hover {
+  background-color: #ffd1d1da;
+}
+
+.admin-dashboard {
+  flex: 10;
+}
+
+.statistics {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  height: 100%;
+  padding: 20px;
+  align-content: flex-start;
+}
+
+.statistics-item {
+  width: 150px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(219, 219, 219);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.users-panel,
+.workshops-panel {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.users-table,
+.workshops-table {
+  border: 1px solid #000;
+}
+
+.users-table-body-item,
+.workshops-table-body-item {
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+.users-delete-button,
+.workshops-delete-button {
+  padding: 10px;
+  color: var(--white-color);
+  background-color: rgb(207, 74, 74);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-ratings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+.rating-wrapper {
+  border: 1px solid #000;
+  display: flex;
+  width: 400px;
+}

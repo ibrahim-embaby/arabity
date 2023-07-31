@@ -11,6 +11,8 @@ const authRoute = require("./routes/authRoute");
 const searchRoute = require("./routes/searchRoute");
 const workshopOwnerRoute = require("./routes/workshopOwnerRoute");
 const rateRoute = require("./routes/rateRoute");
+const messagesRoute = require("./routes/messageRoutes");
+const conversationsRoute = require("./routes/conversationRoute");
 
 // connection to DB
 connectToDb();
@@ -29,7 +31,9 @@ app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/search", searchRoute);
 app.use("/api/workshop-owner", workshopOwnerRoute);
-app.use("/api/rate", rateRoute);
+app.use("/api/ratings", rateRoute);
+app.use("/api/messages", messagesRoute);
+app.use("/api/conversations", conversationsRoute);
 
 PORT = process.env.PORT || 8000;
 app.listen(process.env.PORT, console.log(`server is running on ${PORT}`));

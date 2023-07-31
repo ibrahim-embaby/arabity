@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
 
 function HeaderRight() {
@@ -9,9 +9,12 @@ function HeaderRight() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const menuRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const handleLogoutUser = () => {
     setToggleMenu(false);
     dispatch(logoutUser());
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -63,7 +66,7 @@ function HeaderRight() {
               حسابي
             </Link>
             <Link
-              to={`/messages`}
+              to={`/conversations`}
               onClick={() => setToggleMenu(false)}
               className="user-menu-item"
             >

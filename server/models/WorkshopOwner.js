@@ -45,6 +45,18 @@ const WorkshopOwnerSchema = new mongoose.Schema(
     workshopServices: {
       type: Array,
     },
+    reports: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        text: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

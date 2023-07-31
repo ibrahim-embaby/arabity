@@ -10,9 +10,10 @@ import Profile from "./pages/profile/Profile";
 import SearchResults from "./pages/search/SearchResults";
 import WorkshopProfile from "./pages/profile/WorkshopProfile";
 import UserProfileSettings from "./pages/profile/UserProfileSettings";
-import Messages from "./pages/messages/Messages";
 import Message from "./pages/message/Message";
 import NotFound from "./pages/not-found/NotFound";
+import Admin from "./pages/admin/Admin";
+import Conversations from "./pages/conversations/Conversations";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -42,12 +43,24 @@ function App() {
           element={<WorkshopProfile />}
         />
         <Route
-          path="/messages"
-          element={user ? <Messages /> : <Navigate to={"/login"} />}
+          path="/conversations"
+          element={user ? <Conversations /> : <Navigate to={"/login"} />}
         />
         <Route
-          path="/message/:id"
+          path="/message/:conversationId"
           element={user ? <Message /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/admin"
+          element={
+            user?.isAdmin ? (
+              <Admin />
+            ) : user ? (
+              <Navigate to={"/"} />
+            ) : (
+              <Navigate to={"/login"} />
+            )
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

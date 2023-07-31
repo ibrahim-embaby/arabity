@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-
+const dotenv = require("dotenv");
+dotenv.config();
 // verify token
 function verifyToken(req, res, next) {
   const authToken = req.headers.authorization;
@@ -11,10 +12,10 @@ function verifyToken(req, res, next) {
       req.user = decodedPayload;
       next();
     } catch (err) {
-      return res.status(401).json({ message: "دخول غير مسموح" });
+      return res.status(401).json({ message: "دخول غير مسموح1" });
     }
   } else {
-    return res.status(401).json({ message: "دخول غير مسموح" });
+    return res.status(401).json({ message: "2دخول غير مسموح" });
   }
 }
 
