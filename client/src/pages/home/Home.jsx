@@ -20,7 +20,11 @@ function Home() {
       <section className="home-top">
         <h1>اكتشف أفضل مراكز الصيانة في منطقتك</h1>
         <form className="search-bar" onSubmit={searchFormHandler}>
-          <select value={service} onChange={(e) => setService(e.target.value)}>
+          <select
+            className="search-bar-item"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+          >
             <option value={""} disabled>
               نوع الصيانة
             </option>
@@ -30,7 +34,11 @@ function Home() {
               </option>
             ))}
           </select>
-          <select value={car} onChange={(e) => setCar(e.target.value)}>
+          <select
+            className="search-bar-item"
+            value={car}
+            onChange={(e) => setCar(e.target.value)}
+          >
             <option value={""} disabled>
               نوع العربية
             </option>
@@ -41,6 +49,7 @@ function Home() {
             ))}
           </select>
           <select
+            className="search-bar-item"
             value={province}
             onChange={(e) => setProvince(e.target.value)}
           >

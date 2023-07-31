@@ -36,7 +36,7 @@
   width: 60%;
   box-shadow: 1px 1px 10px #000;
 }
-.search-bar select {
+.search-bar .search-bar-item {
   padding: 10px;
   margin: 10px;
   font-size: 18px;
@@ -45,6 +45,7 @@
   border: 1px solid var(--primary-color);
   text-align: right;
   flex: 3;
+  cursor: pointer;
 }
 
 .search-bar button {

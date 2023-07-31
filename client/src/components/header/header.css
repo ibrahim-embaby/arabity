@@ -83,6 +83,7 @@
   right: 85px;
   display: none;
   z-index: 10;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .user-menu .user-menu-item {
