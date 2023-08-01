@@ -46,7 +46,6 @@
 }
 
 .header-right {
-  padding-right: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -54,15 +53,15 @@
 }
 
 .header-right .auth-link {
-  padding: 5px;
+  padding: 0px 8px;
   background-color: var(--dark-color);
   cursor: pointer;
   text-decoration: none;
   font-size: 20px;
-  margin: 5px;
   border: none;
   background-color: transparent;
   color: var(--dark-color);
+  text-align: center;
 }
 
 .header-right a:hover {
@@ -101,4 +100,14 @@
 .user-menu .user-menu-item:hover {
   background-color: var(--dark-color);
   color: var(--white-color);
+}
+
+/* Media Query */
+@media (max-width: 720px) {
+  .navbar {
+    display: none;
+  }
+  .header-right .auth-link {
+    font-size: 16px;
+  }
 }

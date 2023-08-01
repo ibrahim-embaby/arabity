@@ -1,6 +1,6 @@
 .home-top {
   position: relative;
-  height: calc(100vh - 191px);
+  min-height: calc(100vh - 191px);
   background: url("../../../public/images/home-top.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,6 +10,7 @@
   color: var(--dark-color);
   font-size: 30px;
   flex-direction: column;
+  text-align: center;
 }
 
 .home-top a {
@@ -34,7 +35,6 @@
   margin-bottom: 100px;
   margin-top: 20px;
   border-radius: 10px;
-  width: 60%;
   box-shadow: 1px 1px 10px #000;
 }
 .search-bar .search-bar-item {
@@ -82,4 +82,28 @@
 
 .home-center .home-center-item i {
   font-size: 40px;
+}
+
+/* Media Query */
+@media (max-width: 720px) {
+  .home-top {
+    padding: 20px 0px;
+  }
+  .home-top h1 {
+    font-size: 35px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    align-items: unset;
+    padding: 10px;
+    margin: 0;
+    width: 260px;
+  }
+
+  .search-bar .search-bar-item {
+    margin: 10px 0px;
+  }
 }

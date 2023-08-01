@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 10px;
 }
 
 .founder-image {
@@ -27,4 +28,17 @@
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+/* Media Query */
+@media (max-width: 720px) {
+  .founders-wrapper {
+    flex-direction: column;
+  }
+  .founder-item {
+    margin: 10px 0px;
+  }
+  .contact-us-item-desc {
+    width: unset;
+  }
 }

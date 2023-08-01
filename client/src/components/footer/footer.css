@@ -43,3 +43,17 @@
 .instagram:hover {
   color: #dc3545;
 }
+
+/* Media Query */
+@media (max-width: 720px) {
+  .footer {
+    flex-direction: column;
+  }
+  .footer-left {
+    font-size: 30px;
+  }
+
+  .footer-right {
+    font-size: 20px;
+  }
+}
