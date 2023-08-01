@@ -48,41 +48,40 @@ function HeaderRight({ toggle, setToggle }) {
             ref={menuRef}
           >
             <i className="bi bi-caret-down-fill"></i> {user?.username}
+            <div
+              className="user-menu"
+              style={{ display: toggleMenu ? "block" : "none" }}
+            >
+              <Link
+                to={
+                  user.workshopName
+                    ? `/workshop-owner/profile/${user.id}`
+                    : `/profile/${user?.id}`
+                }
+                onClick={() => setToggleMenu(false)}
+                className="user-menu-item"
+              >
+                حسابي
+              </Link>
+              <Link
+                to={`/conversations`}
+                onClick={() => setToggleMenu(false)}
+                className="user-menu-item"
+              >
+                المحادثات
+              </Link>
+              <Link
+                to={`/profile/${user?.id}/settings`}
+                onClick={() => setToggleMenu(false)}
+                className="user-menu-item"
+              >
+                إعدادت
+              </Link>
+              <p className="user-menu-item" onClick={handleLogoutUser}>
+                تسجيل الخروج
+              </p>
+            </div>
           </p>
-
-          <div
-            className="user-menu"
-            style={{ display: toggleMenu ? "block" : "none" }}
-          >
-            <Link
-              to={
-                user.workshopName
-                  ? `/workshop-owner/profile/${user.id}`
-                  : `/profile/${user?.id}`
-              }
-              onClick={() => setToggleMenu(false)}
-              className="user-menu-item"
-            >
-              حسابي
-            </Link>
-            <Link
-              to={`/conversations`}
-              onClick={() => setToggleMenu(false)}
-              className="user-menu-item"
-            >
-              المحادثات
-            </Link>
-            <Link
-              to={`/profile/${user?.id}/settings`}
-              onClick={() => setToggleMenu(false)}
-              className="user-menu-item"
-            >
-              إعدادت
-            </Link>
-            <p className="user-menu-item" onClick={handleLogoutUser}>
-              تسجيل الخروج
-            </p>
-          </div>
         </>
       ) : (
         <>

@@ -50,7 +50,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  position: relative;
 }
 
 .header-right .auth-link {
@@ -74,13 +73,14 @@
   font-size: 20px;
   cursor: pointer;
   padding: 10px;
+  position: relative;
 }
 .user-menu {
   position: absolute;
   padding: 5px;
   background-color: var(--white-color);
   border-radius: 5px;
-  top: 30px;
+  top: 40px;
   right: 85px;
   display: none;
   width: 140px;
