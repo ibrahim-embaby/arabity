@@ -123,7 +123,7 @@
     width: 100%;
     height: unset;
     background-color: #fafafa;
-    transition: all 0.7s ease-in-out;
+    transition: all 0.3s ease-in-out;
     clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     z-index: 10;
     display: block;
