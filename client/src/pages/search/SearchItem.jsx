@@ -24,7 +24,8 @@ function SearchItem({ item }) {
       </div>
       <div className="info-wrapper">
         <p className="workshop-name">
-          {item.workshopName} <Rating rating={avgRating} />
+          <span>{item.workshopName}</span>
+          <Rating rating={avgRating} />
         </p>
 
         <p>

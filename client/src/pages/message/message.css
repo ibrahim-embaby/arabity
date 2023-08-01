@@ -38,11 +38,11 @@
 }
 
 .message-text-input {
-  flex: 1;
   padding: 10px;
   align-content: flex-start;
   direction: rtl;
   font-size: 20px;
+  width: 100%;
 }
 
 .message-send-btn {
@@ -57,4 +57,11 @@
   border-radius: 5px;
   border: none;
   font-family: "Cairo";
+}
+
+/* Media Query */
+@media (max-width: 520px) {
+  .message-container {
+    width: 100%;
+  }
 }

@@ -16,8 +16,9 @@
 .search-results-sidebar-wrapper {
   border-radius: 10px;
   background-color: var(--white-color);
-  position: fixed;
-  width: 16%;
+  position: sticky;
+  top: 10px;
+  width: -webkit-fill-available;
 }
 .search-results-sidebar-wrapper h4 {
   background-color: var(--primary-color);
@@ -94,6 +95,7 @@
 
 .info-wrapper {
   height: 100%;
+  width: 100%;
   direction: rtl;
   padding: 10px 0px;
   line-height: 1.6;
@@ -103,6 +105,10 @@
   font-size: 25px;
   color: var(--primary-color);
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .no-results-found {
@@ -113,4 +119,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Media Query */
+
+@media (max-width: 970px) {
+  .search-results-sidebar {
+    flex: 4;
+  }
+  .search-results-main {
+    flex: 8;
+  }
+}
+@media (max-width: 720px) {
+  .search-results {
+    flex-direction: column;
+  }
+  .search-results-sidebar {
+    flex: unset;
+    position: unset;
+  }
+  .search-results-sidebar-wrapper {
+    position: unset;
+  }
+  .workshop-name {
+    font-size: 20px;
+  }
 }
