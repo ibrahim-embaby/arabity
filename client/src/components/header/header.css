@@ -77,12 +77,12 @@
 }
 .user-menu {
   position: absolute;
+  display: none;
   padding: 5px;
   background-color: var(--white-color);
   border-radius: 5px;
   top: 40px;
   right: 85px;
-  display: none;
   width: 140px;
   z-index: 10;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);

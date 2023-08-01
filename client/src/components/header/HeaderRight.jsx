@@ -44,7 +44,7 @@ function HeaderRight({ toggle, setToggle }) {
         <>
           <p
             className="user-settings"
-            onClick={() => setToggleMenu((prev) => !prev)}
+            onClick={() => setToggleMenu(!toggleMenu)}
             ref={menuRef}
           >
             <i className="bi bi-caret-down-fill"></i> {user?.username}
