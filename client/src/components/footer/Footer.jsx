@@ -5,10 +5,10 @@ function Footer() {
     <div className="footer">
       <div className="footer-left">عربيتي</div>
       <div className="footer-right">
-        <i className="bi bi-facebook" style={{ color: "#0d6efd" }}></i>
-        <i className="bi bi-whatsapp" style={{ color: "#198754" }}></i>
-        <i className="bi bi-linkedin" style={{ color: "#0d6efd" }}></i>
-        <i className="bi bi-instagram" style={{ color: "#dc3545" }}></i>
+        <i className="bi bi-facebook facebook"></i>
+        <i className="bi bi-whatsapp whatsapp"></i>
+        <i className="bi bi-linkedin linkedin"></i>
+        <i className="bi bi-instagram instagram"></i>
       </div>
     </div>
   );

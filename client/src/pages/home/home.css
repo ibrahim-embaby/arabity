@@ -1,9 +1,9 @@
 .home-top {
   position: relative;
   height: calc(100vh - 191px);
-  background: url("../../../public/images/car-home-top.png");
+  background: url("../../../public/images/home-top.jpg");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,7 +31,8 @@
   justify-content: space-evenly;
   padding-left: 10px;
   background-color: var(--white-color);
-  margin-top: 60px;
+  margin-bottom: 100px;
+  margin-top: 20px;
   border-radius: 10px;
   width: 60%;
   box-shadow: 1px 1px 10px #000;
@@ -46,6 +47,7 @@
   text-align: right;
   flex: 3;
   cursor: pointer;
+  font-family: "Cairo";
 }
 
 .search-bar button {
@@ -56,6 +58,7 @@
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--primary-color);
+  font-family: "Cairo";
 }
 
 .home-center {

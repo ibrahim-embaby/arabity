@@ -14,6 +14,7 @@ import Message from "./pages/message/Message";
 import NotFound from "./pages/not-found/NotFound";
 import Admin from "./pages/admin/Admin";
 import Conversations from "./pages/conversations/Conversations";
+import ContactUs from "./pages/contact-us/ContactUs";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -50,6 +51,7 @@ function App() {
           path="/message/:conversationId"
           element={user ? <Message /> : <Navigate to={"/login"} />}
         />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route
           path="/admin"
           element={

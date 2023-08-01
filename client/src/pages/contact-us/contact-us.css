@@ -1,0 +1,30 @@
+.contact-us {
+  min-height: calc(100vh - 191px);
+  direction: rtl;
+}
+
+.contact-us-item {
+  padding: 20px;
+  border-bottom: 0.5px solid #ddd;
+}
+.contact-us-item-desc {
+  width: 60%;
+}
+.founders-wrapper {
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.founder-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.founder-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}

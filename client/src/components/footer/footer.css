@@ -7,11 +7,11 @@
   font-size: 40px;
   border-top: 1px solid #000;
   background-color: #212326;
+  color: var(--white-color);
 }
 
 .footer-left {
   flex: 6;
-  color: var(--white-color);
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -29,4 +29,17 @@
 .footer-right i {
   padding: 5px;
   cursor: pointer;
+}
+
+.facebook:hover {
+  color: #0d6efd;
+}
+.whatsapp:hover {
+  color: #198754;
+}
+.linkedin:hover {
+  color: #0d6efd;
+}
+.instagram:hover {
+  color: #dc3545;
 }

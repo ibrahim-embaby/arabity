@@ -8,6 +8,7 @@ import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
 import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
+import { toast } from "react-toastify";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -39,12 +40,16 @@ function WorkshopProfile() {
   };
 
   const handleCreateConversation = () => {
+    if (!user) {
+      return toast.info("يرجي تسجيل الدخول أولًا");
+    }
     try {
       const conversationInfo = {
         userId: user.id,
         WorkshopOwnerId: id,
       };
       dispatch(createConversation(conversationInfo));
+      navigate(`/message/${user.id + id}`);
     } catch (error) {
       console.log(error);
     }
@@ -154,14 +159,13 @@ function WorkshopProfile() {
             {workshopOwner?.username}
           </p>
 
-          {user?.id !== id && (
-            <Link
-              to={`/message/${user.id + id}`}
+          {(!user || !user.workshopName) && (
+            <p
               className="workshopOwner-profile-contact-button"
               onClick={handleCreateConversation}
             >
               مراسلة
-            </Link>
+            </p>
           )}
         </div>
       </div>
