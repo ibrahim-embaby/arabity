@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ toggle, setToggle }) {
   const { user } = useSelector((state) => state.auth);
   const [currentTab, setCurrentTab] = useState(1);
   const location = useLocation();
@@ -18,11 +18,17 @@ function Navbar() {
     }
   }, [location.pathname, currentTab]);
   return (
-    <nav className="navbar">
+    <nav
+      className="navbar"
+      style={{ clipPath: toggle && "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+    >
       <ul>
         <Link
           to={"/"}
-          onClick={() => setCurrentTab(1)}
+          onClick={() => {
+            setCurrentTab(1);
+            setToggle(false);
+          }}
           style={{
             backgroundColor: currentTab === 1 && "#292b2c",
             color: currentTab === 1 && "white",
@@ -31,7 +37,10 @@ function Navbar() {
           الرئيسية
         </Link>
         <Link
-          onClick={() => setCurrentTab(2)}
+          onClick={() => {
+            setCurrentTab(2);
+            setToggle(false);
+          }}
           style={{
             backgroundColor: currentTab === 2 && "#292b2c",
             color: currentTab === 2 && "white",
@@ -43,7 +52,10 @@ function Navbar() {
         {user?.isAdmin && (
           <Link
             to={"/admin"}
-            onClick={() => setCurrentTab(3)}
+            onClick={() => {
+              setCurrentTab(3);
+              setToggle(false);
+            }}
             style={{
               backgroundColor: currentTab === 3 && "#292b2c",
               color: currentTab === 3 && "white",

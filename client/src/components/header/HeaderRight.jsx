@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
 
-function HeaderRight() {
+function HeaderRight({ toggle, setToggle }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -94,6 +94,13 @@ function HeaderRight() {
           </Link>
         </>
       )}
+      <div className="header-menu" onClick={() => setToggle((perv) => !perv)}>
+        {toggle ? (
+          <i className="bi bi-x-lg"></i>
+        ) : (
+          <i className="bi bi-list"></i>
+        )}
+      </div>
     </div>
   );
 }

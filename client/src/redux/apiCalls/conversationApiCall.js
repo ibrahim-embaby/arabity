@@ -4,15 +4,11 @@ import { conversationActions } from "../slices/conversationSlice";
 export function createConversation(conversationInfo) {
   return async (dispatch, getState) => {
     try {
-      const { data } = await request.post(
-        "/api/conversations/",
-        conversationInfo,
-        {
-          headers: {
-            Authorization: "Bearer " + getState().auth.user.token,
-          },
-        }
-      );
+      await request.post("/api/conversations/", conversationInfo, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
     } catch (error) {
       console.log(error);
     }
