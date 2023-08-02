@@ -64,8 +64,15 @@ function SearchResults() {
                 </option>
               ))}
             </select>
-            <button type="submit">بحث</button>
-            <button onClick={resetFormHandler}>تفريغ الحقول</button>
+            <button className="search-results-form-btn" type="submit">
+              بحث
+            </button>
+            <button
+              className="search-results-form-btn"
+              onClick={resetFormHandler}
+            >
+              تفريغ الحقول
+            </button>
           </form>
         </div>
       </div>

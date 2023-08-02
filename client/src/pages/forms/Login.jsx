@@ -65,7 +65,9 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">دخول</button>
+            <button className="login-form-btn" type="submit">
+              دخول
+            </button>
           </form>
         ) : (
           <form className="login-form" onSubmit={loginWorkshopOwnerFormHandler}>
@@ -83,7 +85,9 @@ function Login() {
               value={workshopOwnerPassword}
               onChange={(e) => setWorkshopOwnerPassword(e.target.value)}
             />
-            <button type="submit">دخول</button>
+            <button className="login-form-btn" type="submit">
+              دخول
+            </button>
           </form>
         )}
       </div>

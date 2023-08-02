@@ -62,7 +62,9 @@ function Home() {
               </option>
             ))}
           </select>
-          <button type="submit">بحث</button>
+          <button className="search-bar-btn" type="submit">
+            بحث
+          </button>
         </form>
       </section>
       {/* <section className="home-center">

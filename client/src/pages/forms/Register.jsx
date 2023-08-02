@@ -185,7 +185,9 @@ function Register() {
               className="form-input"
             />
 
-            <button type="submit">تسجيل</button>
+            <button className="register-form-btn" type="submit">
+              تسجيل
+            </button>
           </form>
         ) : (
           <form
@@ -273,7 +275,9 @@ function Register() {
               </div>
             </div>
 
-            <button type="submit">تسجيل</button>
+            <button className="register-form-btn" type="submit">
+              تسجيل
+            </button>
           </form>
         )}
       </div>

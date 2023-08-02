@@ -10,15 +10,18 @@ import MessageBox from "../../components/message-box/MessageBox";
 import { toast } from "react-toastify";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
 import formatTime from "../../utils/formatTime";
+import { io } from "socket.io-client";
 
 function Message() {
   const dispatch = useDispatch();
   const [messageText, setMessageText] = useState("");
   const [messageType, setMessageType] = useState("text");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const { conversationId } = useParams();
   const { messages } = useSelector((state) => state.message);
   const { otherUser } = useSelector((state) => state.conversation);
   const messagesContainerRef = useRef(null);
+  const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
 
   const handleSendMessage = (e, sentBy) => {
@@ -27,6 +30,14 @@ function Message() {
       if (messageText === "") {
         return toast.warning("لا يمكن ارسال رسالة فارغة");
       }
+
+      socket?.current.emit("sendMessage", {
+        senderId: user.id,
+        receiverId: user.workshopName
+          ? conversationId.substring(0, 24)
+          : conversationId.substring(24, 48),
+        content: messageText,
+      });
       const messageInfo = {
         conversationId,
         sentBy,
@@ -39,10 +50,21 @@ function Message() {
       console.log("error", error);
     }
   };
+  useEffect(() => {
+    socket.current = io("https://arabity.onrender.com"); // http://localhost:8000
+
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage(data?.content);
+    });
+  }, []);
+
+  useEffect(() => {
+    socket?.current?.emit("addUser", user.id);
+  }, [user.id, conversationId]);
 
   useEffect(() => {
     dispatch(fetchMessages(conversationId));
-  }, [conversationId, dispatch]);
+  }, [conversationId, dispatch, arrivalMessage]);
 
   useEffect(() => {
     if (
@@ -57,7 +79,6 @@ function Message() {
   const fetchOtherUser = (conversationId) => {
     if (user.workshopName) {
       const otherUserId = conversationId.substring(0, 24);
-      console.log(otherUserId);
       dispatch(fetchOtherUserData(otherUserId, "user"));
     } else {
       const otherUserId = conversationId.substring(24, 48);

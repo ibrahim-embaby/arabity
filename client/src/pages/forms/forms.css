@@ -19,7 +19,7 @@
   font-size: 18px;
 }
 
-.login-form button {
+.login-form-btn {
   padding: 5px;
   background-color: var(--primary-color);
   font-size: 20px;
@@ -70,7 +70,7 @@
   margin: 10px 0px;
 }
 
-.register-form button[type="submit"] {
+.register-form-btn {
   font-size: 20px;
   padding: 5px;
   border-radius: 5px;
