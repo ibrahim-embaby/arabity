@@ -11,6 +11,7 @@
   --pumpkin-color: #d35400;
   --red-color: #d9534f;
   --white-color: #fff;
+  --difference-value: 140px;
 }
 
 * {
@@ -34,7 +35,7 @@ code {
 }
 
 .loading-page {
-  height: calc(100vh - 191px);
+  height: calc(100vh - var(--difference-value));
   display: flex;
   align-items: center;
   justify-content: center;

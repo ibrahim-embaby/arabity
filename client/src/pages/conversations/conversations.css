@@ -1,7 +1,7 @@
 .conversations {
   display: flex;
   justify-content: center;
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
   padding: 0 20px;
 }
 .container {

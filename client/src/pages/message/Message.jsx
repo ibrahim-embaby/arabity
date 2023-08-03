@@ -51,7 +51,7 @@ function Message() {
     }
   };
   useEffect(() => {
-    socket.current = io("https://arabity.onrender.com"); // http://localhost:8000
+    socket.current = io("https://arabity.onrender.com"); //http://localhost:8000
 
     socket.current.on("getMessage", (data) => {
       setArrivalMessage(data?.content);

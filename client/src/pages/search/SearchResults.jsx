@@ -1,36 +1,83 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
 import SearchItem from "./SearchItem";
 import "./search.css";
 import { useDispatch, useSelector } from "react-redux";
 import { cars, provinces, services } from "../../dummyData";
 import CircularProgress from "@mui/joy/CircularProgress";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 function SearchResults() {
   const { searchResults, loading } = useSelector((state) => state.search);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
   const dispatch = useDispatch();
-  const [service, setService] = useState("");
-  const [car, setCar] = useState("");
-  const [province, setProvince] = useState("");
-  const searchFormHandler = (e) => {
-    e.preventDefault();
-    dispatch(fetchAllWorkshops(car, service, province));
-  };
+  const [service, setService] = useState(params.get("service") || "");
+  const [car, setCar] = useState(params.get("car") || "");
+  const [province, setProvince] = useState(params.get("province") || "");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const resetFormHandler = (e) => {
+    e.preventDefault();
     setService("");
     setCar("");
     setProvince("");
   };
+
+  useEffect(() => {
+    dispatch(fetchAllWorkshops(car || "", service || "", province || ""));
+  }, [dispatch, car, service, province]);
+
+  useEffect(() => {
+    // Check if the `service`, `car`, or `province` state variables have changed.
+
+    setSearchParams(
+      {
+        service: service,
+        car: car,
+        province: province,
+      },
+      { relative: "route", replace: true }
+    );
+  }, [searchParams, service, car, province]);
+
+  // useEffect(() => {
+  //   if (
+  //     provinces.some((p) => p.name === params.get("province")) ||
+  //     !params.get("province")
+  //   ) {
+  //     setProvince(params.get("province") || "");
+  //   } else {
+  //     setProvince("");
+  //   }
+
+  //   if (cars.some((p) => p.name === params.get("car")) || !params.get("car")) {
+  //     setCar(params.get("car") || "");
+  //   } else {
+  //     setCar("");
+  //   }
+
+  //   if (
+  //     services.some((p) => p.name === params.get("service")) ||
+  //     !params.get("service")
+  //   ) {
+  //     setService(params.get("service") || "");
+  //   } else {
+  //     setService("");
+  //   }
+  // }, [searchParams]);
   return (
     <div className="search-results">
       <div className="search-results-sidebar">
         <div className="search-results-sidebar-wrapper">
           <h4>تعديل البحث</h4>
-          <form className="search-results-form" onSubmit={searchFormHandler}>
+          <form className="search-results-form">
             <select
               value={service}
-              onChange={(e) => setService(e.target.value)}
+              onChange={(e) => {
+                setService(e.target.value);
+                params.set("service", e.target.value);
+              }}
             >
               <option value={""} disabled>
                 نوع الصيانة
@@ -41,7 +88,13 @@ function SearchResults() {
                 </option>
               ))}
             </select>
-            <select value={car} onChange={(e) => setCar(e.target.value)}>
+            <select
+              value={car}
+              onChange={(e) => {
+                setCar(e.target.value);
+                params.set("car", e.target.value);
+              }}
+            >
               <option value={""} disabled>
                 نوع العربية
               </option>
@@ -53,7 +106,10 @@ function SearchResults() {
             </select>
             <select
               value={province}
-              onChange={(e) => setProvince(e.target.value)}
+              onChange={(e) => {
+                setProvince(e.target.value);
+                params.set("province", e.target.value);
+              }}
             >
               <option value={""} disabled>
                 المحافظة
@@ -64,9 +120,7 @@ function SearchResults() {
                 </option>
               ))}
             </select>
-            <button className="search-results-form-btn" type="submit">
-              بحث
-            </button>
+
             <button
               className="search-results-form-btn"
               onClick={resetFormHandler}

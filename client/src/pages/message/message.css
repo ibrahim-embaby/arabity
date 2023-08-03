@@ -1,5 +1,5 @@
 .message {
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
   display: flex;
   justify-content: center;
 }

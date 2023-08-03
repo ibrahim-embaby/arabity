@@ -1,24 +1,33 @@
 import { useState } from "react";
 import { cars, provinces, services } from "../../dummyData";
 import "./home.css";
-import { useDispatch } from "react-redux";
-import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { useNavigate } from "react-router-dom";
 function Home() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [service, setService] = useState("");
   const [car, setCar] = useState("");
   const [province, setProvince] = useState("");
+
   const searchFormHandler = (e) => {
     e.preventDefault();
-    dispatch(fetchAllWorkshops(car, service, province));
-    navigate("/search/workshops");
+    const queryParams = new URLSearchParams();
+    if (service) {
+      queryParams.append("service", service);
+    }
+
+    if (car) {
+      queryParams.append("car", car);
+    }
+
+    if (province) {
+      queryParams.append("province", province);
+    }
+    navigate(`/search/workshops?${queryParams.toString()}`);
   };
   return (
     <div className="home">
       <section className="home-top">
-        <h1>اكتشف أفضل مراكز الصيانة في منطقتك</h1>
+        <h1 className="home-top-title">اكتشف أفضل مراكز الصيانة في منطقتك</h1>
         <form className="search-bar" onSubmit={searchFormHandler}>
           <select
             className="search-bar-item"

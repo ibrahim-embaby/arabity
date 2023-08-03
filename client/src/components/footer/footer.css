@@ -1,11 +1,10 @@
 .footer {
-  height: 131px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /* background-color: var(--primary-color); */
-  font-size: 40px;
-  border-top: 1px solid #000;
+  flex-direction: row-reverse;
+  font-size: 30px;
   background-color: #212326;
   color: var(--white-color);
 }
@@ -15,7 +14,8 @@
   font-weight: bold;
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-right: 20px;
+  justify-content: flex-end;
 }
 
 .footer-right {
@@ -27,7 +27,6 @@
   /* background-color: var(--white-color); */
 }
 .footer-right i {
-  padding: 5px;
   cursor: pointer;
 }
 

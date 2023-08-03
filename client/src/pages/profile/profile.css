@@ -1,5 +1,5 @@
 .profile {
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -51,7 +51,7 @@
   direction: rtl;
   text-align: right;
   padding: 20px 60px;
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
 }
 
 .workshopOwner-profile-top {
@@ -171,7 +171,7 @@
 }
 
 .user-profile-settings {
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
 }
 
 .workshopOwner-profile-info-services {

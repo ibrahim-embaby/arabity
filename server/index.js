@@ -42,7 +42,7 @@ const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://arabity-fzmr.onrender.com", //"http://localhost:3000 "
+    origin: "https://arabity-fzmr.onrender.com", //http://localhost:3000
   },
 });
 

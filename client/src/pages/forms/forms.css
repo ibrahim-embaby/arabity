@@ -1,7 +1,7 @@
 .login {
   display: flex;
   align-items: center;
-  min-height: calc(100vh - 191px);
+  min-height: calc(100vh - var(--difference-value));
   text-align: right;
   flex-direction: column;
 }
