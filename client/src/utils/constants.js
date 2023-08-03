@@ -1,2 +1,1 @@
-const production = true;
-module.exports = production;
+export const production = true;

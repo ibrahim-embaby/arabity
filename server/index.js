@@ -13,7 +13,7 @@ const workshopOwnerRoute = require("./routes/workshopOwnerRoute");
 const rateRoute = require("./routes/rateRoute");
 const messagesRoute = require("./routes/messageRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
-const { production } = require("../client/src/utils/constants");
+const production = require("./utils/constants");
 
 // connection to DB
 connectToDb();
