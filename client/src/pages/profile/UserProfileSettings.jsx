@@ -15,6 +15,10 @@ function UserProfileSettings() {
       mobile,
     };
     dispatch(updateUserProfile(userInfo));
+
+    setUsername("");
+    setPassword("");
+    setMobile("");
   };
   return (
     <div className="user-profile-settings">
