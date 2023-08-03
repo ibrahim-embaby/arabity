@@ -170,10 +170,6 @@
   text-decoration: none;
 }
 
-.user-profile-settings {
-  min-height: calc(100vh - var(--difference-value));
-}
-
 .workshopOwner-profile-info-services {
   display: flex;
 }
@@ -187,6 +183,57 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+/* USER SETTINGS */
+
+.user-profile-settings {
+  min-height: calc(100vh - var(--difference-value));
+  direction: rtl;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-profile-settings-form {
+  padding: 20px;
+}
+.user-profile-settings-form-wrapper {
+  display: flex;
+  gap: 15px;
+}
+.user-profile-settings-form-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.user-profile-settings-form-inputs {
+  display: flex;
+  flex-direction: column;
+}
+.user-profile-settings-form-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.user-profile-settings-form-item-input {
+  padding: 10px;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.user-profile-settings-form-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--primary-color);
+  border: none;
+  color: var(--white-color);
+  font-size: 18px;
+  cursor: pointer;
+  font-family: "Cairo";
+  font-weight: bold;
 }
 
 /* Media Query */
@@ -217,4 +264,16 @@
 }
 
 @media (max-width: 520px) {
+  .user-profile-settings-form-labels {
+    font-size: 10px;
+  }
+  .user-profile-settings-form-item-input {
+    padding: 5px;
+    font-size: 15px;
+    width: 100%;
+  }
+  .user-profile-settings-form-btn {
+    font-size: 15px;
+    padding: 5px;
+  }
 }

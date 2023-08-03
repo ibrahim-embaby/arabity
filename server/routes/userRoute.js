@@ -2,6 +2,7 @@ const {
   getUserCtrl,
   getUsersCtrl,
   deleteUserCtrl,
+  updateUserCtrl,
 } = require("../controllers/userController");
 const validateObjectId = require("../middlewares/validateObjectId");
 const {
@@ -19,5 +20,8 @@ router
   .route("/profile/:id")
   .get(validateObjectId, verifyToken, getUserCtrl)
   .delete(validateObjectId, verifyTokenAndAdmin, deleteUserCtrl);
+
+// /api/user/profile/
+router.route("/profile/").put(verifyToken, updateUserCtrl);
 
 module.exports = router;

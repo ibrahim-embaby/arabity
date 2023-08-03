@@ -20,10 +20,8 @@ export function loginUser(user) {
     try {
       const { data } = await request.post("/api/auth/login", user);
       dispatch(authActions.setUser(data));
-      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (err) {
       console.log(err);
-
       toast.error(err.response.data.message);
     }
   };

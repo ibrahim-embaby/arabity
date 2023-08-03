@@ -13,6 +13,7 @@ const workshopOwnerRoute = require("./routes/workshopOwnerRoute");
 const rateRoute = require("./routes/rateRoute");
 const messagesRoute = require("./routes/messageRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
+const { production } = require("../client/src/utils/constants");
 
 // connection to DB
 connectToDb();
@@ -42,7 +43,9 @@ const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://arabity-fzmr.onrender.com", //http://localhost:3000
+    origin: production
+      ? "https://arabity-fzmr.onrender.com"
+      : "http://localhost:3000",
   },
 });
 

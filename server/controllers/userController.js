@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { User } = require("../models/User");
+const bcrypt = require("bcrypt");
+
 /**
  * @desc get user profile
  * @route /api/user/profile/:id
@@ -42,4 +44,50 @@ module.exports.deleteUserCtrl = asyncHandler(async (req, res) => {
   }
   await User.findByIdAndDelete(id);
   res.status(200).json({ message: "تم حذف المستخدم بنجاح" });
+});
+
+/**
+ * @desc update user data
+ * @route /api/user/profile/
+ * @method PUT
+ * @access private ( user himslef )
+ */
+module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+  }
+
+  const { username, password, mobile } = req.body;
+
+  let newPassword;
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    newPassword = await bcrypt.hash(password, salt);
+  }
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    {
+      ...(username && { username }),
+      ...(newPassword && { password: newPassword }),
+      ...(mobile && { mobile }),
+    },
+    {
+      new: true,
+    }
+  );
+  const token = updatedUser.generateAuthToken();
+  res.status(200).json({
+    data: {
+      id: updatedUser._id,
+      token,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      username: updatedUser.username,
+      mobile: updatedUser.mobile,
+      password: updatedUser.password,
+    },
+    message: "تم تحديث بياناتك بنجاح",
+  });
 });

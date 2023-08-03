@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
 import formatTime from "../../utils/formatTime";
 import { io } from "socket.io-client";
+import { production } from "../../utils/constants";
 
 function Message() {
   const dispatch = useDispatch();
@@ -51,7 +52,9 @@ function Message() {
     }
   };
   useEffect(() => {
-    socket.current = io("https://arabity.onrender.com"); //http://localhost:8000
+    socket.current = io(
+      production ? "https://arabity.onrender.com" : "http://localhost:8000"
+    );
 
     socket.current.on("getMessage", (data) => {
       setArrivalMessage(data?.content);

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { profileActions } from "../slices/profileSlice";
+import { authActions } from "../slices/authSlice";
 
 // get user profile
 export function fetchUserProfile(id) {
@@ -48,6 +49,25 @@ export function deleteUser(id) {
       toast.success(data.message);
     } catch (err) {
       toast.error(err.response.data.message);
+    }
+  };
+}
+
+// update user profile
+export function updateUserProfile(userInfo) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put("/api/user/profile/", userInfo, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+      dispatch(profileActions.setProfile(data.data));
+      dispatch(authActions.setUser(data.data));
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 }
