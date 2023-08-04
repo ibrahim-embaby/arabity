@@ -41,7 +41,8 @@ module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
       $or: [{ userId: id }, { WorkshopOwnerId: id }],
     })
       .populate("userId", "username")
-      .populate("WorkshopOwnerId", "username");
+      .populate("WorkshopOwnerId", "username")
+      .sort({ updatedAt: -1 });
 
     const startedConversations = conversations.filter(
       (conversation) => conversation.lastMessage

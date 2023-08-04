@@ -54,3 +54,14 @@ module.exports.reportWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   });
   res.status(200).json({ workshop: workshopOwner, message: "تم ارسال بلاغك" });
 });
+
+/**
+ * @desc get workshops count
+ * @route /api/workshop-owner/count
+ * @method GET
+ * @access public
+ */
+module.exports.getWorkshopsCountCtrl = asyncHandler(async (req, res) => {
+  const count = await WorkshopOwner.count();
+  res.status(200).json(count);
+});

@@ -5,6 +5,7 @@ const workshopOwnerSlice = createSlice({
   initialState: {
     workshopOwner: null,
     loading: false,
+    workshopsCount: null,
   },
   reducers: {
     setWorkshopOwner(state, action) {
@@ -18,6 +19,9 @@ const workshopOwnerSlice = createSlice({
         state.workshopOwner.workshopRatings.filter(
           (rate) => rate._id !== action.payload
         );
+    },
+    setWorkshopsCount(state, action) {
+      state.workshopsCount = action.payload;
     },
     setLoading(state) {
       state.loading = true;

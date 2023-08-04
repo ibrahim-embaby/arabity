@@ -47,7 +47,10 @@ function HeaderRight({ toggle, setToggle }) {
             onClick={() => setToggleMenu(!toggleMenu)}
             ref={menuRef}
           >
-            <i className="bi bi-caret-down-fill"></i> {user?.username}
+            <i className="bi bi-caret-down-fill"></i>{" "}
+            {user?.username.length > 10
+              ? "..." + user?.username.substr(0, 10)
+              : user?.username}
             <div
               className="user-menu"
               style={{ display: toggleMenu ? "block" : "none" }}

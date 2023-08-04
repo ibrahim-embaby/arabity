@@ -63,7 +63,7 @@ export const cars = [
   { value: "سانج يونج", label: "سانج يونج" },
   { value: "فولفو", label: "فولفو" },
   { value: "بي واي دي", label: "بي واي دي" },
-  { value: "جميع السيارات", label: "جميع السيارات" },
+  // { value: "جميع السيارات", label: "جميع السيارات" },
 ];
 
 export const provinces = [

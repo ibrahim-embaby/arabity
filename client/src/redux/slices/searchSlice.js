@@ -4,6 +4,7 @@ const searchSlice = createSlice({
   name: "search",
   initialState: {
     searchResults: [],
+    searchResultsCount: null,
     loading: false,
   },
   reducers: {
@@ -14,6 +15,9 @@ const searchSlice = createSlice({
       state.searchResults = state.searchResults.filter(
         (res) => res.id !== action.payload
       );
+    },
+    setSearchResultsCount(state, action) {
+      state.searchResultsCount = action.payload;
     },
     setLoading(state) {
       state.loading = true;

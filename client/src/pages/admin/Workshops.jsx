@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
+import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { deleteWorkshop } from "../../redux/apiCalls/workshopOwnerApiCall";
 
 function Workshops() {
   const dispatch = useDispatch();
   const { searchResults, loading } = useSelector((state) => state.search);
   useEffect(() => {
-    dispatch(fetchAllWorkshops());
+    dispatch(fetchWorkshops());
   }, [dispatch]);
 
   const deleteWorkshopHandler = (id) => {

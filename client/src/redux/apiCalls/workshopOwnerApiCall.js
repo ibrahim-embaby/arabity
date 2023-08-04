@@ -37,3 +37,15 @@ export function deleteWorkshop(id) {
     }
   };
 }
+
+// /api/workshop-owner/count
+export function fetchWorkshopsCount() {
+  return async (dispatch) => {
+    try {
+      const { data } = await request.get("/api/workshop-owner/count");
+      dispatch(workshopOwnerActions.setWorkshopsCount(data));
+    } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+}

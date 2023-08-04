@@ -6,7 +6,7 @@ import CircularProgress from "@mui/joy/CircularProgress";
 import RatingC from "../../components/rating/Rating";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
-import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
+import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 import { toast } from "react-toastify";
 
@@ -35,7 +35,7 @@ function WorkshopProfile() {
   }, [id, workshopOwner?.workshopRatings?.length, dispatch]);
 
   const searchTagHandler = (service) => {
-    dispatch(fetchAllWorkshops("", service, ""));
+    dispatch(fetchWorkshops("", service, ""));
     navigate("/search/workshops");
   };
 
@@ -55,7 +55,12 @@ function WorkshopProfile() {
     }
   };
   return loading ? (
-    <div className="loading-page">
+    <div
+      className="loading-page"
+      style={{
+        minHeight: "calc(100vh - var(--difference-value))",
+      }}
+    >
       <CircularProgress color="primary" />
     </div>
   ) : (

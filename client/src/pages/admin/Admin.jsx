@@ -6,18 +6,18 @@ import Manage from "./Manage";
 import Statistics from "./Statistics";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../redux/apiCalls/profileApiCall";
-import { fetchAllWorkshops } from "../../redux/apiCalls/searchApiCall";
 import Ratings from "./Ratings";
+import { fetchWorkshopsCount } from "../../redux/apiCalls/workshopOwnerApiCall";
 
 function Admin() {
   const [currentComponent, setCurrentComponent] = useState(1);
 
   const dispatch = useDispatch();
-  const { searchResults, loading } = useSelector((state) => state.search);
+  const { workshopsCount } = useSelector((state) => state.workshopOwner);
   const { users } = useSelector((state) => state.profile);
   useEffect(() => {
     dispatch(fetchAllUsers());
-    dispatch(fetchAllWorkshops());
+    dispatch(fetchWorkshopsCount());
   }, [dispatch]);
 
   return (
@@ -67,7 +67,7 @@ function Admin() {
         {currentComponent === 1 ? (
           <Statistics
             usersNumber={users.length}
-            workshopsNumber={searchResults.length}
+            workshopsNumber={workshopsCount}
           />
         ) : currentComponent === 2 ? (
           <Workshops />

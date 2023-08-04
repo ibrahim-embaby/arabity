@@ -35,26 +35,35 @@
 .search-results-form select {
   padding: 10px;
   margin: 10px;
-  font-size: 18px;
+  font-size: 15px;
   border-radius: 5px;
   outline: none;
   border: 1px solid var(--primary-color);
   text-align: right;
+  cursor: pointer;
+  font-family: "Cairo";
 }
 
 .search-results-form-btn {
   padding: 10px 15px;
   margin: 0 10px 10px 10px;
-  font-size: 20px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--primary-color);
+  font-family: "Cairo";
 }
 
 .search-results-main {
   flex: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results-main-items {
+  height: 100%;
 }
 
 /* Search Item */

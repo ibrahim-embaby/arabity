@@ -15,6 +15,7 @@ import NotFound from "./pages/not-found/NotFound";
 import Admin from "./pages/admin/Admin";
 import Conversations from "./pages/conversations/Conversations";
 import ContactUs from "./pages/contact-us/ContactUs";
+import WorkshopProfileSettings from "./pages/profile/WorkshopProfileSettings";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -36,7 +37,17 @@ function App() {
         <Route path="/profile/:id" element={<Profile />} />
         <Route
           path="/profile/:id/settings"
-          element={user ? <UserProfileSettings /> : <Navigate to={"/login"} />}
+          element={
+            user ? (
+              user.workshopName ? (
+                <WorkshopProfileSettings />
+              ) : (
+                <UserProfileSettings />
+              )
+            ) : (
+              <Navigate to={"/login"} />
+            )
+          }
         />
         <Route path="/search/workshops" element={<SearchResults />} />
         <Route

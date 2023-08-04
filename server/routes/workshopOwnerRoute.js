@@ -2,6 +2,7 @@ const {
   deleteWorkshopOwnerCtrl,
   getWorkshopOwnerCtrl,
   reportWorkshopOwnerCtrl,
+  getWorkshopsCountCtrl,
 } = require("../controllers/workshopController");
 const validateObjectId = require("../middlewares/validateObjectId");
 const {
@@ -10,6 +11,9 @@ const {
 } = require("../middlewares/verifyToken");
 
 const router = require("express").Router();
+
+// /api/workshop-owner/count
+router.route("/count").get(getWorkshopsCountCtrl);
 
 // /api/workshop-owner/:id
 router
