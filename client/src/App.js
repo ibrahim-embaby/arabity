@@ -83,3 +83,19 @@ function App() {
 }
 
 export default App;
+
+// NOTES FOR PERFORMANCE
+/*
+Here are some ways to minimize the size of your React app bundle:
+
+    - Minify the code - This compresses the bundle by removing whitespace, comments, and other unnecessary syntax. You can do this with tools like Babel minify or UglifyJS.
+    - Tree shaking - This removes unused imports from your modules, especially third party libraries. This can be done with webpack and Babel.
+    - Code splitting - Split your bundle into smaller chunks, and lazy load routes and components as needed. This can significantly reduce the initial load size. You can do this with React.lazy() and Suspense.
+    - Optimize images - Compress and optimize images to reduce their file size, which will reduce the overall bundle size.
+    - Avoid unused imports - Make sure to audit your imports and remove any that are not actually used in your code.
+    - Use lightweight packages - Where possible, choose smaller alternative libraries over larger ones.
+    - Send Javascript files as compressed - Compress JS files sent to the browser using gzip compression. This is enabled by default in most servers.
+    - Enable long term caching - Use cache-control headers so that browsers cache your bundle for a long time. This avoids unnecessary downloads.
+    - Configure webpack optimizations - Enable webpack optimizations like concatenateModules, dedupe, and uglifyjs-webpack-plugin.
+    - Split large libraries into separate bundles - Large libraries like React, Lodash, Moment can be split into their own chunks to reduce the main bundle size.
+*/

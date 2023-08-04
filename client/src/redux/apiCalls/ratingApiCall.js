@@ -47,13 +47,17 @@ export function deleteRating(id) {
 export function fetchSingleUserRatings(userId) {
   return async (dispatch, getState) => {
     try {
+      dispatch(ratingActions.setLoading());
+
       const { data } = await request.get(`api/${routeName}/${userId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
       dispatch(ratingActions.setRatings(data));
+      dispatch(ratingActions.clearLoading());
     } catch (error) {
+      dispatch(ratingActions.clearLoading());
       toast.error(error.response.data.message);
     }
   };

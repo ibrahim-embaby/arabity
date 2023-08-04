@@ -12,9 +12,9 @@ function Users({ users }) {
       <table className="users-table">
         <thead className="users-table-header">
           <tr className="users-table-header-row">
-            <th className="users-table-header-item">id</th>
-            <th className="users-table-header-item">name</th>
-            <th className="users-table-header-item">options</th>
+            <th className="users-table-header-item">المعرف</th>
+            <th className="users-table-header-item">الاسم</th>
+            <th className="users-table-header-item">خيارات</th>
           </tr>
         </thead>
         <tbody className="users-table-body">
@@ -28,7 +28,7 @@ function Users({ users }) {
                     className="users-delete-button"
                     onClick={() => deleteUserHandler(user._id)}
                   >
-                    delete
+                    حذف
                   </button>
                 )}
               </td>

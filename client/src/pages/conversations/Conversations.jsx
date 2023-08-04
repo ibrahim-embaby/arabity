@@ -11,7 +11,7 @@ function Conversations() {
   const { conversations } = useSelector((state) => state.conversation);
   useEffect(() => {
     dispatch(fetchUserConversations(user.id));
-  }, []);
+  }, [conversations]);
   return (
     <div className="conversations">
       <div className="container">

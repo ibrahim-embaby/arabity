@@ -195,9 +195,11 @@ function Register() {
             onSubmit={registerWorkshopOwnerFormHandler}
           >
             <div className="form-group">
-              <label htmlFor="">بيانات الحساب</label>
-              <div className="">
-                <div>
+              <h4 className="form-group-title" htmlFor="">
+                بيانات الحساب
+              </h4>
+              <div className="form-group-inputs">
+                <div className="form-group-input-wrapper">
                   <label htmlFor="workshopOwnerUsername">الاسم</label>
                   <input
                     type="text"
@@ -207,7 +209,7 @@ function Register() {
                     className="form-input"
                   />
                 </div>
-                <div>
+                <div className="form-group-input-wrapper">
                   <label htmlFor="workshopOwnerEmail">البريد الإلكتروني</label>
                   <input
                     type="email"
@@ -217,7 +219,7 @@ function Register() {
                     className="form-input"
                   />
                 </div>
-                <div>
+                <div className="form-group-input-wrapper">
                   <label htmlFor="password">كلمة المرور</label>
                   <input
                     type="password"
@@ -231,7 +233,9 @@ function Register() {
             </div>
             <hr />
             <div className="form-group">
-              <label htmlFor="">بيانات الورشة</label>
+              <h4 className="form-group-title" htmlFor="">
+                بيانات الورشة
+              </h4>
 
               <label htmlFor="workshopName">اسم الورشة</label>
               <input

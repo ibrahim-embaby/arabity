@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./forms.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import {
   loginUser,
   loginWorkshopOwner,
-  logoutUser,
 } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 function Login() {

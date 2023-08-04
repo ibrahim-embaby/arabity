@@ -16,14 +16,21 @@ import { production } from "../../utils/constants";
 function Message() {
   const dispatch = useDispatch();
   const [messageText, setMessageText] = useState("");
-  const [messageType, setMessageType] = useState("text");
-  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [messageType] = useState("text");
+  // const [arrivalMessage, setArrivalMessage] = useState(null);
   const { conversationId } = useParams();
   const { messages } = useSelector((state) => state.message);
   const { otherUser } = useSelector((state) => state.conversation);
   const messagesContainerRef = useRef(null);
   const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    socket.current = io(
+      production ? "https://arabity.onrender.com" : "http://localhost:8000"
+    );
+    dispatch(fetchMessages(conversationId));
+  }, []);
 
   const handleSendMessage = (e, sentBy) => {
     e.preventDefault();
@@ -51,23 +58,21 @@ function Message() {
       console.log("error", error);
     }
   };
-  useEffect(() => {
-    socket.current = io(
-      production ? "https://arabity.onrender.com" : "http://localhost:8000"
-    );
 
+  useEffect(() => {
     socket.current.on("getMessage", (data) => {
-      setArrivalMessage(data?.content);
+      // setArrivalMessage(data?.content);
+      dispatch(fetchMessages(conversationId));
     });
-  }, []);
+  }, [conversationId]);
 
   useEffect(() => {
     socket?.current?.emit("addUser", user.id);
   }, [user.id, conversationId]);
 
-  useEffect(() => {
-    dispatch(fetchMessages(conversationId));
-  }, [conversationId, dispatch, arrivalMessage]);
+  // useEffect(() => {
+  //   dispatch(fetchMessages(conversationId));
+  // }, [conversationId, dispatch, arrivalMessage]);
 
   useEffect(() => {
     if (

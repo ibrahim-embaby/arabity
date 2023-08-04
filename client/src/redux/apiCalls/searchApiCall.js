@@ -18,8 +18,8 @@ export function fetchWorkshops(
       dispatch(searchActions.setSearchResultsCount(data.count));
       dispatch(searchActions.clearLoading());
     } catch (err) {
-      toast.error(err.response.data.message);
-      dispatch(searchActions.setLoading());
+      dispatch(searchActions.clearLoading());
+      toast.error("يرجي اعادة تحميل الصفحة");
     }
   };
 }

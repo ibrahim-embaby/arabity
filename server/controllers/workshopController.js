@@ -35,6 +35,22 @@ module.exports.deleteWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
 });
 
+// /**
+//  * @desc delete many workshop owners
+//  * @route /api/workshop-owner/
+//  * @method DELETE
+//  * @access private (only admin)
+//  */
+// module.exports.deleteWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
+//   const workshopOwner = await WorkshopOwner.findById(req.params.id);
+//   if (!workshopOwner) {
+//     return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+//   }
+//   await WorkshopOwner.deleteOne({ _id: workshopOwner._id });
+//   await WorkshopRatings.deleteMany({ workshopOwner: workshopOwner._id });
+//   return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
+// });
+
 /**
  * @desc report workshop owner
  * @route /api/workshop-owner/:id

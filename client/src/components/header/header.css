@@ -43,8 +43,7 @@
 }
 
 .navbar ul a:hover {
-  color: var(--main-color);
-  background-color: var(--dark-color);
+  background-color: #ccc;
 }
 
 .header-right {

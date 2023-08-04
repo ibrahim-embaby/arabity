@@ -4,9 +4,7 @@
   width: fit-content;
   margin: 10px;
   width: 70%;
-  font-family: "Cairo", "Helvetica Neue", Helvetica, Arial,
-    sans-serif for Latin text and "Helvetica Neue", Helvetica, Arial, sans-serif,
-    "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family);
 }
 
 .sent-by-me {
@@ -26,7 +24,5 @@
 .message-time {
   font-size: 13px;
   color: #ddd;
-  font-family: "Cairo", "Helvetica Neue", Helvetica, Arial,
-    sans-serif for Latin text and "Helvetica Neue", Helvetica, Arial, sans-serif,
-    "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family);
 }

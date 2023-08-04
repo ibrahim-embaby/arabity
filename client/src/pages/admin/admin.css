@@ -51,6 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .users-table,
@@ -73,13 +74,18 @@
   outline: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .admin-ratings {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 13px;
   padding: 10px;
+  height: 100%;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 .rating-wrapper {
   border: 1px solid #000;

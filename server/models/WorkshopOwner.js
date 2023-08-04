@@ -57,6 +57,9 @@ const WorkshopOwnerSchema = new mongoose.Schema(
         },
       },
     ],
+    views: {
+      type: Array,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

@@ -6,13 +6,13 @@ import { authActions } from "../slices/authSlice";
 // get user profile
 export function fetchUserProfile(id) {
   return async (dispatch, getState) => {
-    const { data } = await request.get(`/api/user/profile/${id}`, {
-      headers: {
-        Authorization: "Bearer " + getState().auth.user.token,
-      },
-    });
-    dispatch(profileActions.setProfile(data));
     try {
+      const { data } = await request.get(`/api/user/profile/${id}`, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+        },
+      });
+      dispatch(profileActions.setProfile(data));
     } catch (err) {
       toast.error(err.response.data.message);
     }

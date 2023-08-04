@@ -1,6 +1,9 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { authActions } from "../slices/authSlice";
+import { profileActions } from "../slices/profileSlice";
+import { ratingActions } from "../slices/ratingSlice";
+import { messageActions } from "../slices/messageSlice";
 
 // register user
 export function registerUser(user) {
@@ -30,8 +33,10 @@ export function loginUser(user) {
 // logout user
 export function logoutUser() {
   return async (dispatch) => {
+    dispatch(profileActions.clearProfile());
+    dispatch(ratingActions.clearRatings());
+    dispatch(messageActions.clearMessages());
     dispatch(authActions.logout());
-    localStorage.removeItem("userInfo");
   };
 }
 

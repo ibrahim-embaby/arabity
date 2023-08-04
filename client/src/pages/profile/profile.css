@@ -231,7 +231,7 @@
   color: var(--white-color);
   font-size: 18px;
   cursor: pointer;
-  font-family: "Cairo";
+  font-family: var(--font-family);
   font-weight: bold;
 }
 

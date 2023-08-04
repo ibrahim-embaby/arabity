@@ -21,7 +21,7 @@ function SearchResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
 
-  const RESULTS_PER_PAGE = 5;
+  const RESULTS_PER_PAGE = 10;
   const pages = Math.ceil((searchResultsCount ?? 0) / RESULTS_PER_PAGE);
 
   const resetFormHandler = (e) => {
@@ -117,6 +117,9 @@ function SearchResults() {
       </div>
 
       <div className="search-results-main">
+        <p className="search-results-count">
+          نتائج البحث: {searchResultsCount}
+        </p>
         <div className="search-results-main-items">
           {loading ? (
             <div className="loading-page">

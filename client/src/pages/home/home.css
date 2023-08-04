@@ -47,7 +47,7 @@
   text-align: right;
   flex: 3;
   cursor: pointer;
-  font-family: "Cairo";
+  font-family: var(--font-family);
 }
 
 .search-bar-btn {
@@ -58,7 +58,7 @@
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--primary-color);
-  font-family: "Cairo";
+  font-family: var(--font-family);
 }
 
 .home-center {

@@ -41,7 +41,7 @@
   border: 1px solid var(--primary-color);
   text-align: right;
   cursor: pointer;
-  font-family: "Cairo";
+  font-family: var(--font-family);
 }
 
 .search-results-form-btn {
@@ -53,13 +53,19 @@
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--primary-color);
-  font-family: "Cairo";
+  font-family: var(--font-family);
+  font-weight: bold;
 }
 
 .search-results-main {
   flex: 10;
   display: flex;
   flex-direction: column;
+}
+.search-results-count {
+  padding: 10px 15px 0 15px;
+  text-align: end;
+  font-weight: 700;
 }
 
 .search-results-main-items {

@@ -10,6 +10,9 @@ const profileSlice = createSlice({
     setProfile(state, action) {
       state.profile = action.payload;
     },
+    clearProfile(state) {
+      state.profile = null;
+    },
     setUsers(state, action) {
       state.users = action.payload;
     },

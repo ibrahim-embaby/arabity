@@ -13,7 +13,7 @@ WorkshopOwner.schema.index({ name: "text", description: "text" });
 
 module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   const { province, car, service, page } = req.query;
-  const pageSize = 5;
+  const pageSize = 10;
   const currentPage = parseInt(page, 10) || 1;
 
   let workshops;

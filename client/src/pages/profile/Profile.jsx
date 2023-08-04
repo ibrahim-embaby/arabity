@@ -11,7 +11,7 @@ import {
 function Profile() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { ratings } = useSelector((state) => state.rating);
+  const { ratings, loading } = useSelector((state) => state.rating);
   const { id } = useParams();
 
   useEffect(() => {
@@ -32,7 +32,9 @@ function Profile() {
         <div className="profile-bottom-left">
           <h2>تقييماتك</h2>
           <div className="user-ratings-wrapper">
-            {ratings.length ? (
+            {loading ? (
+              <p>يتم التحميل...</p>
+            ) : ratings.length ? (
               ratings.map((rating) => (
                 <div className="user-rating" key={rating._id}>
                   <Link
