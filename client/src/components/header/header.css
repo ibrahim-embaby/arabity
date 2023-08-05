@@ -191,3 +191,10 @@
     font-size: 12px;
   }
 }
+
+@supports (-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px)) {
+  .fixed-header {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+}
