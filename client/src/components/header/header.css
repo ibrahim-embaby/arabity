@@ -1,6 +1,9 @@
 .fixed-header {
-  background-color: transparent;
+  background-color: rgba(250, 250, 250, 0.5);
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  -webkit-background-color: rgba(250, 250, 250, 0.5);
+
   height: 70px;
   display: flex;
   align-items: center;
@@ -42,6 +45,9 @@
   display: flex;
   justify-content: center;
   flex-direction: row-reverse;
+  background-color: #fff;
+  background-color: rgba(250, 250, 250, 0.5);
+  backdrop-filter: blur(6px);
 }
 .navbar ul a {
   padding: 0px 10px;
@@ -174,5 +180,14 @@
 
   .header-auth-links {
     display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .header-menu {
+    padding: 0;
+  }
+  .user-settings {
+    font-size: 12px;
   }
 }

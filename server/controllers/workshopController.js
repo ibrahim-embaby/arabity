@@ -11,7 +11,13 @@ const { WorkshopRatings } = require("../models/WorkshopRatings");
 module.exports.getWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   const workshopOwner = await WorkshopOwner.findById(req.params.id)
     .select("-password")
-    .populate("workshopRatings");
+    .populate({
+      path: "workshopRatings",
+      populate: {
+        path: "user",
+        select: "username",
+      },
+    });
 
   if (!workshopOwner) {
     return res.status(404).json({ message: "هذا المستخدم غير موجود" });

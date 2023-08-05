@@ -5,6 +5,7 @@ import { fetchUserConversations } from "../../redux/apiCalls/conversationApiCall
 import { Link } from "react-router-dom";
 import formatTime from "../../utils/formatTime";
 import { useTranslation } from "react-i18next";
+import limitText from "../../utils/limitText";
 
 function Conversations() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function Conversations() {
                   : conversation.WorkshopOwnerId.username}
               </span>
               <p className="conversation-item-text">
-                {conversation.lastMessage}
+                {limitText(conversation.lastMessage, 30)}
               </p>
               <span className="conversation-item-time">
                 {formatTime(conversation.updatedAt)}

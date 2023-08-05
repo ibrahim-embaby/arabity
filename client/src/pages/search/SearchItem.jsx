@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import RatingMui from "../../components/rating/RatingMui";
+import limitText from "../../utils/limitText";
 
 function SearchItem({ item }) {
   const [avgRating, setAvgRating] = useState(0);
@@ -26,13 +27,13 @@ function SearchItem({ item }) {
       </div>
       <div className="info-wrapper">
         <div className="workshop-name">
-          <span>{item.workshopName}</span>
+          <span>{limitText(item.workshopName, 10)}</span>
           <RatingMui rating={avgRating} />
         </div>
 
         <p>
           <i className="bi bi-person-fill search-item-title"></i>
-          {item.username}
+          {limitText(item.username, 10)}
         </p>
         <p>
           <i className="bi bi-car-front-fill search-item-title"></i>

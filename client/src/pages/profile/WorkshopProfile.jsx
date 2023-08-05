@@ -158,8 +158,9 @@ function WorkshopProfile() {
             {user &&
               !user.workshopName &&
               !workshopOwner?.workshopRatings.filter(
-                (item) => item.user === user.id
+                (item) => item.user._id === user.id
               ).length && <AddRating id={id} />}
+
             {workshopOwner?.workshopRatings.length
               ? workshopOwner?.workshopRatings.map((r) => (
                   <RatingComponent key={r._id} userRate={r} />

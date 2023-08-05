@@ -4,6 +4,7 @@ import { deleteRating } from "../../redux/apiCalls/ratingApiCall";
 import { useDispatch, useSelector } from "react-redux";
 import RatingMui from "./RatingMui";
 import { useTranslation } from "react-i18next";
+import limitText from "../../utils/limitText";
 moment.locale("ar_SA");
 function RatingComponent({ userRate }) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function RatingComponent({ userRate }) {
       <p className="rating-item-info">
         <span>
           <i className="bi bi-person-fill search-item-title"></i>
-          {userRate.username}
+          {limitText(userRate.user.username, 10)}
         </span>
         <RatingMui rating={userRate.rating} />
       </p>
@@ -26,7 +27,7 @@ function RatingComponent({ userRate }) {
         <p className="rating-item-date">
           <Moment format="LLLL">{userRate.createdAt}</Moment>
         </p>
-        {(user?.isAdmin || user?.id === userRate.user) && (
+        {(user?.isAdmin || user?.id === userRate.user._id) && (
           <button
             onClick={() => deleteRatingHandler(userRate._id)}
             className="delete-rating-button"

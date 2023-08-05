@@ -170,13 +170,14 @@
 
 .workshopOwner-profile-info-services {
   display: flex;
+  flex-wrap: wrap;
 }
 .workshopOwner-profile-info-services .service-tag {
   background-color: var(--primary-color);
   color: white;
   border-radius: 5px;
   padding: 5px;
-  margin: 0 5px;
+  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;

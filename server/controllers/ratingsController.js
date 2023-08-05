@@ -29,7 +29,6 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
     workshopOwner: workshopOwner,
     rating: req.body.rating,
     text: req.body.text,
-    username: user.username,
   });
 
   return res.status(201).json(rating);

@@ -7,13 +7,14 @@ import SwitchLanguage from "../switch-language/SwitchLanguage";
 import { useTranslation } from "react-i18next";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import limitText from "../../utils/limitText.js";
 
 function HeaderRight({ toggle, setToggle }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [toggleMenu, setToggleMenu] = useState(false);
   const menuRef = useRef(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
   const handleLogoutUser = () => {
@@ -48,15 +49,19 @@ function HeaderRight({ toggle, setToggle }) {
       <SwitchLanguage />
       {user ? (
         <>
-          <p
+          <div
             className="user-settings"
             onClick={() => setToggleMenu(!toggleMenu)}
             ref={menuRef}
           >
             <ArrowDropDown size="medium" />
-            {user?.username.length > 10
-              ? "..." + user?.username.substr(0, 10)
-              : user?.username}
+            <p
+              style={{
+                direction: i18n.language === "ar" ? "rtl" : "ltr",
+              }}
+            >
+              {limitText(user?.username, 10)}
+            </p>
             <div
               className="user-menu"
               style={{ display: toggleMenu ? "block" : "none" }}
@@ -94,7 +99,7 @@ function HeaderRight({ toggle, setToggle }) {
                 {t("logout")}
               </p>
             </div>
-          </p>
+          </div>
         </>
       ) : (
         <div className="header-auth-links">
