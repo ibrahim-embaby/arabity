@@ -12,18 +12,19 @@ import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
 import formatTime from "../../utils/formatTime";
 import { io } from "socket.io-client";
 import { production } from "../../utils/constants";
+import { useTranslation } from "react-i18next";
 
 function Message() {
   const dispatch = useDispatch();
   const [messageText, setMessageText] = useState("");
   const [messageType] = useState("text");
-  // const [arrivalMessage, setArrivalMessage] = useState(null);
   const { conversationId } = useParams();
   const { messages } = useSelector((state) => state.message);
   const { otherUser } = useSelector((state) => state.conversation);
   const messagesContainerRef = useRef(null);
   const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     socket.current = io(
@@ -61,7 +62,6 @@ function Message() {
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
-      // setArrivalMessage(data?.content);
       dispatch(fetchMessages(conversationId));
     });
   }, [conversationId]);
@@ -69,10 +69,6 @@ function Message() {
   useEffect(() => {
     socket?.current?.emit("addUser", user.id);
   }, [user.id, conversationId]);
-
-  // useEffect(() => {
-  //   dispatch(fetchMessages(conversationId));
-  // }, [conversationId, dispatch, arrivalMessage]);
 
   useEffect(() => {
     if (
@@ -102,40 +98,54 @@ function Message() {
       {user.id === conversationId.substring(0, 24) ||
       user.id === conversationId.substring(24, 48) ? (
         <div className="message-container">
-          <div className="message-bar-info">
-            <p>انت تراسل: {otherUser?.username} </p>
-            {otherUser?.workshopName && <p>ورشة: {otherUser?.workshopName}</p>}
-          </div>
-          <div ref={messagesContainerRef} className="sent-messages">
-            {messages.length > 0 &&
-              messages.map((msg) => {
-                return (
-                  <MessageBox
-                    key={msg._id}
-                    text={msg.message}
-                    time={formatTime(msg.createdAt)}
-                    view={
-                      msg.sentBy === user.id ? "sent-by-me" : "sent-by-others"
-                    }
-                  />
-                );
-              })}
-          </div>
-          <form
-            onSubmit={(e) => handleSendMessage(e, user.id)}
-            className="send-message-wrapper"
+          <div
+            className="message-bar-info"
+            style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
           >
-            <input
-              value={messageText}
-              onChange={(e) => setMessageText(e.target.value)}
-              className="message-text-input"
-              type="text"
-              placeholder="اكتب رسالتك"
-            />
-            <button type="submit" className="message-send-btn">
-              ارسال
-            </button>
-          </form>
+            <p>
+              {t("you_are_messaging")}
+              {otherUser?.username}{" "}
+            </p>
+            {otherUser?.workshopName && (
+              <p>
+                {t("workshop")}
+                {otherUser?.workshopName}
+              </p>
+            )}
+          </div>
+          <div className="messages-container-body">
+            <div ref={messagesContainerRef} className="sent-messages">
+              {messages.length > 0 &&
+                messages.map((msg) => {
+                  return (
+                    <MessageBox
+                      key={msg._id}
+                      text={msg.message}
+                      time={formatTime(msg.createdAt)}
+                      view={
+                        msg.sentBy === user.id ? "sent-by-me" : "sent-by-others"
+                      }
+                    />
+                  );
+                })}
+            </div>
+            <form
+              onSubmit={(e) => handleSendMessage(e, user.id)}
+              className="send-message-wrapper"
+              style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+            >
+              <input
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                className="message-text-input"
+                type="text"
+                placeholder={t("write_your_message")}
+              />
+              <button type="submit" className="message-send-btn">
+                {t("send")}
+              </button>
+            </form>
+          </div>
         </div>
       ) : (
         <div>لا يمكن عرض المحادثة</div>

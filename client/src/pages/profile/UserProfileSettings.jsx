@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../redux/apiCalls/profileApiCall";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 function UserProfileSettings() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
 
   const handleUserSettingsForm = (e) => {
     e.preventDefault();
+    if (!username && !password && !mobile) {
+      return toast.warn(t("edit_one_field_at_least"));
+    }
     const userInfo = {
       username,
       password,
       mobile,
     };
+
     dispatch(updateUserProfile(userInfo));
 
     setUsername("");
@@ -21,16 +28,19 @@ function UserProfileSettings() {
     setMobile("");
   };
   return (
-    <div className="user-profile-settings">
+    <div
+      className="user-profile-settings"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <form
         onSubmit={handleUserSettingsForm}
         className="user-profile-settings-form"
       >
         <div className="user-profile-settings-form-wrapper">
           <div className="user-profile-settings-form-labels">
-            <label>تغيير الإسم</label>
-            <label>تغيير كلمة المرور</label>
-            <label>تغيير رقم الهاتف</label>
+            <label> {t("user_settings_name")}</label>
+            <label>{t("user_settings_password")}</label>
+            <label>{t("user_settings_mobile")}</label>
           </div>
 
           <div className="user-profile-settings-form-inputs">
@@ -38,28 +48,28 @@ function UserProfileSettings() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               type="text"
-              placeholder="اكتب اسمك"
+              placeholder={t("user_settings_name_placeholder")}
               className="user-profile-settings-form-item-input"
             />
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
-              placeholder="كلمة المرور"
+              placeholder={t("password")}
               className="user-profile-settings-form-item-input"
             />
             <input
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
               type="text"
-              placeholder="رقم الهاتف"
+              placeholder={t("user_settings_mobile_placeholder")}
               className="user-profile-settings-form-item-input"
             />
           </div>
         </div>
 
         <button type="submit" className="user-profile-settings-form-btn">
-          تعديل
+          {t("user_settings_edit")}
         </button>
       </form>
     </div>

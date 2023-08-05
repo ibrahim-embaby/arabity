@@ -7,6 +7,8 @@ import {
   loginWorkshopOwner,
 } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
+import { useTranslation } from "react-i18next";
+
 function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ function Login() {
   const [workshopOwnerPassword, setWorkshopOwnerPassword] = useState("");
 
   const [visibleForm, setVisibleForm] = useState(1);
+  const { t, i18n } = useTranslation();
 
   const loginFormHandler = (e) => {
     e.preventDefault();
@@ -39,10 +42,13 @@ function Login() {
     );
   };
   return (
-    <div className="login">
+    <div
+      className="login"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <SwitchBar
-        option1={"تسجيل دخول كمالك سيارة"}
-        option2={"تسجيل دخول كمالك ورشة"}
+        option1={t("login_as_user")}
+        option2={t("login_as_workshop_owner")}
         visibleForm={visibleForm}
         setVisibleForm={setVisibleForm}
       />
@@ -50,14 +56,14 @@ function Login() {
       <div className="form">
         {visibleForm === 1 ? (
           <form className="login-form" onSubmit={loginFormHandler}>
-            <label htmlFor="email">البريد الإلكتروني</label>
+            <label htmlFor="email">{t("email")}</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="password">كلمة المرور</label>
+            <label htmlFor="password"> {t("password")}</label>
             <input
               type="password"
               id="password"
@@ -65,19 +71,19 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button className="login-form-btn" type="submit">
-              دخول
+              {t("login")}
             </button>
           </form>
         ) : (
           <form className="login-form" onSubmit={loginWorkshopOwnerFormHandler}>
-            <label htmlFor="workshopOwnerEmail">البريد الإلكتروني</label>
+            <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
             <input
               type="email"
               id="workshopOwnerEmail"
               value={workshopOwnerEmail}
               onChange={(e) => setWorkshopOwnerEmail(e.target.value)}
             />
-            <label htmlFor="workshopOwnerPassword">كلمة المرور</label>
+            <label htmlFor="workshopOwnerPassword"> {t("password")}</label>
             <input
               type="password"
               id="workshopOwnerPassword"
@@ -85,7 +91,7 @@ function Login() {
               onChange={(e) => setWorkshopOwnerPassword(e.target.value)}
             />
             <button className="login-form-btn" type="submit">
-              دخول
+              {t("login")}
             </button>
           </form>
         )}

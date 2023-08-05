@@ -9,6 +9,7 @@ import SwitchBar from "../../components/switch-bar/SwitchBar";
 import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
 import Branch from "./Branch";
 import { cars, services } from "../../dummyData";
+import { useTranslation } from "react-i18next";
 
 function Register() {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ function Register() {
       branchMobile: "",
     },
   ]);
+  const { t, i18n } = useTranslation();
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedCars, setSelectedCars] = useState([]);
@@ -42,6 +44,7 @@ function Register() {
     if (email.trim() === "") return toast.error("email is empty");
     if (mobile.trim() === "") return toast.error("mobile is empty");
     if (password.trim() === "") return toast.error("password is empty");
+
     dispatch(
       registerUser({
         email,
@@ -139,17 +142,20 @@ function Register() {
   };
 
   return (
-    <div className="register">
+    <div
+      className="register"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <SwitchBar
-        option1={"تسجيل كمالك سيارة"}
-        option2={"تسجيل كمالك ورشة"}
+        option1={t("register_as_user")}
+        option2={t("register_as_workshop_owner")}
         visibleForm={visibleForm}
         setVisibleForm={setVisibleForm}
       />
       <div className="form">
         {visibleForm === 1 ? (
           <form className="register-form" onSubmit={registerFormHandler}>
-            <label htmlFor="username">الاسم</label>
+            <label htmlFor="username">{t("register_name")}</label>
             <input
               type="text"
               id="username"
@@ -158,7 +164,7 @@ function Register() {
               className="form-input"
             />
 
-            <label htmlFor="email">البريد الإلكتروني</label>
+            <label htmlFor="email"> {t("email")}</label>
             <input
               type="email"
               id="email"
@@ -167,7 +173,7 @@ function Register() {
               className="form-input"
             />
 
-            <label htmlFor="mobile">رقم الموبايل</label>
+            <label htmlFor="mobile">{t("register_mobile")} </label>
             <input
               type="text"
               id="mobile"
@@ -176,7 +182,7 @@ function Register() {
               className="form-input"
             />
 
-            <label htmlFor="password">كلمة المرور</label>
+            <label htmlFor="password">{t("password")}</label>
             <input
               type="password"
               id="password"
@@ -186,7 +192,7 @@ function Register() {
             />
 
             <button className="register-form-btn" type="submit">
-              تسجيل
+              {t("register")}
             </button>
           </form>
         ) : (
@@ -196,11 +202,13 @@ function Register() {
           >
             <div className="form-group">
               <h4 className="form-group-title" htmlFor="">
-                بيانات الحساب
+                {t("register_account_info")}
               </h4>
               <div className="form-group-inputs">
                 <div className="form-group-input-wrapper">
-                  <label htmlFor="workshopOwnerUsername">الاسم</label>
+                  <label htmlFor="workshopOwnerUsername">
+                    {t("register_name")}
+                  </label>
                   <input
                     type="text"
                     id="workshopOwnerUsername"
@@ -210,7 +218,7 @@ function Register() {
                   />
                 </div>
                 <div className="form-group-input-wrapper">
-                  <label htmlFor="workshopOwnerEmail">البريد الإلكتروني</label>
+                  <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
                   <input
                     type="email"
                     id="workshopOwnerEmail"
@@ -220,7 +228,7 @@ function Register() {
                   />
                 </div>
                 <div className="form-group-input-wrapper">
-                  <label htmlFor="password">كلمة المرور</label>
+                  <label htmlFor="password"> {t("password")}</label>
                   <input
                     type="password"
                     id="password"
@@ -234,35 +242,47 @@ function Register() {
             <hr />
             <div className="form-group">
               <h4 className="form-group-title" htmlFor="">
-                بيانات الورشة
+                {t("register_workshop_info")}
               </h4>
 
-              <label htmlFor="workshopName">اسم الورشة</label>
-              <input
-                type="text"
-                id="workshopName"
-                value={workshopName}
-                onChange={(e) => setWorkshopName(e.target.value)}
-                className="form-input"
-              />
+              <div className="workshop-info-input-wrapper">
+                <label htmlFor="workshopName">
+                  {t("register_workshop_name")}
+                </label>
+                <input
+                  type="text"
+                  id="workshopName"
+                  value={workshopName}
+                  onChange={(e) => setWorkshopName(e.target.value)}
+                  className="form-input"
+                />
+              </div>
 
-              <label htmlFor="tag-input">خدمات الورشة</label>
-              <TagSelectInput
-                selectedOptions={selectedServices}
-                setSelectedOptions={setSelectedServices}
-                options={services}
-                placeholder={"اختر خدمة او اكثر"}
-              />
+              <div className="workshop-info-input-wrapper">
+                <label htmlFor="tag-input">
+                  {t("register_workshop_services")}
+                </label>
+                <TagSelectInput
+                  selectedOptions={selectedServices}
+                  setSelectedOptions={setSelectedServices}
+                  options={services}
+                  placeholder={t("choose_service")}
+                  input_placeholder={t("add_another_service")}
+                />
+              </div>
 
-              <label htmlFor="tag-input">انواع الماركات</label>
-              <TagSelectInput
-                selectedOptions={selectedCars}
-                setSelectedOptions={setSelectedCars}
-                options={cars}
-                placeholder={"اختر ماركة او اكثر"}
-              />
+              <div className="workshop-info-input-wrapper">
+                <label htmlFor="tag-input">{t("register_workshop_cars")}</label>
+                <TagSelectInput
+                  selectedOptions={selectedCars}
+                  setSelectedOptions={setSelectedCars}
+                  options={cars}
+                  placeholder={t("choose_model")}
+                  input_placeholder={t("add_another_model")}
+                />
+              </div>
 
-              <label htmlFor="">الفروع</label>
+              <label htmlFor="">{t("register_workshop_branches")}</label>
               <div className="branches">
                 {branches.map((branch, index) => (
                   <Branch
@@ -273,14 +293,18 @@ function Register() {
                     canRemove={branches.length > 1 && branch !== null}
                   />
                 ))}
-                <button type="button" onClick={handleAddBranch}>
-                  أضف فرع آخر
+                <button
+                  className="branch-btn add-branch-btn"
+                  type="button"
+                  onClick={handleAddBranch}
+                >
+                  {t("register_workshop_add_branch")}
                 </button>
               </div>
             </div>
 
             <button className="register-form-btn" type="submit">
-              تسجيل
+              {t("register")}
             </button>
           </form>
         )}

@@ -9,6 +9,7 @@ import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 import { toast } from "react-toastify";
 import RatingMui from "../../components/rating/RatingMui";
+import { useTranslation } from "react-i18next";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ function WorkshopProfile() {
   );
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchWorkshopOwner(id));
@@ -89,14 +91,18 @@ function WorkshopProfile() {
       <div className="workshopOwner-profile-info-wrapper">
         <div className="workshopOwner-profile-info">
           <div className="workshopOwner-profile-info-desc workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">وصف الخدمة</span>
+            <span className="workshopOwner-profile-info-title">
+              {t("workshop_desc_title")}
+            </span>
             {workshopOwner?.workshopDescription
               ? workshopOwner?.workshopDescription
-              : "لا يوجد وصف"}
+              : t("no_workshop_desc")}
           </div>
 
           <div className="workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">الخدمات</span>
+            <span className="workshopOwner-profile-info-title">
+              {t("workshop_services")}
+            </span>
             <div className="workshopOwner-profile-info-services">
               {workshopOwner?.workshopServices.map((service) => (
                 <p
@@ -112,7 +118,7 @@ function WorkshopProfile() {
 
           <div className="workshopOwner-profile-info-item">
             <span className="workshopOwner-profile-info-title">
-              ماركات السيارات
+              {t("workshop_cars")}
             </span>
             <div className="workshopOwner-profile-info-services">
               {workshopOwner?.cars.map((car) => (
@@ -124,7 +130,9 @@ function WorkshopProfile() {
           </div>
 
           <div className="workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">الفروع</span>
+            <span className="workshopOwner-profile-info-title">
+              {t("workshop_branches")}
+            </span>
             <div className="workshopOwner-profile-info-branches">
               {workshopOwner?.workshopBranches.map((branch) => (
                 <p
@@ -144,7 +152,9 @@ function WorkshopProfile() {
           </div>
 
           <div className="workshopOwner-profile-info-item workshopOwner-profile-info-ratings">
-            <span className="workshopOwner-profile-info-title">التقييمات</span>
+            <span className="workshopOwner-profile-info-title">
+              {t("workshop_ratings")}
+            </span>
             {user &&
               !user.workshopName &&
               !workshopOwner?.workshopRatings.filter(
@@ -154,11 +164,11 @@ function WorkshopProfile() {
               ? workshopOwner?.workshopRatings.map((r) => (
                   <RatingComponent key={r._id} userRate={r} />
                 ))
-              : "لا توجد تقييمات"}
+              : t("no_workshop_ratings")}
           </div>
         </div>
         <div className="workshopOwner-profile-contact">
-          <h4> بيانات التواصل</h4>
+          <h4> {t("contact_information")}</h4>
           <p className="workshopOwner-profile-contact-item">
             <i className="bi bi-person-fill search-item-title"></i>
             {workshopOwner?.username}
@@ -169,7 +179,7 @@ function WorkshopProfile() {
               className="workshopOwner-profile-contact-button"
               onClick={handleCreateConversation}
             >
-              مراسلة
+              {t("send_message_btn")}
             </p>
           )}
         </div>

@@ -2,11 +2,13 @@ import { useState } from "react";
 import { cars, provinces, services } from "../../dummyData";
 import "./home.css";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 function Home() {
   const navigate = useNavigate();
   const [service, setService] = useState("");
   const [car, setCar] = useState("");
   const [province, setProvince] = useState("");
+  const { t } = useTranslation();
 
   const searchFormHandler = (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ function Home() {
   return (
     <div className="home">
       <section className="home-top">
-        <h1 className="home-top-title">اكتشف أفضل مراكز الصيانة في منطقتك</h1>
+        <h1 className="home-top-title">{t("home_top_section_title")}</h1>
         <form className="search-bar" onSubmit={searchFormHandler}>
           <select
             className="search-bar-item"
@@ -35,7 +37,7 @@ function Home() {
             onChange={(e) => setService(e.target.value)}
           >
             <option value={""} disabled>
-              نوع الصيانة
+              {t("service_select")}
             </option>
             {services.map((service) => (
               <option key={service.value} value={service.label}>
@@ -49,7 +51,7 @@ function Home() {
             onChange={(e) => setCar(e.target.value)}
           >
             <option value={""} disabled>
-              نوع العربية
+              {t("car_select")}
             </option>
             {cars.map((car) => (
               <option key={car.value} value={car.value}>
@@ -63,7 +65,7 @@ function Home() {
             onChange={(e) => setProvince(e.target.value)}
           >
             <option value={""} disabled>
-              المحافظة
+              {t("province_select")}
             </option>
             {provinces.map((province) => (
               <option key={province.name} value={province.name}>
@@ -72,7 +74,7 @@ function Home() {
             ))}
           </select>
           <button className="search-bar-btn" type="submit">
-            بحث
+            {t("search_btn")}
           </button>
         </form>
       </section>

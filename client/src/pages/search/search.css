@@ -10,14 +10,13 @@
 .search-results-sidebar {
   flex: 2;
   padding: 10px;
-  position: relative;
 }
 
 .search-results-sidebar-wrapper {
   border-radius: 10px;
   background-color: var(--white-color);
   position: sticky;
-  top: 10px;
+  top: 85px;
   width: -webkit-fill-available;
 }
 .search-results-sidebar-wrapper h4 {
@@ -74,8 +73,8 @@
 
 /* Search Item */
 .search-item {
+  direction: ltr;
   margin: 10px;
-  /* border: 1px solid var(--dark-color); */
   display: flex;
   flex-direction: row-reverse;
   text-align: right;

@@ -2,17 +2,20 @@ import { useState } from "react";
 import Select from "react-select";
 import "./TagSelectInput.css";
 import SelectedTags from "./SelectedTags";
+import { useTranslation } from "react-i18next";
 
 function TagSelectInput({
   selectedOptions,
   setSelectedOptions,
   options,
   placeholder,
+  input_placeholder,
 }) {
   const [newTag, setNewTag] = useState("");
   const handleSelectChange = (selectedOptions) => {
     setSelectedOptions(selectedOptions);
   };
+  const { t } = useTranslation();
 
   const handleRemoveTag = (tagToRemove) => {
     setSelectedOptions(
@@ -38,7 +41,7 @@ function TagSelectInput({
       <div className="tag-select-add-container">
         <input
           type="text"
-          placeholder="أضف خدمة أخري"
+          placeholder={input_placeholder}
           value={newTag}
           onChange={(e) => setNewTag(e.target.value)}
           className="tag-select-add-input"
@@ -56,7 +59,7 @@ function TagSelectInput({
           type="button"
           className="tag-select-add-button"
         >
-          أضف
+          {t("add")}
         </button>
       </div>
       <SelectedTags

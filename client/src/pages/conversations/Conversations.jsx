@@ -4,17 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserConversations } from "../../redux/apiCalls/conversationApiCall";
 import { Link } from "react-router-dom";
 import formatTime from "../../utils/formatTime";
+import { useTranslation } from "react-i18next";
 
 function Conversations() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { conversations } = useSelector((state) => state.conversation);
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     dispatch(fetchUserConversations(user.id));
   }, [conversations]);
   return (
-    <div className="conversations">
-      <h2 className="conversations-page-title">محادثاتك</h2>
+    <div
+      className="conversations"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
+      <h2 className="conversations-page-title">{t("user_conversations")}</h2>
       <div className="container">
         {conversations.length > 0 &&
           conversations.map((conversation) => (

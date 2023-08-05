@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Header from "./components/header/Header";
@@ -16,12 +17,13 @@ import Admin from "./pages/admin/Admin";
 import Conversations from "./pages/conversations/Conversations";
 import ContactUs from "./pages/contact-us/ContactUs";
 import WorkshopProfileSettings from "./pages/profile/WorkshopProfileSettings";
+import "./i18n";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <>
+    <Suspense fallback={null}>
       <ToastContainer theme="colored" position="top-center" />
       <Header />
       <Routes>
@@ -78,7 +80,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
-    </>
+    </Suspense>
   );
 }
 

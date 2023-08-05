@@ -30,6 +30,14 @@
   align-items: center;
 }
 
+.facebook,
+.whatsapp,
+.linkedin,
+.instagram {
+  text-decoration: none;
+  color: var(--white-color);
+}
+
 .facebook:hover {
   color: #0d6efd;
 }

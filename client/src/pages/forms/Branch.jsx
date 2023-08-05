@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { provinces } from "../../dummyData";
 
 function Branch({ index, branch, onBranchChange, canRemove }) {
@@ -12,6 +13,8 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
       cities,
     });
   };
+
+  const { t } = useTranslation();
 
   const handleCityChange = (event) => {
     const { value } = event.target;
@@ -30,16 +33,16 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
   };
 
   return (
-    <div>
-      <label>
-        المحافظة
+    <div className="branch">
+      <label className="workshop-province branch-item">
+        {t("register_workshop_province")}
         <select
           name={`province${index}`}
           value={branch.branchProvince}
           onChange={handleProvinceChange}
           required
         >
-          <option value="">-- اختر المحافظة --</option>
+          <option value="">{t("choose_province")}</option>
           {provinces.map((province) => (
             <option key={province.name} value={province.name}>
               {province.name}
@@ -49,15 +52,15 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
       </label>
 
       {branch.cities.length > 0 && (
-        <label>
-          المدينة
+        <label className="workshop-city branch-item">
+          {t("register_workshop_city")}
           <select
             name={`city${index}`}
             value={branch.branchCity}
             onChange={handleCityChange}
             required
           >
-            <option value="">-- اختر المدينة --</option>
+            <option value="">{t("choose_city")}</option>
             {branch.cities.map((city) => (
               <option key={city} value={city}>
                 {city}
@@ -67,8 +70,8 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
         </label>
       )}
 
-      <label>
-        العنوان التفصيلي:
+      <label className="workshop-address branch-item">
+        {t("register_workshop_address")}
         <input
           type="text"
           name={`branchAddress`}
@@ -78,8 +81,8 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
         />
       </label>
 
-      <label>
-        موبايل الفرع
+      <label className="workshop-mobile branch-item">
+        {t("register_workshop_mobile")}
         <input
           type="text"
           name={`branchMobile`}
@@ -90,7 +93,11 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
       </label>
 
       {canRemove && (
-        <button type="button" onClick={handleRemoveClick}>
+        <button
+          className="branch-btn add-branch-btn"
+          type="button"
+          onClick={handleRemoveClick}
+        >
           احذف الفرع
         </button>
       )}

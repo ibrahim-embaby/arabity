@@ -156,17 +156,15 @@
 }
 
 .workshopOwner-profile-contact-button {
-  padding: 10px 15px;
-  font-size: 20px;
+  padding: 5px;
+  font-size: 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  width: 90%;
-  margin-bottom: 10px;
-  align-self: center;
+  text-align: center;
+  margin: 0px 10px 10px 10px;
   color: var(--white-color);
   background-color: var(--primary-color);
-  text-align: center;
   text-decoration: none;
 }
 
@@ -268,9 +266,6 @@
 
   .user-ratings-wrapper {
     padding: 20px;
-  }
-  .workshopOwner-profile-contact-button {
-    font-size: 15px;
   }
 }
 

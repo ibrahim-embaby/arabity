@@ -23,12 +23,16 @@ function AddRating({ id }) {
     <form className="add-rating-form" onSubmit={rateFormHandler}>
       <label htmlFor="addRating">أضف تقييم</label>
       <Rating
-        name="simple-controlled"
+        name="half-rating"
+        precision={0.5}
         value={rate}
         onChange={(event, newValue) => {
           setRate(newValue);
         }}
-        className="add-rating-stars"
+        sx={{
+          direction: "ltr",
+          margin: "0px 0px 5px 0px",
+        }}
       />
       <input
         type="text"

@@ -3,10 +3,12 @@ import moment from "moment/";
 import { deleteRating } from "../../redux/apiCalls/ratingApiCall";
 import { useDispatch, useSelector } from "react-redux";
 import RatingMui from "./RatingMui";
+import { useTranslation } from "react-i18next";
 moment.locale("ar_SA");
 function RatingComponent({ userRate }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
   const deleteRatingHandler = (id) => {
     dispatch(deleteRating(id));
   };
@@ -29,7 +31,7 @@ function RatingComponent({ userRate }) {
             onClick={() => deleteRatingHandler(userRate._id)}
             className="delete-rating-button"
           >
-            حذف
+            {t("delete_btn")}
           </button>
         )}
       </p>

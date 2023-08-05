@@ -7,12 +7,14 @@ import {
   deleteRating,
   fetchSingleUserRatings,
 } from "../../redux/apiCalls/ratingApiCall";
+import { useTranslation } from "react-i18next";
 
 function Profile() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { ratings, loading } = useSelector((state) => state.rating);
   const { id } = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchUserProfile(id));
@@ -27,33 +29,33 @@ function Profile() {
       <div className="profile-top">{user.username}</div>
       <div className="profile-bottom">
         <div className="profile-bottom-right">
-          <h2>المفضلة</h2>
+          <h2>{t("profile_favorites")}</h2>
         </div>
         <div className="profile-bottom-left">
-          <h2>تقييماتك</h2>
+          <h2>{t("profile_ratings")}</h2>
           <div className="user-ratings-wrapper">
             {loading ? (
-              <p>يتم التحميل...</p>
+              <p>{t("loading")}</p>
             ) : ratings.length ? (
               ratings.map((rating) => (
                 <div className="user-rating" key={rating._id}>
                   <Link
                     to={`/workshop-owner/profile/${rating.workshopOwner._id}`}
                   >
-                    <p>ورشة: {rating.workshopOwner.workshopName}</p>
-                    <p>التقييم: {rating.rating} / 5</p>
+                    <p>{rating.workshopOwner.workshopName}</p>
+                    <p>{rating.rating} / 5</p>
                     <p>{rating.text}</p>
                   </Link>
                   <button
                     className="delete-rating-button"
                     onClick={() => handleDeleteRating(rating._id)}
                   >
-                    حذف
+                    {t("delete_btn")}
                   </button>
                 </div>
               ))
             ) : (
-              <p>لا توجد تقييمات</p>
+              <p>{t("no_results")}</p>
             )}
           </div>
         </div>

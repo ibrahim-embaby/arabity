@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
@@ -6,6 +7,8 @@ function Navbar({ toggle, setToggle }) {
   const { user } = useSelector((state) => state.auth);
   const [currentTab, setCurrentTab] = useState(1);
   const location = useLocation();
+  const { t, i18n } = useTranslation();
+  const selectedTabColor = "var(--primary-color)";
   useEffect(() => {
     if (location.pathname === "/") {
       setCurrentTab(1);
@@ -20,7 +23,10 @@ function Navbar({ toggle, setToggle }) {
   return (
     <nav
       className="navbar"
-      style={{ clipPath: toggle && "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+      style={{
+        clipPath: toggle && "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+        direction: i18n.language === "en" ? "rtl" : "ltr",
+      }}
     >
       <ul>
         <Link
@@ -30,11 +36,10 @@ function Navbar({ toggle, setToggle }) {
             setToggle(false);
           }}
           style={{
-            backgroundColor: currentTab === 1 && "#292b2c",
-            color: currentTab === 1 && "white",
+            color: currentTab === 1 && selectedTabColor,
           }}
         >
-          الرئيسية
+          {t("navbar_main")}
         </Link>
         <Link
           onClick={() => {
@@ -42,12 +47,11 @@ function Navbar({ toggle, setToggle }) {
             setToggle(false);
           }}
           style={{
-            backgroundColor: currentTab === 2 && "#292b2c",
-            color: currentTab === 2 && "white",
+            color: currentTab === 2 && selectedTabColor,
           }}
           to={"/contact-us"}
         >
-          اتصل بنا
+          {t("navbar_contact")}
         </Link>
         {user?.isAdmin && (
           <Link
@@ -57,11 +61,10 @@ function Navbar({ toggle, setToggle }) {
               setToggle(false);
             }}
             style={{
-              backgroundColor: currentTab === 3 && "#292b2c",
-              color: currentTab === 3 && "white",
+              color: currentTab === 3 && selectedTabColor,
             }}
           >
-            صفحة المسؤول
+            {t("navbar_admin")}
           </Link>
         )}
       </ul>

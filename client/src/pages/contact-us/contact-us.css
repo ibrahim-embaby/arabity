@@ -28,8 +28,31 @@
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
+  border: 5px solid wheat;
 }
 
+.founder-name {
+  font-weight: bold;
+}
+
+.founder-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+.founder-link {
+  text-decoration: none;
+  display: flex;
+}
+
+.founder-linkedin {
+  color: #0d6efd;
+}
+
+.founder-github {
+  color: #1f2328;
+}
 /* Media Query */
 @media (max-width: 720px) {
   .founders-wrapper {

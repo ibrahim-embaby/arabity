@@ -5,10 +5,13 @@
 }
 
 .message-container {
-  width: 80%;
+  height: 100%;
+  width: 70%;
+}
+
+.messages-container-body {
   background-color: antiquewhite;
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
 }
 .message-bar-info {
@@ -40,7 +43,6 @@
 .message-text-input {
   padding: 10px;
   align-content: flex-start;
-  direction: rtl;
   font-size: 20px;
   width: 100%;
 }
@@ -60,7 +62,14 @@
 }
 
 /* Media Query */
-@media (max-width: 520px) {
+
+@media (max-width: 890px) {
+  .message-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 570px) {
   .message-container {
     width: 100%;
   }

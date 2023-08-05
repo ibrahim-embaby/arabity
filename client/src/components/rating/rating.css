@@ -13,9 +13,6 @@
   flex-direction: column;
 }
 
-.add-rating-stars {
-  direction: ltr;
-}
 .add-rating-text {
   padding: 15px 10px;
   width: 100%;

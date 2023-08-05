@@ -1,10 +1,11 @@
 .message-box {
   color: var(--white-color);
-  padding: 20px;
+  padding: 5px 10px;
   width: fit-content;
-  margin: 10px;
-  width: 70%;
+  margin: 5px 10px;
+  width: 200px;
   font-family: var(--font-family);
+  border-radius: 20px;
 }
 
 .sent-by-me {
@@ -22,7 +23,7 @@
   font-size: 18px;
 }
 .message-time {
-  font-size: 13px;
+  font-size: 10px;
   color: #ddd;
   font-family: var(--font-family);
 }

@@ -1,11 +1,23 @@
-.header {
-  /* background-color: var(--primary-color); */
-  background-color: #fafafa;
+.fixed-header {
+  background-color: transparent;
+  backdrop-filter: blur(6px);
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+}
+
+.header {
+  background-color: #fafafa;
+  backdrop-filter: blur(6px);
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -43,7 +55,7 @@
 }
 
 .navbar ul a:hover {
-  background-color: #ccc;
+  color: #ccc;
 }
 
 .header-right {
@@ -118,6 +130,10 @@
 
 /* Media Query */
 @media (max-width: 720px) {
+  .header-menu {
+    display: block;
+    padding: 0 10px;
+  }
   .navbar {
     position: absolute;
     left: 0;
@@ -143,9 +159,5 @@
   }
   .header-right .auth-link {
     font-size: 16px;
-  }
-  .header-menu {
-    display: block;
-    padding: 0 10px;
   }
 }

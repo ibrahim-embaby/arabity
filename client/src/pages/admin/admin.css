@@ -90,5 +90,6 @@
 .rating-wrapper {
   border: 1px solid #000;
   display: flex;
-  width: 400px;
+  width: 300px;
+  padding: 0 10px;
 }

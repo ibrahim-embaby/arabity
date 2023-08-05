@@ -7,6 +7,7 @@ import { cars, provinces, services } from "../../dummyData";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { useLocation, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/pagination/Pagination";
+import { useTranslation } from "react-i18next";
 
 function SearchResults() {
   const { searchResults, loading, searchResultsCount } = useSelector(
@@ -20,6 +21,7 @@ function SearchResults() {
   const [province, setProvince] = useState(params.get("province") || "");
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
+  const { t, i18n } = useTranslation();
 
   const RESULTS_PER_PAGE = 10;
   const pages = Math.ceil((searchResultsCount ?? 0) / RESULTS_PER_PAGE);
@@ -52,10 +54,13 @@ function SearchResults() {
   }, [searchParams, service, car, province, page]);
 
   return (
-    <div className="search-results">
+    <div
+      className="search-results"
+      style={{ direction: i18n.language === "en" ? "rtl" : "ltr" }}
+    >
       <div className="search-results-sidebar">
         <div className="search-results-sidebar-wrapper">
-          <h4>تعديل البحث</h4>
+          <h4>{t("search_edit")}</h4>
           <form className="search-results-form">
             <select
               value={service}
@@ -65,7 +70,7 @@ function SearchResults() {
               }}
             >
               <option value={""} disabled>
-                نوع الصيانة
+                {t("service_select")}
               </option>
               {services.map((service) => (
                 <option key={service.value} value={service.label}>
@@ -81,7 +86,7 @@ function SearchResults() {
               }}
             >
               <option value={""} disabled>
-                نوع العربية
+                {t("car_select")}
               </option>
               {cars.map((car) => (
                 <option key={car.value} value={car.value}>
@@ -97,7 +102,7 @@ function SearchResults() {
               }}
             >
               <option value={""} disabled>
-                المحافظة
+                {t("province_select")}
               </option>
               {provinces.map((province) => (
                 <option key={province.name} value={province.name}>
@@ -110,7 +115,7 @@ function SearchResults() {
               className="search-results-form-btn"
               onClick={resetFormHandler}
             >
-              تفريغ الحقول
+              {t("reset_inputs")}
             </button>
           </form>
         </div>
@@ -118,7 +123,7 @@ function SearchResults() {
 
       <div className="search-results-main">
         <p className="search-results-count">
-          نتائج البحث: {searchResultsCount}
+          {t("search_results")} {searchResultsCount}
         </p>
         <div className="search-results-main-items">
           {loading ? (
@@ -130,7 +135,7 @@ function SearchResults() {
               <SearchItem key={item._id} item={item} />
             ))
           ) : (
-            <p className="no-results-found">لا توجد نتائج</p>
+            <p className="no-results-found">{t("no_results")}</p>
           )}
         </div>
         <Pagination page={page} setPage={setPage} pages={pages} />

@@ -1,29 +1,45 @@
+import { useTranslation } from "react-i18next";
 import "./contact-us.css";
+import LinkedIn from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 function ContactUs() {
+  const { t, i18n } = useTranslation();
   return (
-    <div className="contact-us">
+    <div
+      className="contact-us"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <div className="contact-us-item about-app">
-        <h4 className="contact-us-item-title">عن التطبيق</h4>
-        <p className="contact-us-item-desc">
-          تطبيق يهدف لربط مقدمي خدمات صيانة السيارات بأصحاب السيارات، ويسعي
-          لتقديم أفضل تجربة لمالك السيارة.
-        </p>
+        <h3 className="contact-us-item-title">{t("about_app_title")}</h3>
+        <p className="contact-us-item-desc">{t("about_app_desc")}</p>
       </div>
       <div className=" contact-us-item target">
-        <h4 className="contact-us-item-title">أهدافنا</h4>
-        <p className="contact-us-item-desc">
-          نهدف إلي تنظيم سوق صيانة وقطع غيار السيارات وتقديم أفضل تجربة لأصحاب
-          السيارات من خلال توفير نظام يمكنهم من تقييم مقدمي الخدمات والبحث عن
-          أفضل مقدم خدمة بجواره
-        </p>
+        <h3 className="contact-us-item-title"> {t("our_vision_title")}</h3>
+        <p className="contact-us-item-desc">{t("our_vision_desc")}</p>
       </div>
       <div className="contact-us-item founders">
-        <h4 className="contact-us-item-title">المؤسسين</h4>
+        <h3 className="contact-us-item-title">{t("founders_title")}</h3>
         <div className="founders-wrapper">
           <div className="founder-item">
             <img src="/images/founder1.jpg" alt="" className="founder-image" />
-            <p className="founder-name">إبراهيم محمد</p>
+            <p className="founder-name">{t("founder")}</p>
+            <div className="founder-links">
+              <a
+                href="https://www.linkedin.com/in/ibrahim-embaby/"
+                target="_blank"
+                className="founder-link founder-linkedin"
+              >
+                <LinkedIn sx={{ fontSize: 35 }} />
+              </a>
+              <a
+                href="https://github.com/ibrahim-embaby"
+                target="_blank"
+                className="founder-link founder-github"
+              >
+                <GitHubIcon sx={{ fontSize: 35 }} />
+              </a>
+            </div>
           </div>
         </div>
       </div>

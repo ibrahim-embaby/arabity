@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   min-height: calc(100vh - var(--difference-value));
-  text-align: right;
   flex-direction: column;
 }
 
@@ -34,7 +33,6 @@
 .register {
   display: flex;
   align-items: center;
-  text-align: right;
   flex-direction: column;
   min-height: calc(100vh - var(--difference-value));
 }
@@ -60,8 +58,12 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  direction: rtl;
   padding: 15px;
+}
+
+.workshop-info-input-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group .form-group-inputs {
@@ -88,5 +90,26 @@
   color: var(--white-color);
   background-color: var(--primary-color);
   border: none;
+  cursor: pointer;
+}
+
+.branch {
+  display: flex;
+  flex-direction: column;
+}
+
+.branch-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.branch-btn {
+  border: none;
+  padding: 5px;
+  color: var(--white-color);
+  background-color: var(--gray-color);
+  font-size: 14px;
   cursor: pointer;
 }
