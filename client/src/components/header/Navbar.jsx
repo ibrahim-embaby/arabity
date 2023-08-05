@@ -12,10 +12,14 @@ function Navbar({ toggle, setToggle }) {
   useEffect(() => {
     if (location.pathname === "/") {
       setCurrentTab(1);
-    } else if (location.pathname === "/contact-us") {
+    } else if (location.pathname === "/about-us") {
       setCurrentTab(2);
     } else if (location.pathname === "/admin") {
       setCurrentTab(3);
+    } else if (location.pathname === "/login") {
+      setCurrentTab(4);
+    } else if (location.pathname === "/register") {
+      setCurrentTab(5);
     } else {
       setCurrentTab(0);
     }
@@ -49,7 +53,7 @@ function Navbar({ toggle, setToggle }) {
           style={{
             color: currentTab === 2 && selectedTabColor,
           }}
-          to={"/contact-us"}
+          to={"/about-us"}
         >
           {t("navbar_contact")}
         </Link>
@@ -67,6 +71,34 @@ function Navbar({ toggle, setToggle }) {
             {t("navbar_admin")}
           </Link>
         )}
+        <div className="nav-auth-links">
+          <Link
+            onClick={() => {
+              setCurrentTab(4);
+              setToggle(false);
+            }}
+            to={"/login"}
+            className="login-button auth-link"
+            style={{
+              color: currentTab === 4 && selectedTabColor,
+            }}
+          >
+            {t("login")}
+          </Link>
+          <Link
+            onClick={() => {
+              setCurrentTab(5);
+              setToggle(false);
+            }}
+            to={"/register"}
+            className="register-button auth-link"
+            style={{
+              color: currentTab === 5 && selectedTabColor,
+            }}
+          >
+            {t("register")}
+          </Link>
+        </div>
       </ul>
     </nav>
   );

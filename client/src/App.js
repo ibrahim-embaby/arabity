@@ -64,7 +64,7 @@ function App() {
           path="/message/:conversationId"
           element={user ? <Message /> : <Navigate to={"/login"} />}
         />
-        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/about-us" element={<ContactUs />} />
         <Route
           path="/admin"
           element={

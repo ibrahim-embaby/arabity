@@ -6,7 +6,7 @@ function Pagination({ pages, page, setPage }) {
   }
   return (
     pages >= 1 && (
-      <div className="pagination">
+      <div className="pagination" style={{ direction: "ltr" }}>
         <span
           onClick={() => page > 1 && setPage((prev) => prev - 1)}
           className="pagination-left pagination-item"

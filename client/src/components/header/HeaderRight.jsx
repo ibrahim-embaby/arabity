@@ -97,14 +97,14 @@ function HeaderRight({ toggle, setToggle }) {
           </p>
         </>
       ) : (
-        <>
+        <div className="header-auth-links">
           <Link to={"/login"} className="login-button auth-link">
             {t("login")}
           </Link>
           <Link to={"/register"} className="register-button auth-link">
             {t("register")}
           </Link>
-        </>
+        </div>
       )}
       <div className="header-menu" onClick={() => setToggle((perv) => !perv)}>
         {toggle ? (

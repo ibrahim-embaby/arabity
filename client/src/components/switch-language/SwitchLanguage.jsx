@@ -1,11 +1,11 @@
 import i18next from "i18next";
 import React, { useEffect, useState } from "react";
 import "./switch-language.css";
-import i18n from "../../i18n";
+import { useTranslation } from "react-i18next";
 
 function SwitchLanguage() {
   const initialLang = localStorage.getItem("lang") || "ar";
-
+  const { i18n } = useTranslation();
   const [toggle, setToggle] = useState(initialLang);
   useEffect(() => {
     // Set i18next language when component mounts
@@ -23,26 +23,15 @@ function SwitchLanguage() {
 
   return (
     <div className="switch-language">
-      <button
-        className="switch-language-btn"
-        style={{
-          backgroundColor: toggle === "en" && "#444",
-          color: toggle === "en" && "#fff",
-        }}
-        onClick={() => setToggle("en")}
-      >
-        EN
-      </button>
-      <button
-        className="switch-language-btn"
-        style={{
-          backgroundColor: toggle === "ar" && "#444",
-          color: toggle === "ar" && "#fff",
-        }}
-        onClick={() => setToggle("ar")}
-      >
-        ع
-      </button>
+      {i18n.language === "ar" ? (
+        <button className="switch-language-btn" onClick={() => setToggle("en")}>
+          EN
+        </button>
+      ) : (
+        <button className="switch-language-btn" onClick={() => setToggle("ar")}>
+          ع
+        </button>
+      )}
     </div>
   );
 }

@@ -58,10 +58,18 @@
   color: #ccc;
 }
 
+.nav-auth-links {
+  display: none;
+}
+
 .header-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.header-auth-links {
+  display: flex;
 }
 
 .header-right .auth-link {
@@ -159,5 +167,12 @@
   }
   .header-right .auth-link {
     font-size: 16px;
+  }
+  .nav-auth-links {
+    display: unset;
+  }
+
+  .header-auth-links {
+    display: none;
   }
 }
