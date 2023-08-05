@@ -71,34 +71,36 @@ function Navbar({ toggle, setToggle }) {
             {t("navbar_admin")}
           </Link>
         )}
-        <div className="nav-auth-links">
-          <Link
-            onClick={() => {
-              setCurrentTab(4);
-              setToggle(false);
-            }}
-            to={"/login"}
-            className="login-button auth-link"
-            style={{
-              color: currentTab === 4 && selectedTabColor,
-            }}
-          >
-            {t("login")}
-          </Link>
-          <Link
-            onClick={() => {
-              setCurrentTab(5);
-              setToggle(false);
-            }}
-            to={"/register"}
-            className="register-button auth-link"
-            style={{
-              color: currentTab === 5 && selectedTabColor,
-            }}
-          >
-            {t("register")}
-          </Link>
-        </div>
+        {!user && (
+          <div className="nav-auth-links">
+            <Link
+              onClick={() => {
+                setCurrentTab(4);
+                setToggle(false);
+              }}
+              to={"/login"}
+              className="login-button auth-link"
+              style={{
+                color: currentTab === 4 && selectedTabColor,
+              }}
+            >
+              {t("login")}
+            </Link>
+            <Link
+              onClick={() => {
+                setCurrentTab(5);
+                setToggle(false);
+              }}
+              to={"/register"}
+              className="register-button auth-link"
+              style={{
+                color: currentTab === 5 && selectedTabColor,
+              }}
+            >
+              {t("register")}
+            </Link>
+          </div>
+        )}
       </ul>
     </nav>
   );
