@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../redux/apiCalls/authApiCall";
+import ArrowDropDown from "@mui/icons-material/KeyboardArrowDown";
 
 function HeaderRight({ toggle, setToggle }) {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ function HeaderRight({ toggle, setToggle }) {
             onClick={() => setToggleMenu(!toggleMenu)}
             ref={menuRef}
           >
-            <i className="bi bi-caret-down-fill"></i>{" "}
+            <ArrowDropDown size="medium" />
             {user?.username.length > 10
               ? "..." + user?.username.substr(0, 10)
               : user?.username}
@@ -80,7 +81,11 @@ function HeaderRight({ toggle, setToggle }) {
               >
                 إعدادت
               </Link>
-              <p className="user-menu-item" onClick={handleLogoutUser}>
+              <p
+                className="user-menu-item"
+                onClick={handleLogoutUser}
+                style={{ borderBottom: "none" }}
+              >
                 تسجيل الخروج
               </p>
             </div>

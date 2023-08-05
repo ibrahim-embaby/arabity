@@ -22,11 +22,12 @@
   flex: 6;
   height: 100%;
   display: flex;
-  align-items: center;
 }
-.footer-right i {
+.footer-right .footer-right-icon {
   cursor: pointer;
   margin: 0 20px;
+  display: flex;
+  align-items: center;
 }
 
 .facebook:hover {

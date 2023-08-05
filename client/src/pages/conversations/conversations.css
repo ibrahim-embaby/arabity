@@ -1,20 +1,24 @@
 .conversations {
   display: flex;
-  justify-content: center;
   min-height: calc(100vh - var(--difference-value));
   padding: 0 20px;
+  flex-direction: column;
+  direction: rtl;
+}
+
+.conversations-page-title {
+  padding: 10px 0;
 }
 .container {
   width: 100%;
 }
 
 .conversation-item {
-  direction: rtl;
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 10px;
-  margin: 10px 0;
+  margin-bottom: 10px;
   border: 1px solid var(--primary-color);
   cursor: pointer;
   text-decoration: none;

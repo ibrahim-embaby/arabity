@@ -14,6 +14,7 @@ function Conversations() {
   }, [conversations]);
   return (
     <div className="conversations">
+      <h2 className="conversations-page-title">محادثاتك</h2>
       <div className="container">
         {conversations.length > 0 &&
           conversations.map((conversation) => (

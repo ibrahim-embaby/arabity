@@ -60,7 +60,7 @@ function Workshops() {
     </div>
   ) : searchResults.length > 0 ? (
     <div className="workshops-panel">
-      <EnhancedTable data={searchResults} />
+      <EnhancedTable data={searchResults} title={"الورش"} />
       {/* <DataGrid
         rows={rows}
         columns={columns}

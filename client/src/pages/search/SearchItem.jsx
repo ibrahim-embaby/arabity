@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
-import Rating from "../../components/rating/Rating";
+// import Rating from "../../components/rating/Rating";
+
 import { useEffect, useState } from "react";
+import RatingMui from "../../components/rating/RatingMui";
 
 function SearchItem({ item }) {
   const [avgRating, setAvgRating] = useState(0);
@@ -23,37 +25,29 @@ function SearchItem({ item }) {
         />
       </div>
       <div className="info-wrapper">
-        <p className="workshop-name">
+        <div className="workshop-name">
           <span>{item.workshopName}</span>
-          <Rating rating={avgRating} />
-        </p>
+          <RatingMui rating={avgRating} />
+        </div>
 
         <p>
           <i className="bi bi-person-fill search-item-title"></i>
-          {/* <span className="search-item-title">اسم المسؤول:</span> */}
           {item.username}
         </p>
         <p>
           <i className="bi bi-car-front-fill search-item-title"></i>
-          {/* <span className="search-item-title">انواع السيارات: </span> */}
           {item.cars.map((car) => (
             <span key={car}>{car} - </span>
           ))}
         </p>
         <p>
           <i className="bi bi-geo-alt-fill search-item-title"></i>
-          {/* <span className="search-item-title">العنوان: </span> */}
           {item.workshopBranches.map((branch) => (
             <span key={branch.workshopProvince}>
               {branch.branchProvince} -{" "}
             </span>
           ))}
         </p>
-        {/* <p> */}
-        {/* <i className="bi bi-telephone-fill search-item-title"></i> */}
-        {/* <span className="search-item-title">موبايل: </span> */}
-        {/* {item.mobile} */}
-        {/* </p> */}
       </div>
     </Link>
   );

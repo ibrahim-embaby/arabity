@@ -26,6 +26,12 @@ const UserSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "WorkshopOwner",
+      },
+    ],
     isAdmin: {
       type: Boolean,
       default: false,

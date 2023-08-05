@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchWorkshopOwner } from "../../redux/apiCalls/workshopOwnerApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
-import RatingC from "../../components/rating/Rating";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
 import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 import { toast } from "react-toastify";
+import RatingMui from "../../components/rating/RatingMui";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -84,7 +84,7 @@ function WorkshopProfile() {
         </div>
         <p className="workshop-name">{workshopOwner?.workshopName}</p>
 
-        <RatingC rating={avgRating} />
+        <RatingMui rating={avgRating} />
       </div>
       <div className="workshopOwner-profile-info-wrapper">
         <div className="workshopOwner-profile-info">
