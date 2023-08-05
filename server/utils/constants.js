@@ -1,2 +1,2 @@
-const production = false;
+const production = true;
 module.exports = production;
