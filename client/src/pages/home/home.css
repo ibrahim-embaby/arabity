@@ -109,6 +109,14 @@
     font-size: 30px;
   }
 
+  .search-bar-inputs-wrapper {
+    flex-direction: column;
+  }
+
+  .search-bar-select-wrapper {
+    margin: 10px 0px;
+  }
+
   .search-bar {
     flex-direction: column;
     align-items: unset;
