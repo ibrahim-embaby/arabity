@@ -1,8 +1,8 @@
 .login {
   display: flex;
   align-items: center;
+  justify-content: center;
   min-height: calc(100vh - var(--difference-value));
-  flex-direction: column;
 }
 
 .login-form {
@@ -33,16 +33,13 @@
 .register {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
   min-height: calc(100vh - var(--difference-value));
 }
 
 .form {
-  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+  flex-direction: column;
   padding: 10px 0;
 }
 

@@ -60,6 +60,12 @@ const WorkshopOwnerSchema = new mongoose.Schema(
     views: {
       type: Array,
     },
+    socialMedia: [
+      {
+        type: String,
+        default: { url: "" },
+      },
+    ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

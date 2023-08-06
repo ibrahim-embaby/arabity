@@ -8,6 +8,7 @@ import CircularProgress from "@mui/joy/CircularProgress";
 import { useLocation, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/pagination/Pagination";
 import { useTranslation } from "react-i18next";
+import SearchSidebar from "./SearchSidebar";
 
 function SearchResults() {
   const { searchResults, loading, searchResultsCount } = useSelector(
@@ -58,68 +59,20 @@ function SearchResults() {
       className="search-results"
       style={{ direction: i18n.language === "en" ? "rtl" : "ltr" }}
     >
-      <div className="search-results-sidebar">
-        <div className="search-results-sidebar-wrapper">
-          <h4>{t("search_edit")}</h4>
-          <form className="search-results-form">
-            <select
-              value={service}
-              onChange={(e) => {
-                setService(e.target.value);
-                params.set("service", e.target.value);
-              }}
-            >
-              <option value={""} disabled>
-                {t("service_select")}
-              </option>
-              {services.map((service) => (
-                <option key={service.value} value={service.label}>
-                  {service.label}
-                </option>
-              ))}
-            </select>
-            <select
-              value={car}
-              onChange={(e) => {
-                setCar(e.target.value);
-                params.set("car", e.target.value);
-              }}
-            >
-              <option value={""} disabled>
-                {t("car_select")}
-              </option>
-              {cars.map((car) => (
-                <option key={car.value} value={car.value}>
-                  {car.label}
-                </option>
-              ))}
-            </select>
-            <select
-              value={province}
-              onChange={(e) => {
-                setProvince(e.target.value);
-                params.set("province", e.target.value);
-              }}
-            >
-              <option value={""} disabled>
-                {t("province_select")}
-              </option>
-              {provinces.map((province) => (
-                <option key={province.name} value={province.name}>
-                  {province.name}
-                </option>
-              ))}
-            </select>
-
-            <button
-              className="search-results-form-btn"
-              onClick={resetFormHandler}
-            >
-              {t("reset_inputs")}
-            </button>
-          </form>
-        </div>
-      </div>
+      <SearchSidebar
+        params={params}
+        service={service}
+        services={services}
+        setService={setService}
+        province={province}
+        provinces={provinces}
+        setProvince={setProvince}
+        car={car}
+        cars={cars}
+        setCar={setCar}
+        t={t}
+        resetFormHandler={resetFormHandler}
+      />
 
       <div className="search-results-main">
         <p className="search-results-count">

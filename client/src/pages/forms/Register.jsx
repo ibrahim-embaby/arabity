@@ -146,13 +146,13 @@ function Register() {
       className="register"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
-      <SwitchBar
-        option1={t("register_as_user")}
-        option2={t("register_as_workshop_owner")}
-        visibleForm={visibleForm}
-        setVisibleForm={setVisibleForm}
-      />
       <div className="form">
+        <SwitchBar
+          option1={t("register_as_user")}
+          option2={t("register_as_workshop_owner")}
+          visibleForm={visibleForm}
+          setVisibleForm={setVisibleForm}
+        />
         {visibleForm === 1 ? (
           <form className="register-form" onSubmit={registerFormHandler}>
             <label htmlFor="username">{t("register_name")}</label>

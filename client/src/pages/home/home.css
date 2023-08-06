@@ -34,17 +34,27 @@
   justify-content: space-evenly;
   padding-left: 10px;
   background-color: var(--white-color);
-  border-radius: 10px;
   box-shadow: 1px 1px 10px #000;
 }
-.search-bar .search-bar-item {
+
+.search-bar-inputs-wrapper {
+  display: flex;
+}
+
+.search-bar-select-wrapper {
+  border: 1px solid var(--primary-color);
   padding: 10px;
   margin: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-bar .search-bar-item {
   font-size: 18px;
   border-radius: 5px;
   outline: none;
-  border: 1px solid var(--primary-color);
-  text-align: right;
+  border: none;
   flex: 3;
   cursor: pointer;
   font-family: var(--font-family);
@@ -54,7 +64,6 @@
   padding: 10px 15px;
   font-size: 20px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--primary-color);

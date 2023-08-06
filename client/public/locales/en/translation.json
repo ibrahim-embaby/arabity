@@ -13,7 +13,7 @@
     "service_select": "service",
     "car_select": "car",
     "search_edit": "edit search",
-    "reset_inputs": "reset inputs",
+    "reset_inputs": "show all",
     "search_results": "search results:",
     "workshop_desc_title": "description",
     "no_workshop_desc": "no description provided",
@@ -76,5 +76,6 @@
     "add_another_service": "add another service",
     "choose_model": "choose one car model or more",
     "add_another_model": "add another car model",
-    "founder": "Ibrahim Mohamed"
+    "founder": "Ibrahim Mohamed",
+    "founder_borther":"founder borther"
 }

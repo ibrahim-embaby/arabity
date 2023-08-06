@@ -35,7 +35,6 @@ export const cars = [
   { value: "مازدا", label: "مازدا" },
   { value: "ام جي", label: "ام جي" },
   { value: "سبرنزا", label: "سبرنزا" },
-  { value: "ميتسوبيشي", label: "ميتسوبيشي" },
   { value: "سوزوكي", label: "سوزوكي" },
   { value: "بي ام دبليو", label: "بي ام دبليو" },
   { value: "إم جي", label: "إم جي" },

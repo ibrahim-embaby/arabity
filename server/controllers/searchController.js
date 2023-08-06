@@ -154,6 +154,7 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   workshops = await WorkshopOwner.find()
     .select("-password")
     .populate("workshopRatings", "", WorkshopRatings)
+    .sort({ workshopRatings: -1 })
     .skip((currentPage - 1) * pageSize)
     .limit(pageSize);
 

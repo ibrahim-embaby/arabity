@@ -7,55 +7,6 @@
   flex-direction: row-reverse;
 }
 
-.search-results-sidebar {
-  flex: 2;
-  padding: 10px;
-}
-
-.search-results-sidebar-wrapper {
-  border-radius: 10px;
-  background-color: var(--white-color);
-  position: sticky;
-  top: 85px;
-  width: -webkit-fill-available;
-}
-.search-results-sidebar-wrapper h4 {
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  border-radius: 10px 10px 0 0;
-  text-align: center;
-  padding: 5px 0;
-}
-.search-results-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.search-results-form select {
-  padding: 10px;
-  margin: 10px;
-  font-size: 15px;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid var(--primary-color);
-  text-align: right;
-  cursor: pointer;
-  font-family: var(--font-family);
-}
-
-.search-results-form-btn {
-  padding: 10px 15px;
-  margin: 0 10px 10px 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  color: var(--white-color);
-  background-color: var(--primary-color);
-  font-family: var(--font-family);
-  font-weight: bold;
-}
-
 .search-results-main {
   flex: 10;
   display: flex;
@@ -71,6 +22,61 @@
   height: 100%;
 }
 
+/* SIDEBAR */
+.search-results-sidebar {
+  flex: 2;
+  padding: 10px;
+}
+
+.search-results-sidebar-wrapper {
+  background-color: var(--white-color);
+  position: sticky;
+  top: 85px;
+  width: -webkit-fill-available;
+}
+.search-results-sidebar-wrapper h4 {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  text-align: center;
+  padding: 5px 0;
+}
+.search-results-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results-form select {
+  padding: 10px;
+  margin: 10px;
+  font-size: 15px;
+  outline: none;
+  border: 1px solid var(--primary-color);
+  text-align: right;
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+
+.search-results-form-btn {
+  padding: 10px 15px;
+  margin: 0 10px 10px 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  font-family: var(--font-family);
+  font-weight: bold;
+}
+.select-wrapper {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+}
+
+.siderbar-select {
+  flex: 1;
+}
+
 /* Search Item */
 .search-item {
   direction: ltr;
@@ -79,7 +85,7 @@
   flex-direction: row-reverse;
   text-align: right;
   align-items: center;
-  border-radius: 15px;
+  /* border-radius: 5px; */
   background-color: var(--white-color);
   cursor: pointer;
   text-decoration: none;
@@ -117,7 +123,8 @@
 
 .workshop-name {
   font-size: 25px;
-  color: var(--primary-color);
+  color: var(--red-color);
+
   font-weight: bold;
   display: flex;
   justify-content: space-between;

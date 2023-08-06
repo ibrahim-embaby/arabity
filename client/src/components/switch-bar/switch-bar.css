@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   border: 1px solid black;
-  width: 100%;
 }
 .switch-bar .divider {
   width: 1px;
@@ -19,6 +18,7 @@
   align-items: center;
   padding: 10px;
   text-align: center;
+  font-size: 15px;
 }
 
 .switch-bar .option1:hover,

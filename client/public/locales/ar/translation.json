@@ -13,7 +13,7 @@
     "service_select": "نوع الصيانة",
     "car_select": "نوع العربية",
     "search_edit": "تعديل البحث",
-    "reset_inputs": "تفريغ الحقول",
+    "reset_inputs": "اظهر الكل",
     "search_results": "نتائج البحث:",
     "workshop_desc_title": "الوصف",
     "no_workshop_desc": "لا يوجد وصف",
@@ -76,5 +76,6 @@
     "add_another_service":"أضف خدمة أخري",
     "choose_model": "اختر ماركة أو أكثر",
     "add_another_model": "أضف ماركة أخري",
-    "founder": "إبراهيم محمد"
+    "founder": "إبراهيم محمد",
+    "founder_borther": "أخو المؤسس"
 }

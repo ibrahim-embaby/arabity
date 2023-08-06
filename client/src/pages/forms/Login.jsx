@@ -46,14 +46,13 @@ function Login() {
       className="login"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
-      <SwitchBar
-        option1={t("login_as_user")}
-        option2={t("login_as_workshop_owner")}
-        visibleForm={visibleForm}
-        setVisibleForm={setVisibleForm}
-      />
-
       <div className="form">
+        <SwitchBar
+          option1={t("login_as_user")}
+          option2={t("login_as_workshop_owner")}
+          visibleForm={visibleForm}
+          setVisibleForm={setVisibleForm}
+        />
         {visibleForm === 1 ? (
           <form className="login-form" onSubmit={loginFormHandler}>
             <label htmlFor="email">{t("email")}</label>
