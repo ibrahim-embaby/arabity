@@ -32,7 +32,7 @@
   align-items: center;
   flex-direction: row-reverse;
   justify-content: space-evenly;
-  padding-left: 10px;
+  padding: 0px 5px 0px 10px;
   background-color: var(--white-color);
   box-shadow: 1px 1px 10px #000;
 }
@@ -44,7 +44,7 @@
 .search-bar-select-wrapper {
   border: 1px solid var(--primary-color);
   padding: 10px;
-  margin: 10px;
+  margin: 10px 5px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -68,6 +68,7 @@
   color: var(--white-color);
   background-color: var(--primary-color);
   font-family: var(--font-family);
+  margin-right: 5px;
 }
 
 .home-center {
@@ -114,18 +115,21 @@
   }
 
   .search-bar-select-wrapper {
-    margin: 10px 0px;
+    margin: 5px 0px;
   }
 
   .search-bar {
     flex-direction: column;
     align-items: unset;
-    padding: 10px;
+    padding: 5px 10px 10px 10px;
     margin-bottom: 30px;
     width: 260px;
   }
 
   .search-bar .search-bar-item {
     margin: 10px 0px;
+  }
+  .search-bar-btn {
+    margin-top: 5px;
   }
 }
