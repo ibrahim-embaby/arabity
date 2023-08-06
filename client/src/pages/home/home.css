@@ -67,6 +67,11 @@
   font-family: var(--font-family);
 }
 
+.search-bar-item-option {
+  background-color: "white";
+  color: black;
+}
+
 .search-bar-btn {
   padding: 10px 15px;
   font-size: 20px;
@@ -76,6 +81,7 @@
   background-color: var(--primary-color);
   font-family: var(--font-family);
   margin-right: 5px;
+  font-weight: bold;
 }
 
 .home-center {

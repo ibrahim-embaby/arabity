@@ -44,10 +44,10 @@ function ContactUs() {
             </div>
           </div>
 
-          <div className="founder-item">
+          {/* <div className="founder-item">
             <img src="/images/founder2.jpg" alt="" className="founder-image" />
             <p className="founder-name">{t("founder_borther")}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

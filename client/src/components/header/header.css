@@ -128,7 +128,7 @@
 }
 
 .user-menu .user-menu-item:hover {
-  background-color: var(--dark-color);
+  background-color: #666;
   color: var(--white-color);
 }
 

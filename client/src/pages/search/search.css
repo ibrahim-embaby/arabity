@@ -2,7 +2,7 @@
   min-height: calc(100vh - var(--difference-value));
   /* background-color: #fe5e5033; */
   background-image: linear-gradient(180deg, #e4fdf7, #d8dceb);
-  padding: 1px;
+  padding: 0 10px;
   display: flex;
   flex-direction: row-reverse;
 }

@@ -32,9 +32,6 @@ function Home() {
 
   return (
     <div className="home">
-      {/* <div className="home-layout">
-
-      </div> */}
       <section className="home-top">
         <h1 className="home-top-title">{t("home_top_section_title")}</h1>
         <form className="search-bar" onSubmit={searchFormHandler}>
@@ -42,17 +39,30 @@ function Home() {
             className="search-bar-inputs-wrapper"
             style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
           >
-            <div className="search-bar-select-wrapper">
+            <div
+              className="search-bar-select-wrapper"
+              style={{
+                backgroundColor: service && "var(--primary-color)",
+              }}
+            >
               <select
                 className="search-bar-item"
                 value={service}
                 onChange={(e) => setService(e.target.value)}
+                style={{
+                  backgroundColor: service && "var(--primary-color)",
+                  color: service && "white",
+                }}
               >
-                <option value={""} disabled>
+                <option className="search-bar-item-option" value={""} disabled>
                   {t("service_select")}
                 </option>
                 {services.map((service) => (
-                  <option key={service.value} value={service.label}>
+                  <option
+                    className="search-bar-item-option"
+                    key={service.value}
+                    value={service.label}
+                  >
                     {service.label}
                   </option>
                 ))}
@@ -73,11 +83,15 @@ function Home() {
                 value={car}
                 onChange={(e) => setCar(e.target.value)}
               >
-                <option value={""} disabled>
+                <option className="search-bar-item-option" value={""} disabled>
                   {t("car_select")}
                 </option>
                 {cars.map((car) => (
-                  <option key={car.value} value={car.value}>
+                  <option
+                    className="search-bar-item-option"
+                    key={car.value}
+                    value={car.value}
+                  >
                     {car.label}
                   </option>
                 ))}
@@ -99,11 +113,15 @@ function Home() {
                 value={province}
                 onChange={(e) => setProvince(e.target.value)}
               >
-                <option value={""} disabled>
+                <option className="search-bar-item-option" value={""} disabled>
                   {t("province_select")}
                 </option>
                 {provinces.map((province) => (
-                  <option key={province.name} value={province.name}>
+                  <option
+                    className="search-bar-item-option"
+                    key={province.name}
+                    value={province.name}
+                  >
                     {province.name}
                   </option>
                 ))}
