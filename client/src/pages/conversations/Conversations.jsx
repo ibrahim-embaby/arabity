@@ -12,10 +12,12 @@ function Conversations() {
   const { user } = useSelector((state) => state.auth);
   const { conversations } = useSelector((state) => state.conversation);
   const { t, i18n } = useTranslation();
+  document.title = t("user_conversations_page_title");
 
   useEffect(() => {
     dispatch(fetchUserConversations(user.id));
   }, [conversations]);
+
   return (
     <div
       className="conversations"
@@ -23,7 +25,7 @@ function Conversations() {
     >
       <h2 className="conversations-page-title">{t("user_conversations")}</h2>
       <div className="container">
-        {conversations.length > 0 &&
+        {conversations.length > 0 ? (
           conversations.map((conversation) => (
             <Link
               to={`/message/${conversation.id}`}
@@ -42,7 +44,10 @@ function Conversations() {
                 {formatTime(conversation.updatedAt)}
               </span>
             </Link>
-          ))}
+          ))
+        ) : (
+          <div>{t("no_user_conversations")}</div>
+        )}
       </div>
     </div>
   );

@@ -61,7 +61,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
   margin-bottom: 20px;
   position: relative;
 }
@@ -132,12 +131,14 @@
   padding: 10px;
   margin-bottom: 20px;
   background-color: var(--main-color);
-  border-radius: 10px;
+}
+.no-workshop-desc {
+  font-size: 15px;
+  color: #888;
 }
 
 .workshopOwner-profile-contact {
   flex: 3;
-  border-radius: 10px;
   background-color: var(--main-color);
   display: flex;
   flex-direction: column;
@@ -146,7 +147,6 @@
 .workshopOwner-profile-contact h4 {
   background-color: var(--primary-color);
   color: var(--white-color);
-  border-radius: 10px 10px 0 0;
   text-align: center;
   padding: 5px 0;
 }
@@ -155,11 +155,10 @@
   padding: 10px;
 }
 
-.workshopOwner-profile-contact-button {
+.workshopOwner-profile-contact-btn {
   padding: 5px;
   font-size: 15px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   text-align: center;
   margin: 0px 10px 10px 10px;
@@ -175,7 +174,6 @@
 .workshopOwner-profile-info-services .service-tag {
   background-color: var(--primary-color);
   color: white;
-  border-radius: 5px;
   padding: 5px;
   margin: 5px;
   display: flex;

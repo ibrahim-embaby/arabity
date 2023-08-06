@@ -23,6 +23,7 @@ function SearchResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const { t, i18n } = useTranslation();
+  document.title = t("search_page_title");
 
   const RESULTS_PER_PAGE = 10;
   const pages = Math.ceil((searchResultsCount ?? 0) / RESULTS_PER_PAGE);

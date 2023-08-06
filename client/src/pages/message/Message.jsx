@@ -25,6 +25,7 @@ function Message() {
   const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
   const { t, i18n } = useTranslation();
+  document.title = t("user_messages_page_title");
 
   useEffect(() => {
     socket.current = io(

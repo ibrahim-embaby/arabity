@@ -13,6 +13,8 @@ import { useTranslation } from "react-i18next";
 
 function Register() {
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+  document.title = t("register_page_title");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +33,6 @@ function Register() {
       branchMobile: "",
     },
   ]);
-  const { t, i18n } = useTranslation();
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedCars, setSelectedCars] = useState([]);

@@ -9,6 +9,7 @@ function UserProfileSettings() {
   const [mobile, setMobile] = useState("");
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+  document.title = t("user_settings_page_title");
 
   const handleUserSettingsForm = (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ function UserProfileSettings() {
     setPassword("");
     setMobile("");
   };
+
   return (
     <div
       className="user-profile-settings"

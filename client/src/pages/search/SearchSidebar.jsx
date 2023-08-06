@@ -39,7 +39,6 @@ function SearchSidebar({
             {service && (
               <HighlightOffIcon
                 sx={{
-                  margin: "10px 0px 10px 10px",
                   color: "red",
                   cursor: "pointer",
                 }}
@@ -68,7 +67,6 @@ function SearchSidebar({
             {car && (
               <HighlightOffIcon
                 sx={{
-                  margin: "10px 0px 10px 10px",
                   color: "red",
                   cursor: "pointer",
                 }}
@@ -98,7 +96,6 @@ function SearchSidebar({
             {province && (
               <HighlightOffIcon
                 sx={{
-                  margin: "10px 0px 10px 10px",
                   color: "red",
                   cursor: "pointer",
                 }}

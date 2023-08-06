@@ -5,6 +5,8 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 function ContactUs() {
   const { t, i18n } = useTranslation();
+  document.title = t("about_us_title");
+
   return (
     <div
       className="contact-us"

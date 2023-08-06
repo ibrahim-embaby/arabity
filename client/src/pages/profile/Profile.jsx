@@ -14,7 +14,8 @@ function Profile() {
   const { user } = useSelector((state) => state.auth);
   const { ratings, loading } = useSelector((state) => state.rating);
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  document.title = t("user_profile_page_title");
 
   useEffect(() => {
     dispatch(fetchUserProfile(id));
@@ -25,7 +26,10 @@ function Profile() {
     dispatch(deleteRating(ratingId));
   };
   return (
-    <div className="profile">
+    <div
+      className="profile"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <div className="profile-top">{user.username}</div>
       <div className="profile-bottom">
         <div className="profile-bottom-right">
@@ -55,7 +59,7 @@ function Profile() {
                 </div>
               ))
             ) : (
-              <p>{t("no_results")}</p>
+              <p>{t("no_workshop_ratings")}</p>
             )}
           </div>
         </div>

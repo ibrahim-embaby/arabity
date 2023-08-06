@@ -19,6 +19,7 @@ function Login() {
 
   const [visibleForm, setVisibleForm] = useState(1);
   const { t, i18n } = useTranslation();
+  document.title = t("login_page_title");
 
   const loginFormHandler = (e) => {
     e.preventDefault();
@@ -41,6 +42,7 @@ function Login() {
       })
     );
   };
+
   return (
     <div
       className="login"

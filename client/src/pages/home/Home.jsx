@@ -11,6 +11,7 @@ function Home() {
   const [car, setCar] = useState("");
   const [province, setProvince] = useState("");
   const { t, i18n } = useTranslation();
+  document.title = t("home_page_title");
 
   const searchFormHandler = (e) => {
     e.preventDefault();
@@ -28,8 +29,12 @@ function Home() {
     }
     navigate(`/search/workshops?${queryParams.toString()}`);
   };
+
   return (
     <div className="home">
+      {/* <div className="home-layout">
+
+      </div> */}
       <section className="home-top">
         <h1 className="home-top-title">{t("home_top_section_title")}</h1>
         <form className="search-bar" onSubmit={searchFormHandler}>

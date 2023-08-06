@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../redux/apiCalls/profileApiCall";
 import Ratings from "./Ratings";
 import { fetchWorkshopsCount } from "../../redux/apiCalls/workshopOwnerApiCall";
+import { useTranslation } from "react-i18next";
 
 function Admin() {
   const [currentComponent, setCurrentComponent] = useState(1);
@@ -15,6 +16,9 @@ function Admin() {
   const dispatch = useDispatch();
   const { workshopsCount } = useSelector((state) => state.workshopOwner);
   const { users } = useSelector((state) => state.profile);
+  const { t } = useTranslation();
+  document.title = t("admin_page_title");
+
   useEffect(() => {
     dispatch(fetchAllUsers());
     dispatch(fetchWorkshopsCount());

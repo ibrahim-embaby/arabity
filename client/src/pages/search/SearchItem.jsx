@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 // import Rating from "../../components/rating/Rating";
-
 import { useEffect, useState } from "react";
 import RatingMui from "../../components/rating/RatingMui";
 import limitText from "../../utils/limitText";

@@ -22,6 +22,7 @@ function WorkshopProfile() {
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { t } = useTranslation();
+  document.title = t("workshop_profile_page_title");
 
   useEffect(() => {
     dispatch(fetchWorkshopOwner(id));
@@ -94,9 +95,13 @@ function WorkshopProfile() {
             <span className="workshopOwner-profile-info-title">
               {t("workshop_desc_title")}
             </span>
-            {workshopOwner?.workshopDescription
-              ? workshopOwner?.workshopDescription
-              : t("no_workshop_desc")}
+            {workshopOwner?.workshopDescription ? (
+              <div className="workshop-desc">
+                {workshopOwner?.workshopDescription}
+              </div>
+            ) : (
+              <p className="no-workshop-desc">{t("no_workshop_desc")}</p>
+            )}
           </div>
 
           <div className="workshopOwner-profile-info-item">
@@ -177,7 +182,7 @@ function WorkshopProfile() {
 
           {(!user || !user.workshopName) && (
             <p
-              className="workshopOwner-profile-contact-button"
+              className="workshopOwner-profile-contact-btn"
               onClick={handleCreateConversation}
             >
               {t("send_message_btn")}

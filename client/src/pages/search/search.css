@@ -39,18 +39,27 @@
   color: var(--white-color);
   text-align: center;
   padding: 5px 0;
+  margin-bottom: 5px;
 }
 .search-results-form {
   display: flex;
   flex-direction: column;
 }
 
-.search-results-form select {
+.select-wrapper {
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+  margin: 5px 10px;
   padding: 10px;
-  margin: 10px;
+}
+
+.siderbar-select {
+  flex: 1;
   font-size: 15px;
   outline: none;
-  border: 1px solid var(--primary-color);
+  border: none;
   text-align: right;
   cursor: pointer;
   font-family: var(--font-family);
@@ -58,7 +67,7 @@
 
 .search-results-form-btn {
   padding: 10px 15px;
-  margin: 0 10px 10px 10px;
+  margin: 5px 10px 10px 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
@@ -66,15 +75,6 @@
   background-color: var(--primary-color);
   font-family: var(--font-family);
   font-weight: bold;
-}
-.select-wrapper {
-  direction: rtl;
-  display: flex;
-  align-items: center;
-}
-
-.siderbar-select {
-  flex: 1;
 }
 
 /* Search Item */
