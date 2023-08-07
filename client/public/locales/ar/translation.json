@@ -86,6 +86,7 @@
     "register_workshop_address": "العنوان التفصيلي",
     "register_workshop_mobile": "موبايل الفرع",
     "register_workshop_add_branch": "أضف فرع آخر",
+    "register_workshop_delete_branch": "احذف الفرع",
     "edit_one_field_at_least": "يرجي تعديل حقل واحد علي الأقل",
     "add": "أضف",
     "choose_service": "اختر خدمة أو أكثر ",

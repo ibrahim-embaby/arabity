@@ -98,7 +98,7 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
           type="button"
           onClick={handleRemoveClick}
         >
-          احذف الفرع
+          {t("register_workshop_delete_branch")}
         </button>
       )}
     </div>
