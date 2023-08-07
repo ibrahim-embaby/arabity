@@ -1,8 +1,8 @@
 .fixed-header {
   background-color: rgba(250, 250, 250, 0.5);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(80px);
   -webkit-background-color: rgba(250, 250, 250, 0.5);
+  -webkit-backdrop-filter: blur(80px);
   height: 70px;
   display: flex;
   align-items: center;
@@ -57,7 +57,7 @@
 }
 
 .navbar ul a:hover {
-  color: #ccc;
+  color: var(--lighted-primary-color);
 }
 
 .nav-auth-links {
@@ -196,9 +196,9 @@
   }
 }
 
-@supports (-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px)) {
+@supports (-webkit-backdrop-filter: blur(80px)) or (backdrop-filter: blur(80px)) {
   .fixed-header {
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(80px);
+    backdrop-filter: blur(80px);
   }
 }

@@ -13,6 +13,7 @@ const workshopOwnerRoute = require("./routes/workshopOwnerRoute");
 const rateRoute = require("./routes/rateRoute");
 const messagesRoute = require("./routes/messageRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
+const controlsRoute = require("./routes/controlsRoute");
 const production = require("./utils/constants");
 
 // connection to DB
@@ -35,6 +36,7 @@ app.use("/api/workshop-owner", workshopOwnerRoute);
 app.use("/api/ratings", rateRoute);
 app.use("/api/messages", messagesRoute);
 app.use("/api/conversations", conversationsRoute);
+app.use("/api/controls", controlsRoute);
 
 PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
@@ -91,4 +93,12 @@ io.on("connection", (socket) => {
     io.emit("getUsers", users);
     // console.log(users);
   });
+});
+
+io.on("error", (err) => {
+  // Do something when an error occurs.
+  if (err.code === "net::ERR_CONNECTION_REFUSED") {
+    // The network is down. Close the connection.
+    socket.disconnect();
+  }
 });

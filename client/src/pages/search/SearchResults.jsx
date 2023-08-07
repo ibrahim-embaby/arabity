@@ -86,7 +86,7 @@ function SearchResults() {
             </div>
           ) : searchResults.length ? (
             searchResults.map((item) => (
-              <SearchItem key={item._id} item={item} />
+              <SearchItem key={item.id} item={item} />
             ))
           ) : (
             <p className="no-results-found">{t("no_results")}</p>

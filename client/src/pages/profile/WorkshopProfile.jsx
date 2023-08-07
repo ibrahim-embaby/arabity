@@ -5,7 +5,6 @@ import { fetchWorkshopOwner } from "../../redux/apiCalls/workshopOwnerApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
-import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 import { toast } from "react-toastify";
 import RatingMui from "../../components/rating/RatingMui";
@@ -37,9 +36,16 @@ function WorkshopProfile() {
     }
   }, [id, workshopOwner?.workshopRatings?.length, dispatch]);
 
-  const searchTagHandler = (service) => {
-    dispatch(fetchWorkshops("", service, ""));
-    navigate("/search/workshops");
+  const searchTagHandler = (service = "", car = "") => {
+    const queryParams = new URLSearchParams();
+    if (service) {
+      queryParams.append("service", service);
+    }
+
+    if (car) {
+      queryParams.append("car", car);
+    }
+    navigate(`/search/workshops?${queryParams.toString()}`);
   };
 
   const handleCreateConversation = () => {
@@ -113,7 +119,7 @@ function WorkshopProfile() {
                 <p
                   key={service}
                   className="service-tag"
-                  onClick={() => searchTagHandler(service)}
+                  onClick={() => searchTagHandler(service, "")}
                 >
                   {service}
                 </p>
@@ -126,8 +132,12 @@ function WorkshopProfile() {
               {t("workshop_cars")}
             </span>
             <div className="workshopOwner-profile-info-services">
-              {workshopOwner?.cars.map((car) => (
-                <p key={car} className="service-tag">
+              {workshopOwner?.cars.map((car, index) => (
+                <p
+                  onClick={() => searchTagHandler("", car)}
+                  key={index}
+                  className="service-tag"
+                >
                   {car}
                 </p>
               ))}

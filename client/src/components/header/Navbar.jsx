@@ -41,6 +41,7 @@ function Navbar({ toggle, setToggle }) {
           }}
           style={{
             color: currentTab === 1 && selectedTabColor,
+            fontWeight: currentTab === 1 && "bolder",
           }}
         >
           {t("navbar_main")}
@@ -52,6 +53,7 @@ function Navbar({ toggle, setToggle }) {
           }}
           style={{
             color: currentTab === 2 && selectedTabColor,
+            fontWeight: currentTab === 2 && "bolder",
           }}
           to={"/about-us"}
         >
@@ -66,6 +68,7 @@ function Navbar({ toggle, setToggle }) {
             }}
             style={{
               color: currentTab === 3 && selectedTabColor,
+              fontWeight: currentTab === 3 && "bolder",
             }}
           >
             {t("navbar_admin")}
@@ -82,6 +85,7 @@ function Navbar({ toggle, setToggle }) {
               className="login-button auth-link"
               style={{
                 color: currentTab === 4 && selectedTabColor,
+                fontWeight: currentTab === 4 && "bolder",
               }}
             >
               {t("login")}
@@ -95,6 +99,7 @@ function Navbar({ toggle, setToggle }) {
               className="register-button auth-link"
               style={{
                 color: currentTab === 5 && selectedTabColor,
+                fontWeight: currentTab === 5 && "bolder",
               }}
             >
               {t("register")}

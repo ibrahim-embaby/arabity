@@ -172,14 +172,21 @@
   flex-wrap: wrap;
 }
 .workshopOwner-profile-info-services .service-tag {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 5px;
+  color: var(--dark-color);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 0px 5px;
   margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border: 1px dashed var(--lighted-primary-color);
+}
+
+.workshopOwner-profile-info-services .service-tag:hover {
+  background-color: var(--lighted-primary-color);
+  color: var(--white-color);
 }
 
 /* USER SETTINGS */

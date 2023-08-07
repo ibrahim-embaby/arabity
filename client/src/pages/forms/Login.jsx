@@ -57,40 +57,50 @@ function Login() {
         />
         {visibleForm === 1 ? (
           <form className="login-form" onSubmit={loginFormHandler}>
-            <label htmlFor="email">{t("email")}</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label htmlFor="password"> {t("password")}</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="login-form-input-wrapper">
+              <label htmlFor="email">{t("email")}</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="login-form-input-wrapper">
+              <label htmlFor="password"> {t("password")}</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
             <button className="login-form-btn" type="submit">
               {t("login")}
             </button>
           </form>
         ) : (
           <form className="login-form" onSubmit={loginWorkshopOwnerFormHandler}>
-            <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
-            <input
-              type="email"
-              id="workshopOwnerEmail"
-              value={workshopOwnerEmail}
-              onChange={(e) => setWorkshopOwnerEmail(e.target.value)}
-            />
-            <label htmlFor="workshopOwnerPassword"> {t("password")}</label>
-            <input
-              type="password"
-              id="workshopOwnerPassword"
-              value={workshopOwnerPassword}
-              onChange={(e) => setWorkshopOwnerPassword(e.target.value)}
-            />
+            <div className="login-form-input-wrapper">
+              <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
+              <input
+                type="email"
+                id="workshopOwnerEmail"
+                value={workshopOwnerEmail}
+                onChange={(e) => setWorkshopOwnerEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="login-form-input-wrapper">
+              <label htmlFor="workshopOwnerPassword"> {t("password")}</label>
+              <input
+                type="password"
+                id="workshopOwnerPassword"
+                value={workshopOwnerPassword}
+                onChange={(e) => setWorkshopOwnerPassword(e.target.value)}
+              />
+            </div>
             <button className="login-form-btn" type="submit">
               {t("login")}
             </button>

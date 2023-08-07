@@ -2,30 +2,27 @@
   height: 70px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: row-reverse;
   font-size: 30px;
+  padding: 0px 20px;
   background-color: #212326;
   color: var(--white-color);
 }
 
 .footer-left {
-  flex: 6;
   font-weight: bold;
   display: flex;
   align-items: center;
-  padding-right: 20px;
-  justify-content: flex-end;
 }
 
 .footer-right {
-  flex: 6;
-  height: 100%;
   display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 .footer-right .footer-right-icon {
   cursor: pointer;
-  margin: 0 20px;
   display: flex;
   align-items: center;
 }
@@ -60,7 +57,7 @@
 
 @media (max-width: 370px) {
   .footer-right {
-    flex-wrap: wrap;
+    gap: 5px;
   }
   .footer-right .footer-right-icon {
     font-size: 4px;

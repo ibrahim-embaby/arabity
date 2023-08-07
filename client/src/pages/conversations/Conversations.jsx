@@ -15,6 +15,10 @@ function Conversations() {
   document.title = t("user_conversations_page_title");
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchUserConversations(user.id));
   }, [conversations]);
 

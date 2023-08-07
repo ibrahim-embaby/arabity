@@ -2,11 +2,14 @@ import { useTranslation } from "react-i18next";
 import "./contact-us.css";
 import LinkedIn from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { useEffect } from "react";
 
 function ContactUs() {
   const { t, i18n } = useTranslation();
   document.title = t("about_us_title");
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
   return (
     <div
       className="contact-us"

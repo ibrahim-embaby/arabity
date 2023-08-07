@@ -34,6 +34,8 @@
     "workshop_branches": "الفروع",
     "workshop_ratings": "التقييمات",
     "no_workshop_ratings": "لا توجد تقييمات",
+    "add_rating": "أضف تقييم",
+    "rate": "تقييم",
     "delete_btn": "حذف",
     "send_message_btn": "مراسلة",
     "contact_information": "بيانات التواصل",
@@ -42,6 +44,7 @@
     "profile_favorites": "المفضلة",
     "user_conversations": "محادثاتك",
     "no_user_conversations": "لا توجد محادثات",
+    "cant_show_conversation": "لا يمكنك عرض هذه المحادثة",
     "user_settings_name": "تغيير الاسم",
     "user_settings_password": "تغيير كلمة المرور",
     "user_settings_mobile": "تغيير رقم الهاتف",
@@ -90,5 +93,7 @@
     "choose_model": "اختر ماركة أو أكثر",
     "add_another_model": "أضف ماركة أخري",
     "founder": "إبراهيم محمد",
-    "founder_borther": "أخو المؤسس"
+    "home_card_create_account": "انشأ حساب",
+    "home_card_browse": "تصفح مراكز الصيانة",
+    "home_card_contact": "تواصل مع مركز الصيانة"
 }

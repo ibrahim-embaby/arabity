@@ -156,41 +156,45 @@ function Register() {
         />
         {visibleForm === 1 ? (
           <form className="register-form" onSubmit={registerFormHandler}>
-            <label htmlFor="username">{t("register_name")}</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="form-input"
-            />
+            <div className="form-group">
+              <div className="form-group-inputs">
+                <label htmlFor="username">{t("register_name")}</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="form-input"
+                />
 
-            <label htmlFor="email"> {t("email")}</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-input"
-            />
+                <label htmlFor="email"> {t("email")}</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-input"
+                />
 
-            <label htmlFor="mobile">{t("register_mobile")} </label>
-            <input
-              type="text"
-              id="mobile"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-              className="form-input"
-            />
+                <label htmlFor="mobile">{t("register_mobile")} </label>
+                <input
+                  type="text"
+                  id="mobile"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  className="form-input"
+                />
 
-            <label htmlFor="password">{t("password")}</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="form-input"
-            />
+                <label htmlFor="password">{t("password")}</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+            </div>
 
             <button className="register-form-btn" type="submit">
               {t("register")}

@@ -24,7 +24,7 @@ module.exports.createConversationCtrl = asyncHandler(async (req, res) => {
     res.status(201).json(newConversation);
   } catch (error) {
     console.log(error);
-    res.status(500).json("خطأ في الخادم");
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });
 
@@ -51,6 +51,6 @@ module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
     res.status(201).json(startedConversations);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ message: "خطأ في الخادم" });
   }
 });

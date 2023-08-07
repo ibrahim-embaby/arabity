@@ -5,7 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import RatingMui from "./RatingMui";
 import { useTranslation } from "react-i18next";
 import limitText from "../../utils/limitText";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 moment.locale("ar_SA");
+
 function RatingComponent({ userRate }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -30,9 +33,10 @@ function RatingComponent({ userRate }) {
         {(user?.isAdmin || user?.id === userRate.user._id) && (
           <button
             onClick={() => deleteRatingHandler(userRate._id)}
-            className="delete-rating-button"
+            className="delete-rating-btn"
           >
-            {t("delete_btn")}
+            <span> {t("delete_btn")}</span>
+            <DeleteIcon />
           </button>
         )}
       </p>

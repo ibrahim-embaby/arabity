@@ -13,11 +13,16 @@ import formatTime from "../../utils/formatTime";
 import { io } from "socket.io-client";
 import { production } from "../../utils/constants";
 import { useTranslation } from "react-i18next";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+import TagFacesIcon from "@mui/icons-material/TagFaces";
+import i18ns from "@emoji-mart/data/i18n/ar.json";
 
 function Message() {
   const dispatch = useDispatch();
   const [messageText, setMessageText] = useState("");
   const [messageType] = useState("text");
+  const [showEmojis, setShowEmojis] = useState(false);
   const { conversationId } = useParams();
   const { messages } = useSelector((state) => state.message);
   const { otherUser } = useSelector((state) => state.conversation);
@@ -28,11 +33,24 @@ function Message() {
   document.title = t("user_messages_page_title");
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
+
+  useEffect(() => {
     socket.current = io(
       production ? "https://arabity.onrender.com" : "http://localhost:8000"
     );
     dispatch(fetchMessages(conversationId));
   }, []);
+
+  socket.current?.on("connect_error", (err) => {
+    // Check if the error message has already been printed.
+    if (err) {
+      // Print the error message once.
+      console.error(err);
+      socket.current.disconnect();
+    }
+  });
 
   const handleSendMessage = (e, sentBy) => {
     e.preventDefault();
@@ -130,18 +148,40 @@ function Message() {
                   );
                 })}
             </div>
+
             <form
               onSubmit={(e) => handleSendMessage(e, user.id)}
               className="send-message-wrapper"
               style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
             >
-              <input
-                value={messageText}
-                onChange={(e) => setMessageText(e.target.value)}
-                className="message-text-input"
-                type="text"
-                placeholder={t("write_your_message")}
-              />
+              <div className="text-input-wrapper">
+                <input
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  className="message-text-input"
+                  type="text"
+                  placeholder={t("write_your_message")}
+                />
+                <div
+                  className="emoji-select-icon"
+                  onClick={() => setShowEmojis((prev) => !prev)}
+                >
+                  <TagFacesIcon />
+                </div>
+
+                {showEmojis && (
+                  <div className="emoji-picker-wrapper">
+                    <Picker
+                      data={data}
+                      onEmojiSelect={(e) =>
+                        setMessageText(messageText + e.native)
+                      }
+                      i18n={i18n.language === "ar" && i18ns}
+                      perLine={8}
+                    />
+                  </div>
+                )}
+              </div>
               <button type="submit" className="message-send-btn">
                 {t("send")}
               </button>
@@ -149,7 +189,7 @@ function Message() {
           </div>
         </div>
       ) : (
-        <div>لا يمكن عرض المحادثة</div>
+        <div>{t("cant_show_conversation")}</div>
       )}
     </div>
   );

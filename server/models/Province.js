@@ -1,32 +1,42 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const CarSchema = new mongoose.Schema(
+const ProvinceSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
+      unique: true,
     },
     code: {
       type: String,
       required: true,
-      trim: true,
     },
     isActive: {
       type: Boolean,
       default: true,
     },
+    cities: [
+      {
+        name: { type: String, required: true },
+        code: { type: String, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );
 
-function validateCar(object) {
+function validateCreateProvince(object) {
   const schema = Joi.object({
-    name: Joi.string().required().trim().unique(),
+    name: Joi.string().trim().required(),
     code: Joi.string().required(),
-    isActive: Joi.boolean(),
+    cities: Joi.array().items(
+      Joi.object({
+        name: Joi.string().required(),
+        code: Joi.string().required(),
+      })
+    ),
   });
 
   return schema.validate(object, {
@@ -39,9 +49,9 @@ function validateCar(object) {
   });
 }
 
-const Car = mongoose.model("Car", CarSchema);
+const Province = mongoose.model("Province", ProvinceSchema);
 
 module.exports = {
-  Car,
-  validateCar,
+  Province,
+  validateCreateProvince,
 };

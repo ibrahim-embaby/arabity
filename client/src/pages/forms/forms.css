@@ -9,24 +9,32 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 5px;
+  padding: 15px;
+  gap: 20px;
 }
 
-.login-form input {
-  padding: 5px;
-  margin: 10px 0;
+.login-form-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form-input-wrapper input {
+  padding: 10px;
+  border-radius: 0px;
+  outline: none;
   font-size: 18px;
 }
 
 .login-form-btn {
   padding: 5px;
   background-color: var(--primary-color);
-  font-size: 20px;
+  font-size: 18px;
   border: none;
   outline: none;
-  border-radius: 5px;
   color: var(--white-color);
   cursor: pointer;
+  font-family: var(--font-family);
 }
 
 /* Register */
@@ -64,7 +72,9 @@
 }
 
 .form-group .form-group-inputs {
-  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .form-group-input-wrapper {
@@ -77,17 +87,17 @@
 .register-form .form-input {
   padding: 5px;
   font-size: 18px;
-  margin: 10px 0px;
 }
 
 .register-form-btn {
-  font-size: 20px;
+  font-size: 18px;
   padding: 5px;
-  border-radius: 5px;
   color: var(--white-color);
   background-color: var(--primary-color);
   border: none;
   cursor: pointer;
+  font-family: var(--font-family);
+  margin: 10px 15px;
 }
 
 .branch {

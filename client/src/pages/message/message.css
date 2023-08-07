@@ -41,6 +41,29 @@
   border-top: 1px solid #ccc;
 }
 
+.text-input-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.emoji-select-icon {
+  display: flex;
+  align-items: center;
+  color: #333;
+  cursor: pointer;
+}
+
+.emoji-picker-wrapper {
+  position: absolute;
+  bottom: 53px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .message-text-input {
   padding: 10px;
   align-content: flex-start;

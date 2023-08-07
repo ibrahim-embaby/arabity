@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { conversationActions } from "../slices/conversationSlice";
 
@@ -11,6 +12,7 @@ export function createConversation(conversationInfo) {
       });
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -31,6 +33,7 @@ export function fetchOtherUserData(userId, type) {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -46,6 +49,7 @@ export function fetchUserConversations(userId) {
       dispatch(conversationActions.setConversations(data));
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 }

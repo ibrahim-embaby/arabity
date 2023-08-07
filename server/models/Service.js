@@ -1,13 +1,12 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
-const CarSchema = new mongoose.Schema(
+const ServiceSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
+      unique: true,
     },
     code: {
       type: String,
@@ -22,7 +21,7 @@ const CarSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-function validateCar(object) {
+function validateService(object) {
   const schema = Joi.object({
     name: Joi.string().required().trim().unique(),
     code: Joi.string().required(),
@@ -39,9 +38,9 @@ function validateCar(object) {
   });
 }
 
-const Car = mongoose.model("Car", CarSchema);
+const Service = mongoose.model("Service", ServiceSchema);
 
 module.exports = {
-  Car,
-  validateCar,
+  Service,
+  validateService,
 };

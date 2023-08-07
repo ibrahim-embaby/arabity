@@ -40,6 +40,12 @@ module.exports.createMessageCtrl = asyncHandler(async (req, res) => {
 module.exports.getChatMessagesCtrl = asyncHandler(async (req, res) => {
   try {
     const { conversationId } = req.params;
+    if (
+      req.user.id !== conversationId.substring(0, 24) &&
+      req.user.id !== conversationId.substring(24, 28)
+    ) {
+      return res.status(403).json({ message: "لا يمكنك عرض هذه المحادثة" });
+    }
     const messages = await Message.find({ conversationId });
     res.status(200).json(messages);
   } catch (error) {
@@ -68,21 +74,6 @@ module.exports.deleteMessagesCtrl = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "تم حذف الرسالة بنجاح" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في الخادم" });
-  }
-});
-
-/**
- * @desc get user Conversations
- * @route /api/messages/conversations/:id
- * @method GET
- * @access private (only logged user)
- */
-module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { id } = req.params;
-    const conversations = await Message;
-  } catch (error) {
     res.status(500).json({ error: "خطأ في الخادم" });
   }
 });
