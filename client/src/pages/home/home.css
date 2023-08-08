@@ -133,7 +133,6 @@
 .home-about-app {
   display: flex;
   align-items: center;
-  gap: 30px;
   background-color: #feefc3a2;
 }
 
@@ -153,7 +152,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-right: 20px;
+  padding: 20px;
 }
 
 .testimonial {
@@ -237,9 +236,6 @@
 
   .home-about-app {
     flex-direction: column;
-  }
-  .home-about-app-left {
-    padding: 0 20px 20px 20px;
   }
 }
 
