@@ -99,15 +99,16 @@
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 40px 20px;
+  gap: 40px;
 }
 
 .home-app-features {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 10px;
   flex-wrap: wrap;
-  padding: 30px 0px;
 }
 .home-app-features-item {
   color: var(--dark-color);
@@ -118,7 +119,6 @@
   text-align: center;
   height: 200px;
   width: 200px;
-  margin: 10px;
   font-weight: bold;
   background-color: #feefc3a2;
   border: 2px solid var(--lighted-primary-color);
@@ -133,7 +133,6 @@
 .home-about-app {
   display: flex;
   align-items: center;
-  padding: 30px;
   gap: 30px;
   background-color: #feefc3a2;
 }
@@ -154,6 +153,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-right: 20px;
 }
 
 .testimonial {
@@ -237,5 +237,11 @@
 
   .home-about-app {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 450px) {
+  .home-app-features {
+    justify-content: center;
   }
 }
