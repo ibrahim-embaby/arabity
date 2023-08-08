@@ -95,7 +95,8 @@
 }
 
 .home-container {
-  width: 80%;
+  width: 100%;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   padding: 20px;
