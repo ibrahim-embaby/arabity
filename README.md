@@ -26,7 +26,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 
 **Deployed On:**
 
-![render](https://img.shields.io/badge/render-5eebc4?style=for-the-badge&logo=render&logoColor=white)
+![netlify](https://img.shields.io/badge/netlify-32e6e2?style=for-the-badge&logo=netlify&logoColor=white)
 
 ## 🚀 Features
 
