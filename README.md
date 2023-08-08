@@ -52,7 +52,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 - 🚧 Admin Dashboard
 - 🚧 Reset Password Mail using Nodemailer
 
-## Sneak Peek of Home Page ✨:
+## Sneak Peek of Website Pages ✨:
 
 ![home](images/img-1.png)
 
