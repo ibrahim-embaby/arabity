@@ -1,5 +1,5 @@
 {
-    "home_page_title": "Arabity | Main",
+    "home_page_title": "Arabity | Home",
     "about_us_title": "Arabity | About Us",
     "admin_page_title": "Arabity | Admin",
     "search_page_title": "Arabity | Search results",
@@ -12,7 +12,7 @@
     "register_page_title":"Arabity | Register",
     "not_found_page_title":"Arabity | not found",
     "header_title": "Arabity",
-    "navbar_main": "Main",
+    "navbar_main": "Home",
     "navbar_contact": "About Us",
     "navbar_admin": "Admin",
     "dropdown_account": "my account",
