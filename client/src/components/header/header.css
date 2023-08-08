@@ -1,12 +1,18 @@
-.fixed-header {
-  background-color: rgba(250, 250, 250, 0.5);
-  backdrop-filter: blur(80px);
-  -webkit-background-color: rgba(250, 250, 250, 0.5);
-  -webkit-backdrop-filter: blur(80px);
+.fixed-header,
+.header {
   height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.fixed-header {
+  background-color: #fafafa80;
+  backdrop-filter: blur(80px);
+  -webkit-background-color: #fafafa80;
+  -webkit-backdrop-filter: blur(80px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0px;
@@ -16,17 +22,11 @@
 .header {
   background-color: #fafafa;
   backdrop-filter: blur(6px);
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .header-left {
   font-size: 30px;
   font-weight: bold;
-  padding-left: 20px;
 }
 
 .header-left a {
@@ -44,9 +44,9 @@
   display: flex;
   justify-content: center;
   flex-direction: row-reverse;
+  gap: 20px;
 }
 .navbar ul a {
-  padding: 0px 10px;
   cursor: pointer;
   color: var(--dark-color);
   font-size: 20px;
@@ -68,14 +68,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 20px;
 }
 
 .header-auth-links {
   display: flex;
+  gap: 20px;
 }
 
 .header-right .auth-link {
-  padding: 0px 5px;
   background-color: var(--dark-color);
   cursor: pointer;
   text-decoration: none;
@@ -86,10 +87,6 @@
   text-align: center;
 }
 
-.header-right .register-button {
-  padding-right: 20px;
-}
-
 .header-right a:hover {
   color: var(--dark-color);
 }
@@ -98,7 +95,6 @@
   color: var(--dark-color);
   font-size: 20px;
   cursor: pointer;
-  padding: 10px 20px 10px 10px;
   position: relative;
   display: flex;
   align-items: center;
@@ -146,7 +142,6 @@
 @media (max-width: 720px) {
   .header-menu {
     display: block;
-    padding: 0px 20px 0px 5px;
   }
   .navbar {
     position: absolute;
@@ -164,9 +159,9 @@
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    padding: 20px;
   }
   .navbar ul a {
-    padding: 10px 20px 10px 10px;
     width: 100%;
     text-align: start;
     justify-content: flex-end;
@@ -175,24 +170,25 @@
     font-size: 16px;
   }
   .nav-auth-links {
-    display: unset;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .header-auth-links {
     display: none;
   }
-  .user-settings {
-    padding: 10px;
-  }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 410px) {
   .header-menu {
     padding: 0;
   }
   .user-settings {
     font-size: 12px;
-    padding: 10px;
+  }
+  .header-right {
+    gap: 10px;
   }
 }
 
