@@ -8,6 +8,7 @@ import {
   fetchSingleUserRatings,
 } from "../../redux/apiCalls/ratingApiCall";
 import { useTranslation } from "react-i18next";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -51,10 +52,11 @@ function Profile() {
                     <p>{rating.text}</p>
                   </Link>
                   <button
-                    className="delete-rating-button"
+                    className="delete-rating-btn"
                     onClick={() => handleDeleteRating(rating._id)}
                   >
-                    {t("delete_btn")}
+                    <span> {t("delete_btn")}</span>
+                    <DeleteIcon />
                   </button>
                 </div>
               ))

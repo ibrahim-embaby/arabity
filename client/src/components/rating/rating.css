@@ -83,6 +83,7 @@
   display: flex;
   background-color: antiquewhite;
   align-items: center;
+  justify-content: space-between;
 }
 
 .workshop-name-rating-wrapper {
