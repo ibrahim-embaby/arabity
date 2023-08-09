@@ -215,7 +215,7 @@ function Home() {
         </div>
       </section>
       <div
-        className="home-container"
+        className="container"
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
       >
         <section className="home-app-features">

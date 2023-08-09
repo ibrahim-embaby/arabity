@@ -94,15 +94,6 @@
   font-weight: bold;
 }
 
-.home-container {
-  width: 100%;
-  max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 20px;
-  gap: 40px;
-}
-
 .home-app-features {
   display: flex;
   align-items: center;

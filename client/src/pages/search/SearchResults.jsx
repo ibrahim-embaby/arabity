@@ -58,7 +58,7 @@ function SearchResults() {
   return (
     <div
       className="search-results"
-      style={{ direction: i18n.language === "en" ? "rtl" : "ltr" }}
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
       <SearchSidebar
         params={params}

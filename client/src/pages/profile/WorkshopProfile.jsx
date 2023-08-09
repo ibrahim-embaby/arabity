@@ -9,6 +9,7 @@ import { createConversation } from "../../redux/apiCalls/conversationApiCall";
 import { toast } from "react-toastify";
 import RatingMui from "../../components/rating/RatingMui";
 import { useTranslation } from "react-i18next";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -20,7 +21,8 @@ function WorkshopProfile() {
   );
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
   document.title = t("workshop_profile_page_title");
 
   useEffect(() => {
@@ -73,131 +75,139 @@ function WorkshopProfile() {
       <CircularProgress color="primary" />
     </div>
   ) : (
-    <div className="workshopOwner-profile">
-      <div className="workshopOwner-profile-top">
-        {user?.id === id && <button className="edit-profile">تعديل</button>}
-        <div className="workshopOwner-profile-image-wrapper">
-          <img
-            src="/images/workshop-owner-avatar.png"
-            alt=""
-            className="workshopOwner-profile-image"
-          />
-          {user?.id === id && (
-            <form>
-              <label htmlFor="file" className="edit-profile-pic">
-                <i className="bi bi-camera-fill"></i>
-              </label>
-              <input type="file" hidden id="file" />
-            </form>
-          )}
-        </div>
-        <p className="workshop-name">{workshopOwner?.workshopName}</p>
+    <div
+      className="workshopOwner-profile"
+      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
+      <div className="container">
+        <div className="workshopOwner-profile-wrapper">
+          <div className="workshopOwner-profile-top">
+            {user?.id === id && <button className="edit-profile">تعديل</button>}
+            <div className="workshopOwner-profile-image-wrapper">
+              <img
+                src="/images/workshop-owner-avatar.png"
+                alt=""
+                className="workshopOwner-profile-image"
+              />
+              {user?.id === id && (
+                <form>
+                  <label htmlFor="file" className="edit-profile-pic">
+                    <i className="bi bi-camera-fill"></i>
+                  </label>
+                  <input type="file" hidden id="file" />
+                </form>
+              )}
+            </div>
+            <p className="workshop-name">{workshopOwner?.workshopName}</p>
 
-        <RatingMui rating={avgRating} />
-      </div>
-      <div className="workshopOwner-profile-info-wrapper">
-        <div className="workshopOwner-profile-info">
-          <div className="workshopOwner-profile-info-desc workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">
-              {t("workshop_desc_title")}
-            </span>
-            {workshopOwner?.workshopDescription ? (
-              <div className="workshop-desc">
-                {workshopOwner?.workshopDescription}
+            <RatingMui rating={avgRating} />
+          </div>
+          <div className="workshopOwner-profile-info-wrapper">
+            <div className="workshopOwner-profile-info">
+              <div className="workshopOwner-profile-info-desc workshopOwner-profile-info-item">
+                <span className="workshopOwner-profile-info-title">
+                  {t("workshop_desc_title")}
+                </span>
+                {workshopOwner?.workshopDescription ? (
+                  <div className="workshop-desc">
+                    {workshopOwner?.workshopDescription}
+                  </div>
+                ) : (
+                  <p className="no-workshop-desc">{t("no_workshop_desc")}</p>
+                )}
               </div>
-            ) : (
-              <p className="no-workshop-desc">{t("no_workshop_desc")}</p>
-            )}
-          </div>
 
-          <div className="workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">
-              {t("workshop_services")}
-            </span>
-            <div className="workshopOwner-profile-info-services">
-              {workshopOwner?.workshopServices.map((service) => (
+              <div className="workshopOwner-profile-info-item">
+                <span className="workshopOwner-profile-info-title">
+                  {t("workshop_services")}
+                </span>
+                <div className="workshopOwner-profile-info-services">
+                  {workshopOwner?.workshopServices.map((service, index) => (
+                    <p
+                      key={index}
+                      className="service-tag"
+                      onClick={() => searchTagHandler(service, "")}
+                    >
+                      {service}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="workshopOwner-profile-info-item">
+                <span className="workshopOwner-profile-info-title">
+                  {t("workshop_cars")}
+                </span>
+                <div className="workshopOwner-profile-info-services">
+                  {workshopOwner?.cars.map((car, index) => (
+                    <p
+                      key={index}
+                      onClick={() => searchTagHandler("", car)}
+                      className="service-tag"
+                    >
+                      {car}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              <div className="workshopOwner-profile-info-item">
+                <span className="workshopOwner-profile-info-title">
+                  {t("workshop_branches")}
+                </span>
+                <div className="workshopOwner-profile-info-branches">
+                  {workshopOwner?.workshopBranches.map((branch, index) => (
+                    <div
+                      key={index}
+                      className="workshopOwner-profile-info-branch"
+                    >
+                      <h5 className="workshopOwner-profile-info-branch-title">
+                        <LocationOnIcon />
+                        {branch.branchProvince} - {branch.branchCity}
+                      </h5>
+                      <p>العنوان التفصيلي: {branch.branchAddress}</p>
+                      <p>تليفون الفرع: {branch.branchMobile}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="workshopOwner-profile-info-item workshopOwner-profile-info-ratings">
+                <span className="workshopOwner-profile-info-title">
+                  {t("workshop_ratings")} (
+                  {workshopOwner?.workshopRatings.length})
+                </span>
+                {user &&
+                  !user.workshopName &&
+                  !workshopOwner?.workshopRatings.filter(
+                    (item) => item.user._id === user.id
+                  ).length && <AddRating id={id} />}
+
+                {workshopOwner?.workshopRatings.length
+                  ? workshopOwner?.workshopRatings.map((r, index) => (
+                      <RatingComponent key={index} userRate={r} />
+                    ))
+                  : t("no_workshop_ratings")}
+              </div>
+            </div>
+
+            <div className="workshopOwner-profile-contact">
+              <h4> {t("contact_information")}</h4>
+              <p className="workshopOwner-profile-contact-item">
+                <i className="bi bi-person-fill search-item-title"></i>
+                {workshopOwner?.username}
+              </p>
+
+              {(!user || !user.workshopName) && (
                 <p
-                  key={service}
-                  className="service-tag"
-                  onClick={() => searchTagHandler(service, "")}
+                  className="workshopOwner-profile-contact-btn"
+                  onClick={handleCreateConversation}
                 >
-                  {service}
+                  {t("send_message_btn")}
                 </p>
-              ))}
+              )}
             </div>
           </div>
-
-          <div className="workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">
-              {t("workshop_cars")}
-            </span>
-            <div className="workshopOwner-profile-info-services">
-              {workshopOwner?.cars.map((car, index) => (
-                <p
-                  onClick={() => searchTagHandler("", car)}
-                  key={index}
-                  className="service-tag"
-                >
-                  {car}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="workshopOwner-profile-info-item">
-            <span className="workshopOwner-profile-info-title">
-              {t("workshop_branches")}
-            </span>
-            <div className="workshopOwner-profile-info-branches">
-              {workshopOwner?.workshopBranches.map((branch) => (
-                <p
-                  key={branch.branchProvince}
-                  className="workshopOwner-profile-info-branch"
-                >
-                  <h5>
-                    <i className="bi bi-geo-alt-fill search-item-title"></i>
-                    {branch.branchProvince} - {branch.branchCity}
-                  </h5>
-                  <p>العنوان التفصيلي: {branch.branchAddress}</p>
-                  <p>تليفون الفرع: {branch.branchMobile}</p>
-                  <br />
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="workshopOwner-profile-info-item workshopOwner-profile-info-ratings">
-            <span className="workshopOwner-profile-info-title">
-              {t("workshop_ratings")}
-            </span>
-            {user &&
-              !user.workshopName &&
-              !workshopOwner?.workshopRatings.filter(
-                (item) => item.user._id === user.id
-              ).length && <AddRating id={id} />}
-
-            {workshopOwner?.workshopRatings.length
-              ? workshopOwner?.workshopRatings.map((r) => (
-                  <RatingComponent key={r._id} userRate={r} />
-                ))
-              : t("no_workshop_ratings")}
-          </div>
-        </div>
-        <div className="workshopOwner-profile-contact">
-          <h4> {t("contact_information")}</h4>
-          <p className="workshopOwner-profile-contact-item">
-            <i className="bi bi-person-fill search-item-title"></i>
-            {workshopOwner?.username}
-          </p>
-
-          {(!user || !user.workshopName) && (
-            <p
-              className="workshopOwner-profile-contact-btn"
-              onClick={handleCreateConversation}
-            >
-              {t("send_message_btn")}
-            </p>
-          )}
         </div>
       </div>
     </div>

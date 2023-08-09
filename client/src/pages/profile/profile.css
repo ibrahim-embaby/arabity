@@ -46,12 +46,16 @@
 }
 
 /* workshop Owner profile */
-
 .workshopOwner-profile {
-  direction: rtl;
-  text-align: right;
-  padding: 20px 60px;
   min-height: calc(100vh - var(--difference-value));
+  display: flex;
+  justify-content: center;
+}
+
+.workshopOwner-profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .workshopOwner-profile-top {
@@ -61,7 +65,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
   position: relative;
 }
 
@@ -112,26 +115,41 @@
 .workshopOwner-profile-info-wrapper {
   display: flex;
   align-items: flex-start;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .workshopOwner-profile-info {
   flex: 9;
-  margin-left: 40px;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .workshopOwner-profile-info-title {
   font-weight: bold;
-  margin: 10px 0;
 }
 
 .workshopOwner-profile-info-item {
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  padding: 10px;
-  margin-bottom: 20px;
   background-color: var(--main-color);
+  gap: 10px;
 }
+
+.workshopOwner-profile-info-branches {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.workshopOwner-profile-info-branch-title {
+  display: flex;
+  align-items: center;
+}
+
 .no-workshop-desc {
   font-size: 15px;
   color: #888;
@@ -155,28 +173,17 @@
   padding: 10px;
 }
 
-.workshopOwner-profile-contact-btn {
-  padding: 5px;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  margin: 0px 10px 10px 10px;
-  color: var(--white-color);
-  background-color: var(--primary-color);
-  text-decoration: none;
-}
-
 .workshopOwner-profile-info-services {
   display: flex;
   flex-wrap: wrap;
+  gap: 5px;
 }
+
 .workshopOwner-profile-info-services .service-tag {
   color: var(--dark-color);
   font-weight: 600;
   font-size: 15px;
   padding: 0px 5px;
-  margin: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,6 +194,18 @@
 .workshopOwner-profile-info-services .service-tag:hover {
   background-color: var(--lighted-primary-color);
   color: var(--white-color);
+}
+
+.workshopOwner-profile-contact-btn {
+  padding: 5px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  margin: 0px 10px 10px 10px;
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  text-decoration: none;
 }
 
 /* USER SETTINGS */
@@ -245,11 +264,7 @@
 }
 
 /* Media Query */
-@media (max-width: 820px) {
-  .workshopOwner-profile {
-    padding: 20px;
-  }
-}
+
 @media (max-width: 720px) {
   .profile-bottom {
     flex-direction: column;
