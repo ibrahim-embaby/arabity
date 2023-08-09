@@ -1,6 +1,6 @@
 :root {
   --main-color: #efefef;
-  --primary-color: #ff9800; /*#1b1c1f*/
+  --primary-color: #ff9800; /*#1b1c1f*/ /*# fe5e50*/
   --lighted-primary-color: #ffc107;
   /* --primary-color: #2181ef; */
   --secondary-color: #495e74;
@@ -46,10 +46,7 @@ code {
 .container {
   width: 100%;
   max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 20px;
-  gap: 40px;
+  padding: 20px;
 }
 
 /* Scrollbar Classes For Google Chrome */

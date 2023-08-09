@@ -32,37 +32,39 @@ function Profile() {
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
       <div className="profile-top">{user.username}</div>
-      <div className="profile-bottom">
-        <div className="profile-bottom-right">
-          <h2>{t("profile_favorites")}</h2>
-        </div>
-        <div className="profile-bottom-left">
-          <h2>{t("profile_ratings")}</h2>
-          <div className="user-ratings-wrapper">
-            {loading ? (
-              <p>{t("loading")}</p>
-            ) : ratings.length ? (
-              ratings.map((rating) => (
-                <div className="user-rating" key={rating._id}>
-                  <Link
-                    to={`/workshop-owner/profile/${rating.workshopOwner._id}`}
-                  >
-                    <p>{rating.workshopOwner.workshopName}</p>
-                    <p>{rating.rating} / 5</p>
-                    <p>{rating.text}</p>
-                  </Link>
-                  <button
-                    className="delete-rating-btn"
-                    onClick={() => handleDeleteRating(rating._id)}
-                  >
-                    <span> {t("delete_btn")}</span>
-                    <DeleteIcon />
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p>{t("no_workshop_ratings")}</p>
-            )}
+      <div className="container">
+        <div className="profile-bottom">
+          <div className="profile-bottom-right">
+            <h2>{t("profile_favorites")}</h2>
+          </div>
+          <div className="profile-bottom-left">
+            <h2>{t("profile_ratings")}</h2>
+            <div className="user-ratings-wrapper">
+              {loading ? (
+                <p>{t("loading")}</p>
+              ) : ratings.length ? (
+                ratings.map((rating) => (
+                  <div className="user-rating" key={rating._id}>
+                    <Link
+                      to={`/workshop-owner/profile/${rating.workshopOwner._id}`}
+                    >
+                      <p>{rating.workshopOwner.workshopName}</p>
+                      <p>{rating.rating} / 5</p>
+                      <p>{rating.text}</p>
+                    </Link>
+                    <button
+                      className="delete-rating-btn"
+                      onClick={() => handleDeleteRating(rating._id)}
+                    >
+                      <span> {t("delete_btn")}</span>
+                      <DeleteIcon />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p>{t("no_workshop_ratings")}</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

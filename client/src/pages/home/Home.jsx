@@ -218,39 +218,44 @@ function Home() {
         className="container"
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
       >
-        <section className="home-app-features">
-          <div className="home-app-features-item">
-            <PersonAddAltIcon className="home-app-features-item-icon" />
-            <p>{t("home_card_create_account")}</p>
-          </div>
+        <div className="home-sections-wrapper">
+          <section className="home-app-features">
+            <div className="home-app-features-item">
+              <PersonAddAltIcon className="home-app-features-item-icon" />
+              <p>{t("home_card_create_account")}</p>
+            </div>
 
-          <div className="home-app-features-item">
-            <SearchIcon className="home-app-features-item-icon" />
-            <p>{t("home_card_browse")}</p>
-          </div>
+            <div className="home-app-features-item">
+              <SearchIcon className="home-app-features-item-icon" />
+              <p>{t("home_card_browse")}</p>
+            </div>
 
-          <div className="home-app-features-item ">
-            <MessageIcon className="home-app-features-item-icon" />
-            <p>{t("home_card_contact")}</p>
-          </div>
-        </section>
+            <div className="home-app-features-item ">
+              <MessageIcon className="home-app-features-item-icon" />
+              <p>{t("home_card_contact")}</p>
+            </div>
+          </section>
 
-        <section className="home-about-app">
-          <div className="home-about-app-right">
-            <img className="home-about-app-right-img" src={appVision} alt="" />
-          </div>
-          <div className="home-about-app-left">
-            <p>{t("our_vision_desc")}</p>
-            <p>{t("our_vision_desc")}</p>
-          </div>
-        </section>
+          <section className="home-about-app">
+            <div className="home-about-app-right">
+              <img
+                className="home-about-app-right-img"
+                src={appVision}
+                alt=""
+              />
+            </div>
+            <div className="home-about-app-left">
+              <p>{t("our_vision_desc")}</p>
+              <p>{t("our_vision_desc")}</p>
+            </div>
+          </section>
 
-        {/* <section className="testimonial">
+          {/* <section className="testimonial">
           <div className="testimonial-wrapper">
             <Testimonial />
           </div>
         </section> */}
-        {/* <section className="testimonial">
+          {/* <section className="testimonial">
           <div className="testimonial-wrapper">
             {testimonials.map((testimonial, index) => (
               <Testimonial
@@ -263,6 +268,7 @@ function Home() {
             ))}
           </div>
         </section> */}
+        </div>
       </div>
     </div>
   );

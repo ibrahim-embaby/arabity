@@ -22,20 +22,21 @@
 }
 .profile-bottom-left {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .user-ratings-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding-top: 30px;
-  padding-bottom: 30px;
 }
 
 .user-rating {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 185px;
   padding: 10px;
   background-color: var(--main-color);
 }
@@ -270,9 +271,6 @@
     flex-direction: column;
   }
 
-  .profile-bottom h2 {
-    padding: 10px;
-  }
   .workshopOwner-profile-info-wrapper {
     flex-direction: column;
     align-items: normal;
@@ -283,10 +281,6 @@
   }
   .workshopOwner-profile-info-services {
     font-size: 15px;
-  }
-
-  .user-ratings-wrapper {
-    padding: 20px;
   }
 }
 

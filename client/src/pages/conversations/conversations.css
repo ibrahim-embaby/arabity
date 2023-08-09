@@ -1,17 +1,12 @@
 .conversations {
   display: flex;
   min-height: calc(100vh - var(--difference-value));
-  padding: 0 20px;
-  flex-direction: column;
-  direction: rtl;
+  justify-content: center;
 }
 
-.conversations-page-title {
+/* .conversations-page-title {
   padding: 10px 0;
-}
-.container {
-  width: 100%;
-}
+} */
 
 .conversation-item {
   display: flex;

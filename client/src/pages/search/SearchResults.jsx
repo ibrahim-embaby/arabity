@@ -60,39 +60,43 @@ function SearchResults() {
       className="search-results"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
-      <SearchSidebar
-        params={params}
-        service={service}
-        services={services}
-        setService={setService}
-        province={province}
-        provinces={provinces}
-        setProvince={setProvince}
-        car={car}
-        cars={cars}
-        setCar={setCar}
-        t={t}
-        resetFormHandler={resetFormHandler}
-      />
+      <div className="container">
+        <div className="search-results-wrapper">
+          <SearchSidebar
+            params={params}
+            service={service}
+            services={services}
+            setService={setService}
+            province={province}
+            provinces={provinces}
+            setProvince={setProvince}
+            car={car}
+            cars={cars}
+            setCar={setCar}
+            t={t}
+            resetFormHandler={resetFormHandler}
+          />
 
-      <div className="search-results-main">
-        <p className="search-results-count">
-          {t("search_results")} {searchResultsCount}
-        </p>
-        <div className="search-results-main-items">
-          {loading ? (
-            <div className="loading-page">
-              <CircularProgress color="primary" />
+          <div className="search-results-main">
+            <p className="search-results-count">
+              {t("search_results")} {searchResultsCount}
+            </p>
+            <div className="search-results-main-items">
+              {loading ? (
+                <div className="loading-page">
+                  <CircularProgress color="primary" />
+                </div>
+              ) : searchResults.length ? (
+                searchResults.map((item) => (
+                  <SearchItem key={item.id} item={item} />
+                ))
+              ) : (
+                <p className="no-results-found">{t("no_results")}</p>
+              )}
             </div>
-          ) : searchResults.length ? (
-            searchResults.map((item) => (
-              <SearchItem key={item.id} item={item} />
-            ))
-          ) : (
-            <p className="no-results-found">{t("no_results")}</p>
-          )}
+            <Pagination page={page} setPage={setPage} pages={pages} />
+          </div>
         </div>
-        <Pagination page={page} setPage={setPage} pages={pages} />
       </div>
     </div>
   );

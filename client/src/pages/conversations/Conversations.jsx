@@ -27,8 +27,8 @@ function Conversations() {
       className="conversations"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
-      <h2 className="conversations-page-title">{t("user_conversations")}</h2>
       <div className="container">
+        <h2 className="conversations-page-title">{t("user_conversations")}</h2>
         {conversations.length > 0 ? (
           conversations.map((conversation) => (
             <Link

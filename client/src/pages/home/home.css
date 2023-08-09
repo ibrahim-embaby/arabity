@@ -94,6 +94,12 @@
   font-weight: bold;
 }
 
+.home-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
 .home-app-features {
   display: flex;
   align-items: center;
