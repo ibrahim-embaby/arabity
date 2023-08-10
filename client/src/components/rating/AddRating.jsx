@@ -33,7 +33,8 @@ function AddRating({ id }) {
 
   const rateFormHandler = (e) => {
     e.preventDefault();
-    if (text.trim() === "") return toast.error("من فضلك اكتب سبب تقييمك");
+    console.log(text.trim());
+    if (!text.trim()) return toast.info("من فضلك اكتب سبب تقييمك");
     if (rate === 0) return toast.error("من فضلك اختر تقييما");
 
     dispatch(rateWorkshopOwner(rate, id, text));

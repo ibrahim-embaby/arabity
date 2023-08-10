@@ -41,14 +41,17 @@ export function fetchOtherUserData(userId, type) {
 export function fetchUserConversations(userId) {
   return async (dispatch, getState) => {
     try {
+      dispatch(conversationActions.setLoading());
       const { data } = await request.get(`/api/conversations/${userId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
         },
       });
       dispatch(conversationActions.setConversations(data));
+      dispatch(conversationActions.clearLoading());
     } catch (error) {
       console.log(error);
+      dispatch(conversationActions.clearLoading());
       toast.error(error.response.data.message);
     }
   };

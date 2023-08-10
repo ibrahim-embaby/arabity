@@ -10,7 +10,7 @@ import limitText from "../../utils/limitText";
 function Conversations() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { conversations } = useSelector((state) => state.conversation);
+  const { conversations, loading } = useSelector((state) => state.conversation);
   const { t, i18n } = useTranslation();
   document.title = t("user_conversations_page_title");
 
@@ -20,7 +20,7 @@ function Conversations() {
 
   useEffect(() => {
     dispatch(fetchUserConversations(user.id));
-  }, [conversations]);
+  }, []);
 
   return (
     <div
@@ -29,7 +29,9 @@ function Conversations() {
     >
       <div className="container">
         <h2 className="conversations-page-title">{t("user_conversations")}</h2>
-        {conversations.length > 0 ? (
+        {loading ? (
+          t("loading")
+        ) : conversations.length > 0 ? (
           conversations.map((conversation) => (
             <Link
               to={`/message/${conversation.id}`}

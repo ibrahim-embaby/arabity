@@ -5,6 +5,7 @@ const conversationSlice = createSlice({
   initialState: {
     conversations: [],
     otherUser: null,
+    loading: false,
   },
   reducers: {
     setConversations(state, action) {
@@ -12,6 +13,12 @@ const conversationSlice = createSlice({
     },
     setOtherUser(state, action) {
       state.otherUser = action.payload;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    clearLoading(state) {
+      state.loading = false;
     },
   },
 });

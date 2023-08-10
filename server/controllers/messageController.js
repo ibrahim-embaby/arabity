@@ -42,7 +42,7 @@ module.exports.getChatMessagesCtrl = asyncHandler(async (req, res) => {
     const { conversationId } = req.params;
     if (
       req.user.id !== conversationId.substring(0, 24) &&
-      req.user.id !== conversationId.substring(24, 28)
+      req.user.id !== conversationId.substring(24, 48)
     ) {
       return res.status(403).json({ message: "لا يمكنك عرض هذه المحادثة" });
     }

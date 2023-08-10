@@ -48,7 +48,7 @@ module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
       (conversation) => conversation.lastMessage
     );
 
-    res.status(201).json(startedConversations);
+    res.status(200).json(startedConversations);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "خطأ في الخادم" });

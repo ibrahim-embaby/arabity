@@ -9,6 +9,7 @@
 .search-results-wrapper {
   display: flex;
   gap: 20px;
+  min-height: calc(100vh - var(--difference-value));
 }
 
 .search-results-main {

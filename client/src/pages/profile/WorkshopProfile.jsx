@@ -153,7 +153,8 @@ function WorkshopProfile() {
 
               <div className="workshopOwner-profile-info-item">
                 <span className="workshopOwner-profile-info-title">
-                  {t("workshop_branches")}
+                  {t("workshop_branches")} (
+                  {workshopOwner?.workshopBranches.length})
                 </span>
                 <div className="workshopOwner-profile-info-branches">
                   {workshopOwner?.workshopBranches.map((branch, index) => (
