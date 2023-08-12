@@ -22,10 +22,11 @@ function SearchItem({ item }) {
       <div className="image-wrapper">
         <img
           className="workshop-image"
-          src="/images/workshop-owner-avatar.png"
+          src="https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
           alt=""
         />
       </div>
+
       <div className="info-wrapper">
         <div className="workshop-name">
           <span>{limitText(item.workshopName, 10)}</span>
@@ -39,18 +40,16 @@ function SearchItem({ item }) {
         <div className="info-item-wrapper">
           <CarRepairIcon sx={{ color: "#333" }} />
           <div className="info-item-data">
-            {item.cars.map((car) => (
-              <span key={car}>{car} - </span>
+            {item.cars.map((car, index) => (
+              <span key={index}>{car} - </span>
             ))}
           </div>
         </div>
         <div className="info-item-wrapper">
           <LocationOnIcon sx={{ color: "#333" }} />
           <div className="info-item-data">
-            {item.workshopBranches.map((branch) => (
-              <span key={branch.workshopProvince}>
-                {branch.branchProvince} -{" "}
-              </span>
+            {item.workshopBranches.map((branch, index) => (
+              <span key={index}>{branch.branchProvince} - </span>
             ))}
           </div>
         </div>

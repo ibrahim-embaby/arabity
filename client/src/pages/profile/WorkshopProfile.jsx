@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import RatingMui from "../../components/rating/RatingMui";
 import { useTranslation } from "react-i18next";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CameraIcon from "@mui/icons-material/Camera";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -85,14 +86,14 @@ function WorkshopProfile() {
             {user?.id === id && <button className="edit-profile">تعديل</button>}
             <div className="workshopOwner-profile-image-wrapper">
               <img
-                src="/images/workshop-owner-avatar.png"
+                src="https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
                 alt=""
                 className="workshopOwner-profile-image"
               />
               {user?.id === id && (
                 <form>
                   <label htmlFor="file" className="edit-profile-pic">
-                    <i className="bi bi-camera-fill"></i>
+                    <CameraIcon />
                   </label>
                   <input type="file" hidden id="file" />
                 </form>
@@ -195,7 +196,6 @@ function WorkshopProfile() {
             <div className="workshopOwner-profile-contact">
               <h4> {t("contact_information")}</h4>
               <p className="workshopOwner-profile-contact-item">
-                <i className="bi bi-person-fill search-item-title"></i>
                 {workshopOwner?.username}
               </p>
 

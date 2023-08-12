@@ -1,5 +1,4 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const helmet = require("helmet");
 const cors = require("cors");
 const connectToDb = require("./config/connectToDb");
