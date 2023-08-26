@@ -14,6 +14,8 @@ import RatingMui from "../../components/rating/RatingMui";
 import { useTranslation } from "react-i18next";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CameraIcon from "@mui/icons-material/Camera";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -99,17 +101,19 @@ function WorkshopProfile() {
           <div className="workshopOwner-profile-top">
             {user?.id === id && <button className="edit-profile">تعديل</button>}
             <div className="workshopOwner-profile-image-wrapper">
-              <img
-                src={
-                  workshopImg
-                    ? URL.createObjectURL(workshopImg)
-                    : workshopOwner?.workshopPhoto.url
-                    ? workshopOwner?.workshopPhoto.url
-                    : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
-                }
-                alt=""
-                className="workshopOwner-profile-image"
-              />
+              <Zoom>
+                <img
+                  src={
+                    workshopImg
+                      ? URL.createObjectURL(workshopImg)
+                      : workshopOwner?.workshopPhoto.url
+                      ? workshopOwner?.workshopPhoto.url
+                      : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+                  }
+                  alt=""
+                  className="workshopOwner-profile-image"
+                />
+              </Zoom>
               {user?.id === id && (
                 <form onSubmit={handleUploadWorkshopImg}>
                   <label htmlFor="file" className="edit-profile-pic">
