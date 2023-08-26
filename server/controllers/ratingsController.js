@@ -41,16 +41,25 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
  * @access private (only user himself)
  */
 module.exports.deleteRatingCtrl = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const rating = await WorkshopRatings.findById(id);
+  try {
+    const { id } = req.params;
+    const rating = await WorkshopRatings.findById(id);
 
-  if (rating && (req.user.id === rating.user.toString() || req.user.isAdmin)) {
-    const deletedRating = await WorkshopRatings.findByIdAndDelete(id);
-    res
-      .status(200)
-      .json({ ratingId: deletedRating._id, message: "تم حذف المراجعة بنجاح" });
-  } else {
-    res.status(500).json({ message: "حدث شئ خاطئ" });
+    if (
+      rating &&
+      (req.user.id === rating.user.toString() || req.user.isAdmin)
+    ) {
+      const deletedRating = await WorkshopRatings.findByIdAndDelete(id);
+      res.status(200).json({
+        ratingId: deletedRating._id,
+        message: "تم حذف المراجعة بنجاح",
+      });
+    } else {
+      res.status(500).json({ message: "لم يتم الحذف بنجاح، اعد المحاولة" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error });
   }
 });
 
@@ -84,6 +93,6 @@ module.exports.getAllRatings = asyncHandler(async (req, res) => {
     return res.status(403).json({ message: "دخول غير مسموح" });
   }
 
-  const ratings = await WorkshopRatings.find();
+  const ratings = await WorkshopRatings.find().populate("user", "username");
   res.status(200).json(ratings);
 });

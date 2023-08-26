@@ -1,7 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const { WorkshopOwner } = require("../models/WorkshopOwner");
 const { WorkshopRatings } = require("../models/WorkshopRatings");
-
+const path = require("path");
+const {
+  cloudinaryImageUpload,
+  cloudinaryRemoveImage,
+} = require("../utils/cloudinary");
+const fs = require("fs");
 /**
  * @desc get workshop owner
  * @route /api/workshop-owner/:id
@@ -86,4 +91,77 @@ module.exports.reportWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
 module.exports.getWorkshopsCountCtrl = asyncHandler(async (req, res) => {
   const count = await WorkshopOwner.count();
   res.status(200).json(count);
+});
+
+/**
+ * @desc update workshop
+ * @route /api/workshop-owner/:id
+ * @method PUT
+ * @access private(only user itself)
+ */
+module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const workshopOwnerExist = await WorkshopOwner.findById(id);
+    if (!workshopOwnerExist)
+      return res
+        .status(404)
+        .json({ message: "هذه الورشة غير موجودة، أو ربما تم حذفها" });
+    const updatedWorkshop = await WorkshopOwner.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ data: updatedWorkshop, message: "تم تحديث بيانات الورشة بنجاح" });
+  } catch (error) {
+    res.status(500).json({ message: "خطأ في الخادم" });
+  }
+});
+
+/**
+ * @desc update workshop photo
+ * @route /api/workshop-owner/:id/photo
+ * @method POST
+ * @access private(only user itself)
+ */
+module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
+  try {
+    if (!req.file)
+      return res.status(400).json({ message: "يرجي ارفاق الصورة" });
+    // get the path to the image
+    const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+    // upload to cloudinary
+    const result = await cloudinaryImageUpload(imagePath);
+    console.log(result);
+    // get the user from DB
+    const workshopOwner = await WorkshopOwner.findById(req.user.id);
+
+    // delete the old profile photo if exist
+    if (workshopOwner.workshopPhoto.publicId !== null) {
+      await cloudinaryRemoveImage(workshopOwner.workshopPhoto.publicId);
+    }
+
+    // change the profilePhoto if exist
+    workshopOwner.workshopPhoto = {
+      url: result.secure_url,
+      publicId: result.public_id,
+    };
+    await workshopOwner.save();
+
+    // send response to client
+    res.status(201).json({
+      message: "تم تحميل الصورة بنجاح",
+      profilePhoto: {
+        url: result.secure_url,
+        publicId: result.public_id,
+      },
+    });
+
+    // remove image from the server (images folder)
+    fs.unlinkSync(imagePath);
+  } catch (error) {
+    res.status(500).json({ message: "خطأ في الخادم" });
+  }
 });
