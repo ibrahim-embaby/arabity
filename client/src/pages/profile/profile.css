@@ -102,10 +102,20 @@
   font-size: 15px;
 }
 
+.upload-workshop-img-btn {
+  position: absolute;
+  right: -64px;
+  bottom: -1px;
+  cursor: pointer;
+  padding: 2px;
+  font-weight: bold;
+}
+
 .workshopOwner-profile-image {
   height: 150px;
   width: 150px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .workshopOwner-profile-top-info {

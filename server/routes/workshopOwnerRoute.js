@@ -3,6 +3,7 @@ const {
   getWorkshopOwnerCtrl,
   getWorkshopsCountCtrl,
   uploadWorkshopPhotoCtrl,
+  updateWorkshopCtrl,
 } = require("../controllers/workshopController");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");

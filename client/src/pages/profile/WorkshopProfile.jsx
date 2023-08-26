@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchWorkshopOwner } from "../../redux/apiCalls/workshopOwnerApiCall";
+import {
+  fetchWorkshopOwner,
+  uploadWorkshopImg,
+} from "../../redux/apiCalls/workshopOwnerApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
@@ -17,6 +20,7 @@ function WorkshopProfile() {
   const navigate = useNavigate();
 
   const [avgRating, setAvgRating] = useState(0);
+  const [workshopImg, setWorkshopImg] = useState(null);
   const { workshopOwner, loading } = useSelector(
     (state) => state.workshopOwner
   );
@@ -66,6 +70,16 @@ function WorkshopProfile() {
       console.log(error);
     }
   };
+
+  const handleUploadWorkshopImg = (e) => {
+    e.preventDefault();
+    if (!workshopImg) return toast.error("لا توجد صورة");
+    const formData = new FormData();
+    formData.append("image", workshopImg);
+    dispatch(uploadWorkshopImg(id, formData));
+    setWorkshopImg(null);
+  };
+
   return loading ? (
     <div
       className="loading-page"
@@ -86,16 +100,34 @@ function WorkshopProfile() {
             {user?.id === id && <button className="edit-profile">تعديل</button>}
             <div className="workshopOwner-profile-image-wrapper">
               <img
-                src="https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+                src={
+                  workshopImg
+                    ? URL.createObjectURL(workshopImg)
+                    : workshopOwner?.workshopPhoto.url
+                    ? workshopOwner?.workshopPhoto.url
+                    : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+                }
                 alt=""
                 className="workshopOwner-profile-image"
               />
               {user?.id === id && (
-                <form>
+                <form onSubmit={handleUploadWorkshopImg}>
                   <label htmlFor="file" className="edit-profile-pic">
                     <CameraIcon />
                   </label>
-                  <input type="file" hidden id="file" />
+                  <input
+                    type="file"
+                    hidden
+                    id="file"
+                    onChange={(e) => {
+                      setWorkshopImg(e.target.files[0]);
+                    }}
+                  />
+                  {workshopImg && (
+                    <button type="submit" className="upload-workshop-img-btn">
+                      upload
+                    </button>
+                  )}
                 </form>
               )}
             </div>

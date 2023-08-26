@@ -65,7 +65,6 @@ export function loginWorkshopOwner(user) {
         user
       );
       dispatch(authActions.setUser(data));
-      localStorage.setItem("userInfo", JSON.stringify(data));
     } catch (err) {
       toast.error(err.response.data.message);
     }

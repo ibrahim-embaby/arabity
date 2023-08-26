@@ -11,6 +11,9 @@ const workshopOwnerSlice = createSlice({
     setWorkshopOwner(state, action) {
       state.workshopOwner = action.payload;
     },
+    setWorkshopOwnerPhoto(state, action) {
+      state.workshopOwner.workshopPhoto = action.payload;
+    },
     addRatingToWorkshopOwner(state, action) {
       state.workshopOwner.workshopRatings.push(action.payload);
     },

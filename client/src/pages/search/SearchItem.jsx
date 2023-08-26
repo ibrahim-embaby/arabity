@@ -22,7 +22,10 @@ function SearchItem({ item }) {
       <div className="image-wrapper">
         <img
           className="workshop-image"
-          src="https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+          src={
+            item.workshopPhoto.url ||
+            "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+          }
           alt=""
         />
       </div>
@@ -32,25 +35,30 @@ function SearchItem({ item }) {
           <span>{limitText(item.workshopName, 10)}</span>
           <RatingMui rating={avgRating} />
         </div>
-
-        <div className="info-item-wrapper">
-          <PersonIcon sx={{ color: "#333" }} />
-          {limitText(item.username, 10)}
-        </div>
-        <div className="info-item-wrapper">
-          <CarRepairIcon sx={{ color: "#333" }} />
-          <div className="info-item-data">
-            {item.cars.map((car, index) => (
-              <span key={index}>{car} - </span>
-            ))}
+        <div className="info-items">
+          <div className="info-item-wrapper">
+            <PersonIcon sx={{ color: "#aaa" }} />
+            {limitText(item.username, 10)}
           </div>
-        </div>
-        <div className="info-item-wrapper">
-          <LocationOnIcon sx={{ color: "#333" }} />
-          <div className="info-item-data">
-            {item.workshopBranches.map((branch, index) => (
-              <span key={index}>{branch.branchProvince} - </span>
-            ))}
+          <div className="info-item-wrapper">
+            <CarRepairIcon sx={{ color: "#aaa" }} />
+            <div className="info-item-data">
+              {item.cars.map((car, index) => (
+                <span className="info-item-data-text" key={index}>
+                  {car}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="info-item-wrapper">
+            <LocationOnIcon sx={{ color: "#aaa" }} />
+            <div className="info-item-data">
+              {item.workshopBranches.map((branch, index) => (
+                <span className="info-item-data-text" key={index}>
+                  {branch.branchProvince}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

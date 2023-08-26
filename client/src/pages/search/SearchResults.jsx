@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { cars, provinces, services } from "../../dummyData";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { useLocation, useSearchParams } from "react-router-dom";
-import Pagination from "../../components/pagination/Pagination";
+// import Pagination from "../../components/pagination/Pagination";
 import { useTranslation } from "react-i18next";
 import SearchSidebar from "./SearchSidebar";
+import { Pagination } from "@mui/material";
 
 function SearchResults() {
   const { searchResults, loading, searchResultsCount } = useSelector(
@@ -43,7 +44,6 @@ function SearchResults() {
   }, [dispatch, car, service, province, page]);
 
   useEffect(() => {
-    // Check if the `service`, `car`, or `province` state variables have changed.
     setSearchParams(
       {
         service: service,
@@ -94,7 +94,20 @@ function SearchResults() {
                 <p className="no-results-found">{t("no_results")}</p>
               )}
             </div>
-            <Pagination page={page} setPage={setPage} pages={pages} />
+            <Pagination
+              style={{
+                direction: "ltr",
+                alignSelf: "center",
+                padding: "10px 0px",
+              }}
+              count={pages}
+              variant="outlined"
+              shape="rounded"
+              onChange={(e, value) => {
+                setPage(value);
+              }}
+            />
+            {/* <Pagination page={page} setPage={setPage} pages={pages} /> */}
           </div>
         </div>
       </div>

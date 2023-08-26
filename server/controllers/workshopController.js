@@ -68,19 +68,19 @@ module.exports.deleteWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
  * @method PUT
  * @access private (only logged user)
  */
-module.exports.reportWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const { text } = req.body;
-  const workshopOwner = await WorkshopOwner.findById(id);
-  if (!workshopOwner) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
-  }
+// module.exports.reportWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   const { text } = req.body;
+//   const workshopOwner = await WorkshopOwner.findById(id);
+//   if (!workshopOwner) {
+//     return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+//   }
 
-  await WorkshopOwner.findByIdAndUpdate(id, {
-    reports: { $push: { user: req.user.id, text } },
-  });
-  res.status(200).json({ workshop: workshopOwner, message: "تم ارسال بلاغك" });
-});
+//   await WorkshopOwner.findByIdAndUpdate(id, {
+//     reports: { $push: { user: req.user.id, text } },
+//   });
+//   res.status(200).json({ workshop: workshopOwner, message: "تم ارسال بلاغك" });
+// });
 
 /**
  * @desc get workshops count
@@ -134,7 +134,7 @@ module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
     const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
     // upload to cloudinary
     const result = await cloudinaryImageUpload(imagePath);
-    console.log(result);
+
     // get the user from DB
     const workshopOwner = await WorkshopOwner.findById(req.user.id);
 
@@ -153,7 +153,7 @@ module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
     // send response to client
     res.status(201).json({
       message: "تم تحميل الصورة بنجاح",
-      profilePhoto: {
+      workshopPhoto: {
         url: result.secure_url,
         publicId: result.public_id,
       },
@@ -162,6 +162,7 @@ module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
     // remove image from the server (images folder)
     fs.unlinkSync(imagePath);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "خطأ في الخادم" });
   }
 });

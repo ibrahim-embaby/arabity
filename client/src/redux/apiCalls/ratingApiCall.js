@@ -19,8 +19,8 @@ export function rateWorkshopOwner(rating, workshopOwner, text) {
       );
       dispatch(workshopOwnerActions.addRatingToWorkshopOwner(data));
       toast.success("تم التقييم بنجاح");
-    } catch (err) {
-      toast.error(err.response.data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
 }
@@ -36,6 +36,7 @@ export function deleteRating(id) {
       dispatch(
         workshopOwnerActions.clearRatingFromWorkshopOwner(data.ratingId)
       );
+      console.log(data);
       dispatch(ratingActions.deleteRating(data.ratingId));
       toast.success(data.message);
     } catch (err) {

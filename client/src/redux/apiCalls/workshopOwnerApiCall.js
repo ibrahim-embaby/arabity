@@ -15,7 +15,7 @@ export function fetchWorkshopOwner(id) {
       dispatch(workshopOwnerActions.clearLoading());
     } catch (err) {
       toast.error(err.response.data.message);
-      dispatch(workshopOwnerActions.setLoading());
+      dispatch(workshopOwnerActions.clearLoading());
     }
   };
 }
@@ -33,6 +33,34 @@ export function deleteWorkshop(id) {
       dispatch(ratingActions.deleteRatingsRelatedToWorkshop(id));
       toast.success(data.message);
     } catch (err) {
+      toast.error(err.response.data.message);
+    }
+  };
+}
+
+// /api/workshop-owner/:id/photo
+export function uploadWorkshopImg(id, workshopImg) {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(workshopOwnerActions.setLoading());
+      const { data } = await request.post(
+        `/api/workshop-owner/${id}/photo`,
+        workshopImg,
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      dispatch(workshopOwnerActions.setWorkshopOwnerPhoto(data.workshopPhoto));
+      dispatch(workshopOwnerActions.clearLoading());
+      toast.success(data.message);
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+      user.profilePhoto = data?.workshopPhoto;
+      localStorage.setItem("userInfo", JSON.stringify(user));
+    } catch (err) {
+      dispatch(workshopOwnerActions.clearLoading());
       toast.error(err.response.data.message);
     }
   };

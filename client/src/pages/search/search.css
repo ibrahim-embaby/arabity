@@ -112,12 +112,18 @@
   width: 100px;
   height: 100px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .info-wrapper {
   width: 100%;
 }
 
+.info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 .workshop-name {
   font-size: 25px;
   color: var(--red-color);
@@ -132,6 +138,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.info-item-data {
+  display: flex;
+  gap: 5px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.info-item-data-text {
+  background-color: #dddddd98;
+  border-radius: 3px;
+  padding: 0 4px;
 }
 
 .no-results-found {
