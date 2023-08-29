@@ -48,7 +48,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 - 🚧 User Notfications
 - 🚧 User Post His Order/Service with Comment Feature
 - 🚧 Search Results Sorting
-- 🚧 Search By City After Selecing Province
+- 🚧 Search By City After Selecting Province
 - 🚧 Admin Dashboard
 - 🚧 Reset Password Mail using Nodemailer
 

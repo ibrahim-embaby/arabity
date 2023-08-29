@@ -60,12 +60,12 @@ const WorkshopOwnerSchema = new mongoose.Schema(
     views: {
       type: Array,
     },
-    socialMedia: [
-      {
-        type: String,
-        default: { url: "" },
-      },
-    ],
+    // socialMedia: [
+    //   {
+    //     type: String,
+    //     default: { url: "" },
+    //   },
+    // ],
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
@@ -106,6 +106,26 @@ function validateCreateWorkshopOwner(obj) {
   return schema.validate(obj);
 }
 
+function validateUpdateWorkshopOwner(obj) {
+  const schema = Joi.object({
+    username: Joi.string().min(1),
+    password: Joi.string().min(1),
+    workshopName: Joi.string().min(1),
+    workshopBranches: Joi.array().items(
+      Joi.object({
+        branchProvince: Joi.string().min(1).required(),
+        branchCity: Joi.string().min(1).required(),
+        branchAddress: Joi.string().min(1).required(),
+        branchMobile: Joi.string().min(1).required(),
+      })
+    ),
+    workshopServices: Joi.array(),
+    cars: Joi.array(),
+    workshopDescription: Joi.string(),
+  });
+  return schema.validate(obj);
+}
+
 function validateLoginWorkshopOwner(obj) {
   const schema = Joi.object({
     email: Joi.string().min(1).required().email(),
@@ -120,4 +140,5 @@ module.exports = {
   WorkshopOwner,
   validateCreateWorkshopOwner,
   validateLoginWorkshopOwner,
+  validateUpdateWorkshopOwner,
 };

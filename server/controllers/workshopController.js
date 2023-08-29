@@ -1,5 +1,8 @@
 const asyncHandler = require("express-async-handler");
-const { WorkshopOwner } = require("../models/WorkshopOwner");
+const {
+  WorkshopOwner,
+  validateUpdateWorkshopOwner,
+} = require("../models/WorkshopOwner");
 const { WorkshopRatings } = require("../models/WorkshopRatings");
 const path = require("path");
 const {
@@ -7,6 +10,7 @@ const {
   cloudinaryRemoveImage,
 } = require("../utils/cloudinary");
 const fs = require("fs");
+const bcrypt = require("bcrypt");
 /**
  * @desc get workshop owner
  * @route /api/workshop-owner/:id
@@ -101,15 +105,24 @@ module.exports.getWorkshopsCountCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
   try {
+    const { error } = validateUpdateWorkshopOwner(req.body);
+    if (error) return res.status(400).json({ message: error.message });
+
     const { id } = req.params;
     const workshopOwnerExist = await WorkshopOwner.findById(id);
     if (!workshopOwnerExist)
       return res
         .status(404)
         .json({ message: "هذه الورشة غير موجودة، أو ربما تم حذفها" });
+
+    let hashedPassword;
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      hashedPassword = await bcrypt.hash(req.body.password, salt);
+    }
     const updatedWorkshop = await WorkshopOwner.findByIdAndUpdate(
       id,
-      req.body,
+      { ...req.body, password: hashedPassword },
       { new: true }
     );
     res
@@ -121,7 +134,7 @@ module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc update workshop photo
+ * @desc upload workshop photo
  * @route /api/workshop-owner/:id/photo
  * @method POST
  * @access private(only user itself)

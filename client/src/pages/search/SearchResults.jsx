@@ -78,9 +78,11 @@ function SearchResults() {
           />
 
           <div className="search-results-main">
-            <p className="search-results-count">
-              {t("search_results")} {searchResultsCount}
-            </p>
+            {!loading && (
+              <p className="search-results-count">
+                {t("search_results")} {searchResultsCount}
+              </p>
+            )}
             <div className="search-results-main-items">
               {loading ? (
                 <div className="loading-page">
@@ -94,19 +96,21 @@ function SearchResults() {
                 <p className="no-results-found">{t("no_results")}</p>
               )}
             </div>
-            <Pagination
-              style={{
-                direction: "ltr",
-                alignSelf: "center",
-                padding: "10px 0px",
-              }}
-              count={pages}
-              variant="outlined"
-              shape="rounded"
-              onChange={(e, value) => {
-                setPage(value);
-              }}
-            />
+            {!loading && (
+              <Pagination
+                style={{
+                  direction: "ltr",
+                  alignSelf: "center",
+                  padding: "10px 0px",
+                }}
+                count={pages}
+                variant="outlined"
+                shape="rounded"
+                onChange={(e, value) => {
+                  setPage(value);
+                }}
+              />
+            )}
             {/* <Pagination page={page} setPage={setPage} pages={pages} /> */}
           </div>
         </div>
