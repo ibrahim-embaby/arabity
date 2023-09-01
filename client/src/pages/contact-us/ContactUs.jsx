@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import "./contact-us.css";
-import LinkedIn from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
+// import LinkedIn from "@mui/icons-material/LinkedIn";
+// import GitHubIcon from "@mui/icons-material/GitHub";
 import { useEffect } from "react";
 
 function ContactUs() {
@@ -23,7 +23,7 @@ function ContactUs() {
         <h3 className="contact-us-item-title"> {t("our_vision_title")}</h3>
         <p className="contact-us-item-desc">{t("our_vision_desc")}</p>
       </div>
-      <div className="contact-us-item founders">
+      {/* <div className="contact-us-item founders">
         <h3 className="contact-us-item-title">{t("founders_title")}</h3>
         <div className="founders-wrapper">
           <div className="founder-item">
@@ -46,13 +46,8 @@ function ContactUs() {
               </a>
             </div>
           </div>
-
-          {/* <div className="founder-item">
-            <img src="/images/founder2.jpg" alt="" className="founder-image" />
-            <p className="founder-name">{t("founder_borther")}</p>
-          </div> */}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
