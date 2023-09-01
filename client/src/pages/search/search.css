@@ -150,7 +150,8 @@
   background-color: rgb(218, 220, 224);
   color: rgb(60, 64, 67);
   border-radius: 3px;
-  padding: 0 4px;
+  padding: 0 6px;
+  line-height: 25px;
 }
 
 .no-results-found {

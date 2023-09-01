@@ -15,7 +15,7 @@ const WorkshopRatingsSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      min: 1,
+      min: 0.5,
       max: 5,
       required: true,
     },
@@ -34,7 +34,7 @@ const WorkshopRatings = mongoose.model(
 
 function validateCreateRating(obj) {
   const schema = Joi.object({
-    rating: Joi.number().min(1).max(5).required(),
+    rating: Joi.number().min(0.5).max(5).required(),
     text: Joi.string().trim().min(1).required(),
     workshopOwner: Joi.string().required(),
   });
