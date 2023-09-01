@@ -28,7 +28,6 @@ function SearchResults() {
 
   const RESULTS_PER_PAGE = 10;
   const pages = Math.ceil((searchResultsCount ?? 0) / RESULTS_PER_PAGE);
-
   const resetFormHandler = (e) => {
     e.preventDefault();
     setService("");
@@ -106,6 +105,7 @@ function SearchResults() {
                 count={pages}
                 variant="outlined"
                 shape="rounded"
+                page={page}
                 onChange={(e, value) => {
                   setPage(value);
                 }}
