@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  fetchWorkshopOwner,
+  fetchMechanic,
   uploadWorkshopImg,
-} from "../../redux/apiCalls/workshopOwnerApiCall";
+} from "../../redux/apiCalls/mechanicApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
@@ -23,9 +23,7 @@ function WorkshopProfile() {
 
   const [avgRating, setAvgRating] = useState(0);
   const [workshopImg, setWorkshopImg] = useState(null);
-  const { workshopOwner, loading } = useSelector(
-    (state) => state.workshopOwner
-  );
+  const { mechanic, loading } = useSelector((state) => state.mechanic);
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { t, i18n } = useTranslation();
@@ -33,17 +31,17 @@ function WorkshopProfile() {
   document.title = t("workshop_profile_page_title");
 
   useEffect(() => {
-    dispatch(fetchWorkshopOwner(id));
-    if (workshopOwner?.workshopRatings?.length) {
+    dispatch(fetchMechanic(id));
+    if (mechanic?.mechanicRatings?.length) {
       let sum = 0;
-      for (let i = 0; i < workshopOwner?.workshopRatings?.length; i++) {
-        sum += workshopOwner?.workshopRatings[i].rating;
+      for (let i = 0; i < mechanic?.mechanicRatings?.length; i++) {
+        sum += mechanic?.mechanicRatings[i].rating;
       }
-      setAvgRating(sum / workshopOwner?.workshopRatings?.length);
+      setAvgRating(sum / mechanic?.mechanicRatings?.length);
     } else {
       setAvgRating(0);
     }
-  }, [id, workshopOwner?.workshopRatings?.length, dispatch]);
+  }, [id, mechanic?.mechanicRatings?.length, dispatch]);
 
   const searchTagHandler = (service = "", car = "") => {
     const queryParams = new URLSearchParams();
@@ -64,7 +62,7 @@ function WorkshopProfile() {
     try {
       const conversationInfo = {
         userId: user.id,
-        WorkshopOwnerId: id,
+        mechanicId: id,
       };
       dispatch(createConversation(conversationInfo));
       navigate(`/message/${user.id + id}`);
@@ -81,7 +79,6 @@ function WorkshopProfile() {
     dispatch(uploadWorkshopImg(id, formData));
     setWorkshopImg(null);
   };
-
   return loading ? (
     <div
       className="loading-page"
@@ -93,25 +90,25 @@ function WorkshopProfile() {
     </div>
   ) : (
     <div
-      className="workshopOwner-profile"
+      className="mechanic-profile"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
       <div className="container">
-        <div className="workshopOwner-profile-wrapper">
-          <div className="workshopOwner-profile-top">
+        <div className="mechanic-profile-wrapper">
+          <div className="mechanic-profile-top">
             {user?.id === id && <button className="edit-profile">تعديل</button>}
-            <div className="workshopOwner-profile-image-wrapper">
+            <div className="mechanic-profile-image-wrapper">
               <Zoom>
                 <img
                   src={
                     workshopImg
                       ? URL.createObjectURL(workshopImg)
-                      : workshopOwner?.workshopPhoto.url
-                      ? workshopOwner?.workshopPhoto.url
+                      : mechanic?.workshopPhoto.url
+                      ? mechanic?.workshopPhoto.url
                       : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
                   }
                   alt=""
-                  className="workshopOwner-profile-image"
+                  className="mechanic-profile-image"
                 />
               </Zoom>
               {user?.id === id && (
@@ -135,31 +132,31 @@ function WorkshopProfile() {
                 </form>
               )}
             </div>
-            <p className="workshop-name">{workshopOwner?.workshopName}</p>
+            <p className="workshop-name">{mechanic?.workshopName}</p>
 
             <RatingMui rating={avgRating} />
           </div>
-          <div className="workshopOwner-profile-info-wrapper">
-            <div className="workshopOwner-profile-info">
-              <div className="workshopOwner-profile-info-desc workshopOwner-profile-info-item">
-                <span className="workshopOwner-profile-info-title">
+          <div className="mechanic-profile-info-wrapper">
+            <div className="mechanic-profile-info">
+              <div className="mechanic-profile-info-desc mechanic-profile-info-item">
+                <span className="mechanic-profile-info-title">
                   {t("workshop_desc_title")}
                 </span>
-                {workshopOwner?.workshopDescription ? (
+                {mechanic?.workshopDescription ? (
                   <div className="workshop-desc">
-                    {workshopOwner?.workshopDescription}
+                    {mechanic?.workshopDescription}
                   </div>
                 ) : (
                   <p className="no-workshop-desc">{t("no_workshop_desc")}</p>
                 )}
               </div>
 
-              <div className="workshopOwner-profile-info-item">
-                <span className="workshopOwner-profile-info-title">
+              <div className="mechanic-profile-info-item">
+                <span className="mechanic-profile-info-title">
                   {t("workshop_services")}
                 </span>
-                <div className="workshopOwner-profile-info-services">
-                  {workshopOwner?.workshopServices.map((service, index) => (
+                <div className="mechanic-profile-info-services">
+                  {mechanic?.workshopServices.map((service, index) => (
                     <p
                       key={index}
                       className="service-tag"
@@ -171,12 +168,12 @@ function WorkshopProfile() {
                 </div>
               </div>
 
-              <div className="workshopOwner-profile-info-item">
-                <span className="workshopOwner-profile-info-title">
+              <div className="mechanic-profile-info-item">
+                <span className="mechanic-profile-info-title">
                   {t("workshop_cars")}
                 </span>
-                <div className="workshopOwner-profile-info-services">
-                  {workshopOwner?.cars.map((car, index) => (
+                <div className="mechanic-profile-info-services">
+                  {mechanic?.cars.map((car, index) => (
                     <p
                       key={index}
                       onClick={() => searchTagHandler("", car)}
@@ -188,18 +185,14 @@ function WorkshopProfile() {
                 </div>
               </div>
 
-              <div className="workshopOwner-profile-info-item">
-                <span className="workshopOwner-profile-info-title">
-                  {t("workshop_branches")} (
-                  {workshopOwner?.workshopBranches.length})
+              <div className="mechanic-profile-info-item">
+                <span className="mechanic-profile-info-title">
+                  {t("workshop_branches")} ({mechanic?.workshopBranches.length})
                 </span>
-                <div className="workshopOwner-profile-info-branches">
-                  {workshopOwner?.workshopBranches.map((branch, index) => (
-                    <div
-                      key={index}
-                      className="workshopOwner-profile-info-branch"
-                    >
-                      <h5 className="workshopOwner-profile-info-branch-title">
+                <div className="mechanic-profile-info-branches">
+                  {mechanic?.workshopBranches.map((branch, index) => (
+                    <div key={index} className="mechanic-profile-info-branch">
+                      <h5 className="mechanic-profile-info-branch-title">
                         <LocationOnIcon />
                         {branch.branchProvince} - {branch.branchCity}
                       </h5>
@@ -210,34 +203,33 @@ function WorkshopProfile() {
                 </div>
               </div>
 
-              <div className="workshopOwner-profile-info-item workshopOwner-profile-info-ratings">
-                <span className="workshopOwner-profile-info-title">
-                  {t("workshop_ratings")} (
-                  {workshopOwner?.workshopRatings.length})
+              <div className="mechanic-profile-info-item mechanic-profile-info-ratings">
+                <span className="mechanic-profile-info-title">
+                  {t("workshop_ratings")} ({mechanic?.mechanicRatings.length})
                 </span>
                 {user &&
                   !user.workshopName &&
-                  !workshopOwner?.workshopRatings.filter(
+                  !mechanic?.mechanicRatings.filter(
                     (item) => item.user._id === user.id
                   ).length && <AddRating id={id} />}
 
-                {workshopOwner?.workshopRatings.length
-                  ? workshopOwner?.workshopRatings.map((r, index) => (
+                {mechanic?.mechanicRatings.length
+                  ? mechanic?.mechanicRatings.map((r, index) => (
                       <RatingComponent key={index} userRate={r} />
                     ))
                   : t("no_workshop_ratings")}
               </div>
             </div>
 
-            <div className="workshopOwner-profile-contact">
+            <div className="mechanic-profile-contact">
               <h4> {t("contact_information")}</h4>
-              <p className="workshopOwner-profile-contact-item">
-                {workshopOwner?.username}
+              <p className="mechanic-profile-contact-item">
+                {mechanic?.username}
               </p>
 
               {(!user || !user.workshopName) && (
                 <p
-                  className="workshopOwner-profile-contact-btn"
+                  className="mechanic-profile-contact-btn"
                   onClick={handleCreateConversation}
                 >
                   {t("send_message_btn")}

@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const { WorkshopOwner } = require("../models/WorkshopOwner");
-const { WorkshopRatings } = require("../models/WorkshopRatings");
+const { Mechanic } = require("../models/Mechanic");
+const { MechanicRating } = require("../models/MechanicRating");
 /**
  * @desc get all workshops
  * @route /api/search/workshop
@@ -9,18 +9,17 @@ const { WorkshopRatings } = require("../models/WorkshopRatings");
  */
 
 // Allow full text search
-WorkshopOwner.schema.index({ name: "text", description: "text" });
+Mechanic.schema.index({ name: "text", description: "text" });
 
 module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   const { province, car, service, page } = req.query;
   const pageSize = 10;
-
   const currentPage = parseInt(page, 10) || 1;
 
   let workshops;
   let count;
   if (province && car && service) {
-    workshops = await WorkshopOwner.find({
+    workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
           branchProvince: province,
@@ -30,11 +29,11 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
       workshopServices: { $in: service },
     })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
-      await WorkshopOwner.find({
+      await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
             branchProvince: province,
@@ -47,7 +46,7 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     return res.status(200).json({ workshops, count });
   }
   if (province && car) {
-    workshops = await WorkshopOwner.find({
+    workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
           branchProvince: province,
@@ -56,11 +55,11 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
       cars: { $in: car },
     })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
-      await WorkshopOwner.find({
+      await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
             branchProvince: province,
@@ -73,7 +72,7 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   }
 
   if (province && service) {
-    workshops = await WorkshopOwner.find({
+    workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
           branchProvince: province,
@@ -82,11 +81,11 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
       workshopServices: { $in: service },
     })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
-      await WorkshopOwner.find({
+      await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
             branchProvince: province,
@@ -99,17 +98,17 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   }
 
   if (service && car) {
-    workshops = await WorkshopOwner.find({
+    workshops = await Mechanic.find({
       cars: { $in: car },
       workshopServices: { $in: service },
     })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
     count = (
-      await WorkshopOwner.find({
+      await Mechanic.find({
         cars: { $in: car },
         workshopServices: { $in: service },
       })
@@ -118,7 +117,7 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   }
 
   if (province) {
-    workshops = await WorkshopOwner.find({
+    workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
           branchProvince: province,
@@ -126,12 +125,11 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
       },
     })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
-
     count = (
-      await WorkshopOwner.find({
+      await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
             branchProvince: province,
@@ -143,34 +141,34 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   }
 
   if (car) {
-    workshops = await WorkshopOwner.find({ cars: { $in: car } })
+    workshops = await Mechanic.find({ cars: { $in: car } })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
-    count = (await WorkshopOwner.find({ cars: { $in: car } })).length;
+    count = (await Mechanic.find({ cars: { $in: car } })).length;
     return res.status(200).json({ workshops, count });
   }
 
   if (service) {
-    workshops = await WorkshopOwner.find({ workshopServices: { $in: service } })
+    workshops = await Mechanic.find({ workshopServices: { $in: service } })
       .select("-password")
-      .populate("workshopRatings", "", WorkshopRatings)
+      .populate("mechanicRatings", "", MechanicRating)
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
-    count = (await WorkshopOwner.find({ workshopServices: { $in: service } }))
+    count = (await Mechanic.find({ workshopServices: { $in: service } }))
       .length;
     return res.status(200).json({ workshops, count });
   }
-  workshops = await WorkshopOwner.find()
+  workshops = await Mechanic.find()
     .select("-password")
-    .populate("workshopRatings", "", WorkshopRatings)
-    .sort({ workshopRatings: -1 })
+    .populate("mechanicRatings", "", MechanicRating)
+    .sort({ mechanicRatings: -1 })
     .skip((currentPage - 1) * pageSize)
     .limit(pageSize);
 
-  count = (await WorkshopOwner.find()).length;
+  count = (await Mechanic.find()).length;
   res.status(200).json({ workshops, count });
 });

@@ -31,8 +31,8 @@ function Conversations() {
         <h2 className="conversations-page-title">{t("user_conversations")}</h2>
         {loading ? (
           t("loading")
-        ) : conversations.length > 0 ? (
-          conversations.map((conversation) => (
+        ) : conversations?.length > 0 ? (
+          conversations?.map((conversation) => (
             <Link
               to={`/message/${conversation.id}`}
               className="conversation-item"
@@ -41,7 +41,7 @@ function Conversations() {
               <span className="conversation-item-sender">
                 {user.workshopName
                   ? conversation.userId.username
-                  : conversation.WorkshopOwnerId.username}
+                  : conversation.mechanicId.username}
               </span>
               <p className="conversation-item-text">
                 {limitText(conversation.lastMessage, 30)}

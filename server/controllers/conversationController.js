@@ -2,15 +2,15 @@ const asyncHandler = require("express-async-handler");
 const { Conversation } = require("../models/Conversation");
 const Message = require("../models/Message");
 /**
- * @desc chat between workshop owner and car owner
+ * @desc chat between mechanic and car owner
  * @route /api/conversations/
  * @method POST
  * @access private (only logged user)
  */
 module.exports.createConversationCtrl = asyncHandler(async (req, res) => {
   try {
-    const { userId, WorkshopOwnerId } = req.body;
-    const id = userId + WorkshopOwnerId;
+    const { userId, mechanicId } = req.body;
+    const id = userId + mechanicId;
     const isConversationExist = await Conversation.findOne({ id });
     if (isConversationExist) {
       return;
@@ -18,7 +18,7 @@ module.exports.createConversationCtrl = asyncHandler(async (req, res) => {
     const newConversation = new Conversation({
       id,
       userId,
-      WorkshopOwnerId,
+      mechanicId,
     });
     await newConversation.save();
     res.status(201).json(newConversation);
@@ -38,10 +38,10 @@ module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
     const conversations = await Conversation.find({
-      $or: [{ userId: id }, { WorkshopOwnerId: id }],
+      $or: [{ userId: id }, { mechanicId: id }],
     })
       .populate("userId", "username")
-      .populate("WorkshopOwnerId", "username")
+      .populate("mechanicId", "username")
       .sort({ updatedAt: -1 });
 
     const startedConversations = conversations.filter(

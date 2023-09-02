@@ -1,16 +1,16 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
-const WorkshopRatingsSchema = new mongoose.Schema(
+const MechanicRatingSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    workshopOwner: {
+    mechanic: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "WorkshopOwner",
+      ref: "Mechanic",
       required: true,
     },
     rating: {
@@ -27,21 +27,18 @@ const WorkshopRatingsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const WorkshopRatings = mongoose.model(
-  "WorkshopRatings",
-  WorkshopRatingsSchema
-);
+const MechanicRating = mongoose.model("MechanicRating", MechanicRatingSchema);
 
 function validateCreateRating(obj) {
   const schema = Joi.object({
     rating: Joi.number().min(0.5).max(5).required(),
     text: Joi.string().trim().min(1).required(),
-    workshopOwner: Joi.string().required(),
+    mechanic: Joi.string().required(),
   });
   return schema.validate(obj);
 }
 
 module.exports = {
-  WorkshopRatings,
+  MechanicRating,
   validateCreateRating,
 };

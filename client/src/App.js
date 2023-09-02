@@ -7,16 +7,16 @@ import Login from "./pages/forms/Login";
 import Register from "./pages/forms/Register";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
-import Profile from "./pages/profile/Profile";
+import UserProfile from "./pages/profile/UserProfile";
 import SearchResults from "./pages/search/SearchResults";
-import WorkshopProfile from "./pages/profile/WorkshopProfile";
-import UserProfileSettings from "./pages/profile/UserProfileSettings";
+import MechanicProfile from "./pages/profile/MechanicProfile";
+import UserProfileSettings from "./pages/profile/UserSettings";
 import Message from "./pages/message/Message";
 import NotFound from "./pages/not-found/NotFound";
 import Admin from "./pages/admin/Admin";
 import Conversations from "./pages/conversations/Conversations";
 import ContactUs from "./pages/contact-us/ContactUs";
-import WorkshopProfileSettings from "./pages/profile/WorkshopProfileSettings";
+import MechanicSettings from "./pages/profile/MechanicSettings";
 import "./i18n";
 
 function App() {
@@ -36,13 +36,13 @@ function App() {
           path="/register"
           element={user ? <Navigate to={"/"} /> : <Register />}
         />
-        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile/:id" element={<UserProfile />} />
         <Route
           path="/profile/:id/settings"
           element={
             user ? (
               user.workshopName ? (
-                <WorkshopProfileSettings />
+                <MechanicSettings />
               ) : (
                 <UserProfileSettings />
               )
@@ -52,10 +52,7 @@ function App() {
           }
         />
         <Route path="/search/workshops" element={<SearchResults />} />
-        <Route
-          path="/workshop-owner/profile/:id"
-          element={<WorkshopProfile />}
-        />
+        <Route path="/mechanic/profile/:id" element={<MechanicProfile />} />
         <Route
           path="/conversations"
           element={user ? <Conversations /> : <Navigate to={"/login"} />}

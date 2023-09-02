@@ -13,7 +13,7 @@ export function createConversation(conversationInfo) {
         withCredentials: true,
       });
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
       toast.error(error.response.data.message);
     }
   };
@@ -32,7 +32,7 @@ export function fetchOtherUserData(userId, type) {
         });
         dispatch(conversationActions.setOtherUser(data));
       } else {
-        const { data } = await request.get(`/api/workshop-owner/${userId}`, {
+        const { data } = await request.get(`/api/mechanic/${userId}`, {
           headers: {
             Cookie: document.cookie.i18next,
           },

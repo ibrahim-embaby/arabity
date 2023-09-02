@@ -1,10 +1,10 @@
 const {
-  deleteWorkshopOwnerCtrl,
-  getWorkshopOwnerCtrl,
   getWorkshopsCountCtrl,
-  uploadWorkshopPhotoCtrl,
-  updateWorkshopCtrl,
-} = require("../controllers/workshopController");
+  uploadMechanicPhotoCtrl,
+  deleteMechanicCtrl,
+  getMechanicCtrl,
+  updateMechanicCtrl,
+} = require("../controllers/mechanicController");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
 const {
@@ -15,28 +15,24 @@ const router = require("express").Router();
 
 /* --------------------------------- FUNCTIONS --------------------------------- */
 
-// /api/workshop-owner/count
+// /api/mechanic/count
 router.route("/count").get(getWorkshopsCountCtrl);
 
-// /api/workshop-owner/:id/photo
+// /api/mechanic/:id/photo
 router
   .route("/:id/photo")
   .post(
     validateObjectId,
     verifyTokenAndOnlyUser,
     photoUpload.single("image"),
-    uploadWorkshopPhotoCtrl
+    uploadMechanicPhotoCtrl
   );
 
-// /api/workshop-owner/:id
+// /api/mechanic/:id
 router
   .route("/:id")
-  .delete(
-    validateObjectId,
-    verifyTokenAndAuthorization,
-    deleteWorkshopOwnerCtrl
-  )
-  .get(validateObjectId, getWorkshopOwnerCtrl)
-  .put(validateObjectId, verifyTokenAndOnlyUser, updateWorkshopCtrl);
+  .delete(validateObjectId, verifyTokenAndAuthorization, deleteMechanicCtrl)
+  .get(validateObjectId, getMechanicCtrl)
+  .put(validateObjectId, verifyTokenAndOnlyUser, updateMechanicCtrl);
 
 module.exports = router;

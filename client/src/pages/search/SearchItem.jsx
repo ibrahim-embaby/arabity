@@ -9,16 +9,16 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 function SearchItem({ item }) {
   const [avgRating, setAvgRating] = useState(0);
   useEffect(() => {
-    if (item.workshopRatings.length) {
+    if (item.mechanicRatings.length) {
       let sum = 0;
-      for (let i = 0; i < item?.workshopRatings.length; i++) {
-        sum += item?.workshopRatings[i].rating;
+      for (let i = 0; i < item?.mechanicRatings.length; i++) {
+        sum += item?.mechanicRatings[i].rating;
       }
-      setAvgRating(sum / item?.workshopRatings.length);
+      setAvgRating(sum / item?.mechanicRatings.length);
     }
-  }, [item.workshopRatings.length]);
+  }, [item.mechanicRatings.length]);
   return (
-    <Link to={`/workshop-owner/profile/${item._id}`} className="search-item">
+    <Link to={`/mechanic/profile/${item._id}`} className="search-item">
       <div className="image-wrapper">
         <img
           className="workshop-image"

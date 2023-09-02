@@ -3,11 +3,11 @@ const {
   validateCreateMechanicPost,
   MechanicPost,
 } = require("../models/MechanicPost");
-const { WorkshopOwner } = require("../models/WorkshopOwner");
+const { WorkshopOwner } = require("../models/Mechanic");
 
 /**
  * @desc
- * @route /api/mechanic-posts/
+ * @route /api/mechanic/:mechanicId/posts/:postId
  * @method
  * @access
  */
@@ -38,6 +38,20 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
       text,
     });
     res.status(201).json({ data: newPost, message: req.t("post_created") });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc get single mechanic post
+ * @route /api/mechanic-posts/:id
+ * @method GET
+ * @access public
+ */
+module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
+  try {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

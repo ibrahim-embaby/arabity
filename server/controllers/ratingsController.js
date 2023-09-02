@@ -1,9 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const { WorkshopOwner } = require("../models/WorkshopOwner");
+const { Mechanic } = require("../models/Mechanic");
 const {
-  WorkshopRatings,
+  MechanicRating,
   validateCreateRating,
-} = require("../models/WorkshopRatings");
+} = require("../models/MechanicRating");
 const { User } = require("../models/User");
 
 /**
@@ -17,16 +17,21 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
-
-  const workshopOwner = await WorkshopOwner.findById(req.body.workshopOwner);
-  if (!workshopOwner) {
+  const isUserRatedThisMechanicBefore = await MechanicRating.findOne({
+    user: req.user.id,
+    mechanic: req.body.mechanic,
+  });
+  if (isUserRatedThisMechanicBefore)
+    return res.status(400).json({ message: req.t("rated_before") });
+  const mechanic = await Mechanic.findById(req.body.mechanic);
+  if (!mechanic) {
     return res.status(404).json({ message: req.t("user_not_found") });
   }
   const user = await User.findById(req.user.id);
 
-  const rating = await WorkshopRatings.create({
-    user: user,
-    workshopOwner: workshopOwner,
+  const rating = await MechanicRating.create({
+    user,
+    mechanic,
     rating: req.body.rating,
     text: req.body.text,
   });
@@ -43,13 +48,13 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
 module.exports.deleteRatingCtrl = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
-    const rating = await WorkshopRatings.findById(id);
+    const rating = await MechanicRating.findById(id);
 
     if (
       rating &&
       (req.user.id === rating.user.toString() || req.user.isAdmin)
     ) {
-      const deletedRating = await WorkshopRatings.findByIdAndDelete(id);
+      const deletedRating = await MechanicRating.findByIdAndDelete(id);
       res.status(200).json({
         ratingId: deletedRating._id,
         message: req.t("rating_deleted"),
@@ -75,8 +80,8 @@ module.exports.getSingleUserRatings = asyncHandler(async (req, res) => {
   if (req.user.id !== userId) {
     return res.status(400).json({ message: req.t("forbidden") });
   }
-  const userRatings = await WorkshopRatings.find({ user: userId }).populate(
-    "workshopOwner"
+  const userRatings = await MechanicRating.find({ user: userId }).populate(
+    "mechanic"
   );
 
   res.status(200).json(userRatings);
@@ -93,6 +98,6 @@ module.exports.getAllRatings = asyncHandler(async (req, res) => {
     return res.status(403).json({ message: req.t("forbidden") });
   }
 
-  const ratings = await WorkshopRatings.find().populate("user", "username");
+  const ratings = await MechanicRating.find().populate("user", "username");
   res.status(200).json(ratings);
 });

@@ -1,16 +1,16 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
-import { workshopOwnerActions } from "../slices/workshopOwnerSlice";
+import { mechanicActions } from "../slices/mechanicSlice";
 import { ratingActions } from "../slices/ratingSlice";
 
 const routeName = "ratings";
 
-export function rateWorkshopOwner(rating, workshopOwner, text) {
+export function rateMechanic(rating, mechanic, text) {
   return async (dispatch, getState) => {
     try {
       const { data } = await request.post(
         `api/${routeName}`,
-        { rating, workshopOwner, text },
+        { rating, mechanic, text },
         {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
@@ -19,9 +19,10 @@ export function rateWorkshopOwner(rating, workshopOwner, text) {
           withCredentials: true,
         }
       );
-      dispatch(workshopOwnerActions.addRatingToWorkshopOwner(data.rating));
+      dispatch(mechanicActions.addRatingToMechanic(data.rating));
       toast.success(data.message);
     } catch (error) {
+      console.log(error.response.data);
       toast.error(error.response.data.message);
     }
   };
@@ -37,9 +38,7 @@ export function deleteRating(id) {
         },
         withCredentials: true,
       });
-      dispatch(
-        workshopOwnerActions.clearRatingFromWorkshopOwner(data.ratingId)
-      );
+      dispatch(mechanicActions.clearRatingFromMechanic(data.ratingId));
       dispatch(ratingActions.deleteRating(data.ratingId));
       toast.success(data.message);
     } catch (err) {

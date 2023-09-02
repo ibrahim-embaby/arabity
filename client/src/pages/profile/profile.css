@@ -47,19 +47,19 @@
 }
 
 /* workshop Owner profile */
-.workshopOwner-profile {
+.mechanic-profile {
   min-height: calc(100vh - var(--difference-value));
   display: flex;
   justify-content: center;
 }
 
-.workshopOwner-profile-wrapper {
+.mechanic-profile-wrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.workshopOwner-profile-top {
+.mechanic-profile-top {
   height: 300px;
   background-color: var(--main-color);
   display: flex;
@@ -82,7 +82,7 @@
   cursor: pointer;
 }
 
-.workshopOwner-profile-image-wrapper {
+.mechanic-profile-image-wrapper {
   position: relative;
 }
 
@@ -111,26 +111,26 @@
   font-weight: bold;
 }
 
-.workshopOwner-profile-image {
+.mechanic-profile-image {
   height: 150px;
   width: 150px;
   border-radius: 5px;
   object-fit: cover;
 }
 
-.workshopOwner-profile-top-info {
+.mechanic-profile-top-info {
   display: flex;
   justify-content: space-evenly;
 }
 
-.workshopOwner-profile-info-wrapper {
+.mechanic-profile-info-wrapper {
   display: flex;
   align-items: flex-start;
   gap: 20px;
   justify-content: space-between;
 }
 
-.workshopOwner-profile-info {
+.mechanic-profile-info {
   flex: 9;
   font-size: 18px;
   display: flex;
@@ -138,11 +138,11 @@
   gap: 20px;
 }
 
-.workshopOwner-profile-info-title {
+.mechanic-profile-info-title {
   font-weight: bold;
 }
 
-.workshopOwner-profile-info-item {
+.mechanic-profile-info-item {
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -150,13 +150,13 @@
   gap: 10px;
 }
 
-.workshopOwner-profile-info-branches {
+.mechanic-profile-info-branches {
   display: flex;
   gap: 10px;
   flex-direction: column;
 }
 
-.workshopOwner-profile-info-branch-title {
+.mechanic-profile-info-branch-title {
   display: flex;
   align-items: center;
 }
@@ -166,31 +166,31 @@
   color: #888;
 }
 
-.workshopOwner-profile-contact {
+.mechanic-profile-contact {
   flex: 3;
   background-color: var(--main-color);
   display: flex;
   flex-direction: column;
 }
 
-.workshopOwner-profile-contact h4 {
+.mechanic-profile-contact h4 {
   background-color: var(--primary-color);
   color: var(--white-color);
   text-align: center;
   padding: 5px 0;
 }
 
-.workshopOwner-profile-contact-item {
+.mechanic-profile-contact-item {
   padding: 10px;
 }
 
-.workshopOwner-profile-info-services {
+.mechanic-profile-info-services {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
 
-.workshopOwner-profile-info-services .service-tag {
+.mechanic-profile-info-services .service-tag {
   color: var(--dark-color);
   font-weight: 600;
   font-size: 15px;
@@ -202,12 +202,12 @@
   border: 1px dashed var(--lighted-primary-color);
 }
 
-.workshopOwner-profile-info-services .service-tag:hover {
+.mechanic-profile-info-services .service-tag:hover {
   background-color: var(--lighted-primary-color);
   color: var(--white-color);
 }
 
-.workshopOwner-profile-contact-btn {
+.mechanic-profile-contact-btn {
   padding: 5px;
   font-size: 15px;
   border: none;
@@ -281,15 +281,15 @@
     flex-direction: column;
   }
 
-  .workshopOwner-profile-info-wrapper {
+  .mechanic-profile-info-wrapper {
     flex-direction: column;
     align-items: normal;
   }
 
-  .workshopOwner-profile-info {
+  .mechanic-profile-info {
     margin-left: 0;
   }
-  .workshopOwner-profile-info-services {
+  .mechanic-profile-info-services {
     font-size: 15px;
   }
 }

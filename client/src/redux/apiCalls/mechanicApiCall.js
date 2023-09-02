@@ -1,37 +1,37 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
-import { workshopOwnerActions } from "../slices/workshopOwnerSlice";
+import { mechanicActions } from "../slices/mechanicSlice";
 import { searchActions } from "../slices/searchSlice";
 import { ratingActions } from "../slices/ratingSlice";
 
-// /api/workshop-owner/:id
-export function fetchWorkshopOwner(id) {
+// /api/mechanic/:id
+export function fetchMechanic(id) {
   return async (dispatch) => {
     try {
-      dispatch(workshopOwnerActions.setLoading());
-      const { data } = await request.get(`/api/workshop-owner/${id}`, {
+      dispatch(mechanicActions.setLoading());
+      const { data } = await request.get(`/api/mechanic/${id}`, {
         headers: {
           Cookie: document.cookie.i18next,
         },
         withCredentials: true,
       });
 
-      dispatch(workshopOwnerActions.setWorkshopOwner(data));
-      dispatch(workshopOwnerActions.clearLoading());
+      dispatch(mechanicActions.setMechanic(data));
+      dispatch(mechanicActions.clearLoading());
     } catch (err) {
       console.log(err);
       console.log(err.response.data.message);
       toast.error(err.response.data.message);
-      dispatch(workshopOwnerActions.clearLoading());
+      dispatch(mechanicActions.clearLoading());
     }
   };
 }
 
-// /api/workshop-owner/:id
-export function deleteWorkshop(id) {
+// /api/mechanic/:id
+export function deleteMechanic(id) {
   return async (dispatch, getState) => {
     try {
-      const { data } = await request.delete(`/api/workshop-owner/${id}`, {
+      const { data } = await request.delete(`/api/mechanic/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
           Cookie: document.cookie.i18next,
@@ -47,13 +47,13 @@ export function deleteWorkshop(id) {
   };
 }
 
-// /api/workshop-owner/:id/photo
+// /api/mechanic/:id/photo
 export function uploadWorkshopImg(id, workshopImg) {
   return async (dispatch, getState) => {
     try {
-      dispatch(workshopOwnerActions.setLoading());
+      dispatch(mechanicActions.setLoading());
       const { data } = await request.post(
-        `/api/workshop-owner/${id}/photo`,
+        `/api/mechanic/${id}/photo`,
         workshopImg,
         {
           headers: {
@@ -64,25 +64,25 @@ export function uploadWorkshopImg(id, workshopImg) {
           withCredentials: true,
         }
       );
-      dispatch(workshopOwnerActions.setWorkshopOwnerPhoto(data.workshopPhoto));
-      dispatch(workshopOwnerActions.clearLoading());
+      dispatch(mechanicActions.setMechanicPhoto(data.workshopPhoto));
+      dispatch(mechanicActions.clearLoading());
       toast.success(data.message);
       const user = JSON.parse(localStorage.getItem("userInfo"));
       user.profilePhoto = data?.workshopPhoto;
       localStorage.setItem("userInfo", JSON.stringify(user));
     } catch (err) {
-      dispatch(workshopOwnerActions.clearLoading());
+      dispatch(mechanicActions.clearLoading());
       toast.error(err.response.data.message);
     }
   };
 }
 
-// /api/workshop-owner/count
+// /api/mechanic/count
 export function fetchWorkshopsCount() {
   return async (dispatch) => {
     try {
-      const { data } = await request.get("/api/workshop-owner/count");
-      dispatch(workshopOwnerActions.setWorkshopsCount(data));
+      const { data } = await request.get("/api/mechanic/count");
+      dispatch(mechanicActions.setWorkshopsCount(data));
     } catch (err) {
       toast.error(err.response.data.message);
     }

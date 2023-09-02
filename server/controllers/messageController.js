@@ -19,7 +19,7 @@ module.exports.createMessageCtrl = asyncHandler(async (req, res) => {
       imageUrl: messageType === "image" ? req.file.path : null,
     });
     await newMessage.save();
-    await Conversation.findOneAndUpdate(
+    const updatedConv = await Conversation.findOneAndUpdate(
       { id: conversationId },
       { $set: { lastMessage: messageText } },
       { new: true }

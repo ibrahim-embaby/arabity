@@ -2,7 +2,7 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-const WorkshopOwnerSchema = new mongoose.Schema(
+const MechanicSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -71,20 +71,20 @@ const WorkshopOwnerSchema = new mongoose.Schema(
 );
 
 // populate ratings
-WorkshopOwnerSchema.virtual("workshopRatings", {
-  ref: "WorkshopRatings",
-  foreignField: "workshopOwner",
+MechanicSchema.virtual("mechanicRatings", {
+  ref: "MechanicRating",
+  foreignField: "mechanic",
   localField: "_id",
 });
 
 // generate auth token
-WorkshopOwnerSchema.methods.generateAuthToken = function () {
+MechanicSchema.methods.generateAuthToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "10d",
   });
 };
 
-function validateCreateWorkshopOwner(obj) {
+function validateCreateMechanic(obj) {
   const schema = Joi.object({
     username: Joi.string().min(1).required(),
     email: Joi.string().min(1).required().email(),
@@ -106,7 +106,7 @@ function validateCreateWorkshopOwner(obj) {
   return schema.validate(obj);
 }
 
-function validateUpdateWorkshopOwner(obj) {
+function validateUpdateMechanic(obj) {
   const schema = Joi.object({
     username: Joi.string().min(1),
     password: Joi.string().min(1),
@@ -126,7 +126,7 @@ function validateUpdateWorkshopOwner(obj) {
   return schema.validate(obj);
 }
 
-function validateLoginWorkshopOwner(obj) {
+function validateLoginMechanic(obj) {
   const schema = Joi.object({
     email: Joi.string().min(1).required().email(),
     password: Joi.string().min(1).required(),
@@ -134,11 +134,11 @@ function validateLoginWorkshopOwner(obj) {
   return schema.validate(obj);
 }
 
-const WorkshopOwner = mongoose.model("WorkshopOwner", WorkshopOwnerSchema);
+const Mechanic = mongoose.model("Mechanic", MechanicSchema);
 
 module.exports = {
-  WorkshopOwner,
-  validateCreateWorkshopOwner,
-  validateLoginWorkshopOwner,
-  validateUpdateWorkshopOwner,
+  Mechanic,
+  validateCreateMechanic,
+  validateLoginMechanic,
+  validateUpdateMechanic,
 };

@@ -7,7 +7,7 @@ import Statistics from "./Statistics";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllUsers } from "../../redux/apiCalls/profileApiCall";
 import Ratings from "./Ratings";
-import { fetchWorkshopsCount } from "../../redux/apiCalls/workshopOwnerApiCall";
+import { fetchWorkshopsCount } from "../../redux/apiCalls/mechanicApiCall";
 import { useTranslation } from "react-i18next";
 
 function Admin() {

@@ -69,7 +69,7 @@ function HeaderRight({ toggle, setToggle }) {
               <Link
                 to={
                   user.workshopName
-                    ? `/workshop-owner/profile/${user.id}`
+                    ? `/mechanic/profile/${user.id}`
                     : `/profile/${user?.id}`
                 }
                 onClick={() => setToggleMenu(false)}

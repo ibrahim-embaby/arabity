@@ -5,11 +5,12 @@ const {
   validateLoginUser,
 } = require("../models/User");
 const bcrypt = require("bcrypt");
+
 const {
-  validateCreateWorkshopOwner,
-  WorkshopOwner,
-  validateLoginWorkshopOwner,
-} = require("../models/WorkshopOwner");
+  Mechanic,
+  validateCreateMechanic,
+  validateLoginMechanic,
+} = require("../models/Mechanic");
 
 /**
  * @desc register user
@@ -76,25 +77,25 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
 
 /**
  * @desc register workshop owner
- * @route /api/auth/workshop-owner/register
+ * @route /api/auth/mechanic/register
  * @method POST
  * @access public
  */
-module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
-  const { error } = validateCreateWorkshopOwner(req.body);
+module.exports.registerMechanicCtrl = asyncHandler(async (req, res) => {
+  const { error } = validateCreateMechanic(req.body);
 
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
 
-  let workshopOwner = await WorkshopOwner.findOne({ email: req.body.email });
-  if (workshopOwner) {
+  let mechanic = await Mechanic.findOne({ email: req.body.email });
+  if (mechanic) {
     return res.status(400).json({ message: req.t("account_exist") });
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-  workshopOwner = new WorkshopOwner({
+  mechanic = new Mechanic({
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword,
@@ -104,7 +105,7 @@ module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
     cars: req.body.cars,
   });
 
-  const savedWorkshopOwner = await workshopOwner.save();
+  const savedWorkshopOwner = await mechanic.save();
   res
     .status(201)
     .json({ message: req.t("account_created"), data: savedWorkshopOwner });
@@ -112,18 +113,18 @@ module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
 
 /**
  * @desc login workshop owner
- * @route /api/auth/workshop-owner/login
+ * @route /api/auth/mechanic/login
  * @method POST
  * @access public
  */
-module.exports.loginWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
-  const { error } = validateLoginWorkshopOwner(req.body);
+module.exports.loginMechanicCtrl = asyncHandler(async (req, res) => {
+  const { error } = validateLoginMechanic(req.body);
   if (error) {
     return res.status(400).json({ message: error.details[0].message });
   }
 
-  const workshopOwner = await WorkshopOwner.findOne({ email: req.body.email });
-  if (!workshopOwner) {
+  const mechanic = await Mechanic.findOne({ email: req.body.email });
+  if (!mechanic) {
     return res.status(404).json({
       message: req.t("incorrect_login_data"),
     });
@@ -131,19 +132,19 @@ module.exports.loginWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
 
   const isPasswordMatch = await bcrypt.compare(
     req.body.password,
-    workshopOwner.password
+    mechanic.password
   );
 
   if (!isPasswordMatch) {
     return res.status(400).json({ message: req.t("incorrect_login_data") });
   }
 
-  const token = workshopOwner.generateAuthToken();
+  const token = mechanic.generateAuthToken();
 
   return res.status(200).json({
-    id: workshopOwner._id,
+    id: mechanic._id,
     token,
-    username: workshopOwner.username,
-    workshopName: workshopOwner.workshopName,
+    username: mechanic.username,
+    workshopName: mechanic.workshopName,
   });
 });

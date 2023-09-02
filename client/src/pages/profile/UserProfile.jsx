@@ -45,10 +45,8 @@ function Profile() {
               ) : ratings.length ? (
                 ratings.map((rating) => (
                   <div className="user-rating" key={rating._id}>
-                    <Link
-                      to={`/workshop-owner/profile/${rating.workshopOwner._id}`}
-                    >
-                      <p>{rating.workshopOwner.workshopName}</p>
+                    <Link to={`/mechanic/profile/${rating.mechanic._id}`}>
+                      <p>{rating.mechanic.workshopName}</p>
                       <p>{rating.rating} / 5</p>
                       <p>{rating.text}</p>
                     </Link>

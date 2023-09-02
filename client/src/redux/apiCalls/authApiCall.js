@@ -50,20 +50,16 @@ export function logoutUser() {
   };
 }
 
-// register workshop owner
-export function registerWorkshopOwner(user) {
+// register Mechanic
+export function registerMechanic(user) {
   return async () => {
     try {
-      const { data } = await request.post(
-        "/api/auth/workshop-owner/register",
-        user,
-        {
-          headers: {
-            Cookie: document.cookie.i18next,
-          },
-          withCredentials: true,
-        }
-      );
+      const { data } = await request.post("/api/auth/mechanic/register", user, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
       toast.success(data.message);
     } catch (err) {
       console.log(user);
@@ -72,20 +68,16 @@ export function registerWorkshopOwner(user) {
   };
 }
 
-// login workshop owner
-export function loginWorkshopOwner(user) {
+// login Mechanic
+export function loginMechanic(user) {
   return async (dispatch) => {
     try {
-      const { data } = await request.post(
-        "/api/auth/workshop-owner/login",
-        user,
-        {
-          headers: {
-            Cookie: document.cookie.i18next,
-          },
-          withCredentials: true,
-        }
-      );
+      const { data } = await request.post("/api/auth/mechanic/login", user, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
       dispatch(authActions.setUser(data));
     } catch (err) {
       toast.error(err.response.data.message);

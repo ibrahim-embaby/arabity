@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import {
   registerUser,
-  registerWorkshopOwner,
+  registerMechanic,
 } from "../../redux/apiCalls/authApiCall";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -56,7 +56,7 @@ function Register() {
     );
   };
 
-  const registerWorkshopOwnerFormHandler = (e) => {
+  const registerMechanicFormHandler = (e) => {
     e.preventDefault();
     const workshopServices = selectedServices.map((service) => {
       return service.label;
@@ -83,7 +83,7 @@ function Register() {
     if (workshopOwnerPassword.trim() === "")
       return toast.error("ادخل كلمة المرور");
     dispatch(
-      registerWorkshopOwner({
+      registerMechanic({
         username: workshopOwnerUsername,
         email: workshopOwnerEmail,
         password: workshopOwnerPassword,
@@ -203,7 +203,7 @@ function Register() {
         ) : (
           <form
             className="register-form"
-            onSubmit={registerWorkshopOwnerFormHandler}
+            onSubmit={registerMechanicFormHandler}
           >
             <div className="form-group">
               <h4 className="form-group-title" htmlFor="">

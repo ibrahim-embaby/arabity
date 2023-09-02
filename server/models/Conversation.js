@@ -11,9 +11,9 @@ const ConversationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    WorkshopOwnerId: {
+    mechanicId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "WorkshopOwner",
+      ref: "Mechanic",
     },
     lastMessage: String,
   },

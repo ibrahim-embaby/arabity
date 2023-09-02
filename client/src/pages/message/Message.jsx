@@ -105,7 +105,7 @@ function Message() {
       dispatch(fetchOtherUserData(otherUserId, "user"));
     } else {
       const otherUserId = conversationId.substring(24, 48);
-      dispatch(fetchOtherUserData(otherUserId, "workshopOwner"));
+      dispatch(fetchOtherUserData(otherUserId, "mechanic"));
     }
   };
   useEffect(() => {

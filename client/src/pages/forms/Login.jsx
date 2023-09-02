@@ -2,10 +2,7 @@ import { useState } from "react";
 import "./forms.css";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import {
-  loginUser,
-  loginWorkshopOwner,
-} from "../../redux/apiCalls/authApiCall";
+import { loginUser, loginMechanic } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import { useTranslation } from "react-i18next";
 
@@ -29,14 +26,14 @@ function Login() {
     dispatch(loginUser({ email, password }));
   };
 
-  const loginWorkshopOwnerFormHandler = (e) => {
+  const loginMechanicFormHandler = (e) => {
     e.preventDefault();
     if (workshopOwnerEmail.trim() === "")
       return toast.error("قم بإدخال البريد الإلكتروني");
     if (workshopOwnerPassword.trim() === "")
       return toast.error("قم بإدخال كلمة المرور ");
     dispatch(
-      loginWorkshopOwner({
+      loginMechanic({
         email: workshopOwnerEmail,
         password: workshopOwnerPassword,
       })
@@ -81,7 +78,7 @@ function Login() {
             </button>
           </form>
         ) : (
-          <form className="login-form" onSubmit={loginWorkshopOwnerFormHandler}>
+          <form className="login-form" onSubmit={loginMechanicFormHandler}>
             <div className="login-form-input-wrapper">
               <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
               <input

@@ -1,7 +1,7 @@
 import React from "react";
 import Rating from "@mui/material/Rating";
 import { useState } from "react";
-import { rateWorkshopOwner } from "../../redux/apiCalls/ratingApiCall";
+import { rateMechanic } from "../../redux/apiCalls/ratingApiCall";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Box } from "@mui/material";
@@ -36,7 +36,7 @@ function AddRating({ id }) {
     if (!text.trim()) return toast.info("من فضلك اكتب سبب تقييمك");
     if (rate === 0) return toast.error("من فضلك اختر تقييما");
 
-    dispatch(rateWorkshopOwner(rate, id, text));
+    dispatch(rateMechanic(rate, id, text));
     setRate(0);
     setText("");
   };
