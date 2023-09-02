@@ -11,7 +11,7 @@ const bcrypt = require("bcrypt");
 module.exports.getUserCtrl = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select("-password");
   if (!user) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
   res.status(200).json(user);
 });
@@ -25,7 +25,7 @@ module.exports.getUserCtrl = asyncHandler(async (req, res) => {
 module.exports.getUsersCtrl = asyncHandler(async (req, res) => {
   const users = await User.find();
   if (!users) {
-    return res.status(404).json({ message: "لا يوجد مستخدمين" });
+    return res.status(404).json({ message: req.t("no_users") });
   }
   res.status(200).json(users);
 });
@@ -40,10 +40,10 @@ module.exports.deleteUserCtrl = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
   await User.findByIdAndDelete(id);
-  res.status(200).json({ message: "تم حذف المستخدم بنجاح" });
+  res.status(200).json({ message: req.t("user_deleted") });
 });
 
 /**
@@ -56,7 +56,7 @@ module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const user = await User.findById(userId);
   if (!user) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
 
   const { username, password, mobile } = req.body;
@@ -88,6 +88,6 @@ module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
       mobile: updatedUser.mobile,
       password: updatedUser.password,
     },
-    message: "تم تحديث بياناتك بنجاح",
+    message: req.t("data_updated"),
   });
 });

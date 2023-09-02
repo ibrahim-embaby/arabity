@@ -27,7 +27,7 @@ module.exports.createMessageCtrl = asyncHandler(async (req, res) => {
     res.status(201).json(newMessage);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });
 
@@ -44,13 +44,13 @@ module.exports.getChatMessagesCtrl = asyncHandler(async (req, res) => {
       req.user.id !== conversationId.substring(0, 24) &&
       req.user.id !== conversationId.substring(24, 48)
     ) {
-      return res.status(403).json({ message: "لا يمكنك عرض هذه المحادثة" });
+      return res.status(403).json({ message: req.t("cant_show_conversation") });
     }
     const messages = await Message.find({ conversationId });
     res.status(200).json(messages);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });
 
@@ -66,14 +66,14 @@ module.exports.deleteMessagesCtrl = asyncHandler(async (req, res) => {
     if (!Array.isArray(messageIds) || messageIds.length === 0) {
       return res
         .status(400)
-        .json({ message: "يرجي تحديد الرسائل التي تريد حذفها" });
+        .json({ message: req.t("select_deleted_messages") });
     }
 
     await Message.deleteMany({ _id: { $in: messageIds } });
 
-    res.status(200).json({ message: "تم حذف الرسالة بنجاح" });
+    res.status(200).json({ message: req.t("message_deleted") });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في الخادم" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });

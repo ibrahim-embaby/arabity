@@ -6,7 +6,11 @@ export function createMessage(messageInfo) {
   return async (dispatch, getState) => {
     try {
       const { data } = await request.post("/api/messages", messageInfo, {
-        headers: { Authorization: "Bearer " + getState().auth.user.token },
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
       });
       dispatch(messageActions.addMessageToMessages(data));
     } catch (error) {
@@ -22,7 +26,9 @@ export function fetchMessages(conversationId) {
       const { data } = await request.get(`/api/messages/${conversationId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
 
       dispatch(messageActions.setMessages(data));

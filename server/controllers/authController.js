@@ -24,9 +24,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res) => {
   }
   let user = await User.findOne({ email: req.body.email });
   if (user) {
-    return res
-      .status(500)
-      .json({ message: "هذا المستخدم موجود من قبل، من فضلك قم بتسجيل الدخول" });
+    return res.status(500).json({ message: req.t("account_exist") });
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -38,7 +36,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res) => {
   });
   await user.save();
 
-  res.status(201).json("تم إنشاء الحساب، من فضلك قم بتسجيل الدخول");
+  res.status(201).json(req.t("account_created"));
 });
 
 /**
@@ -55,7 +53,7 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.status(404).json({
-      message: "هذا المستخدم غير موجود، من فضلك قم بإنشاء حساب أولًا",
+      message: req.t("incorrect_login_data"),
     });
   }
   const isPasswordMatch = await bcrypt.compare(
@@ -63,7 +61,7 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
     user.password
   );
   if (!isPasswordMatch) {
-    return res.status(400).json({ message: "كلمة المرور غير صحيحة" });
+    return res.status(400).json({ message: req.t("incorrect_login_data") });
   }
   const token = user.generateAuthToken();
 
@@ -91,9 +89,7 @@ module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
 
   let workshopOwner = await WorkshopOwner.findOne({ email: req.body.email });
   if (workshopOwner) {
-    return res
-      .status(400)
-      .json({ message: "هذا الحساب موجود بالفعل، من فضلك قم بتسجيل الدخول" });
+    return res.status(400).json({ message: req.t("account_exist") });
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -111,7 +107,7 @@ module.exports.registerWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   const savedWorkshopOwner = await workshopOwner.save();
   res
     .status(201)
-    .json({ message: "تم إنشاء الحساب بنجاح", data: savedWorkshopOwner });
+    .json({ message: req.t("account_created"), data: savedWorkshopOwner });
 });
 
 /**
@@ -129,7 +125,7 @@ module.exports.loginWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   const workshopOwner = await WorkshopOwner.findOne({ email: req.body.email });
   if (!workshopOwner) {
     return res.status(404).json({
-      message: "هذا المستخدم غير موجود، من فضلك قم بإنشاء حساب أولًا",
+      message: req.t("incorrect_login_data"),
     });
   }
 
@@ -137,8 +133,9 @@ module.exports.loginWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
     req.body.password,
     workshopOwner.password
   );
+
   if (!isPasswordMatch) {
-    return res.status(400).json({ message: "كلمة المرور غير صحيحة" });
+    return res.status(400).json({ message: req.t("incorrect_login_data") });
   }
 
   const token = workshopOwner.generateAuthToken();

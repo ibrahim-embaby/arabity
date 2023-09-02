@@ -1,0 +1,24 @@
+{
+    "rating_deleted": "rating is deleted successfully",
+    "rating_created": "rating was added successfully",
+    "user_not_found": "this user doesn't exist",
+    "no_users": "there is no users",
+    "user_deleted": "user was deleted successfully",
+    "data_updated": "your data was updated successfully",
+    "account_deleted": "account was deleted successfully",
+    "no_workshop": "this workshop doesn't exist or may be removed",
+    "workshop_updated": "workshop data was updated successfully",
+    "attatch_image": "please attatch an image",
+    "photo_uploaded": "photo was uploaded successfully",
+    "cant_show_conversation": "you can't view this conversation",
+    "select_deleted_messages": "please the message you want to delete",
+    "message_deleted": "message was deleted successfully",
+    "server_error": "Internal server error",
+    "account_exist": "this account already exist, please login",
+    "account_created": "account was created successfully, please login",
+    "incorrect_login_data": "the email or password is not correct",
+    "forbidden": "forbidden",
+    "not_deleted": "The deletion was not successful, please try again",
+    "cloudinary_error": "internal server error (cloudinary)"
+    
+}

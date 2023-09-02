@@ -29,7 +29,7 @@ module.exports.getWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
     });
 
   if (!workshopOwner) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
   res.status(200).json(workshopOwner);
 });
@@ -43,11 +43,11 @@ module.exports.getWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
 module.exports.deleteWorkshopOwnerCtrl = asyncHandler(async (req, res) => {
   const workshopOwner = await WorkshopOwner.findById(req.params.id);
   if (!workshopOwner) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
   await WorkshopOwner.deleteOne({ _id: workshopOwner._id });
   await WorkshopRatings.deleteMany({ workshopOwner: workshopOwner._id });
-  return res.status(200).json({ message: "تم حذف الحساب بنجاح" });
+  return res.status(200).json({ message: req.t("account_deleted") });
 });
 
 // /**
@@ -111,9 +111,7 @@ module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
     const { id } = req.params;
     const workshopOwnerExist = await WorkshopOwner.findById(id);
     if (!workshopOwnerExist)
-      return res
-        .status(404)
-        .json({ message: "هذه الورشة غير موجودة، أو ربما تم حذفها" });
+      return res.status(404).json({ message: req.t("no_workshop") });
 
     let hashedPassword;
     if (req.body.password) {
@@ -127,9 +125,9 @@ module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
     );
     res
       .status(200)
-      .json({ data: updatedWorkshop, message: "تم تحديث بيانات الورشة بنجاح" });
+      .json({ data: updatedWorkshop, message: req.t("workshop_updated") });
   } catch (error) {
-    res.status(500).json({ message: "خطأ في الخادم" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });
 
@@ -142,7 +140,7 @@ module.exports.updateWorkshopCtrl = asyncHandler(async (req, res) => {
 module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
   try {
     if (!req.file)
-      return res.status(400).json({ message: "يرجي ارفاق الصورة" });
+      return res.status(400).json({ message: req.t("attatch_image") });
     // get the path to the image
     const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
     // upload to cloudinary
@@ -165,7 +163,7 @@ module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
 
     // send response to client
     res.status(201).json({
-      message: "تم تحميل الصورة بنجاح",
+      message: req.t("photo_uploaded"),
       workshopPhoto: {
         url: result.secure_url,
         publicId: result.public_id,
@@ -176,6 +174,6 @@ module.exports.uploadWorkshopPhotoCtrl = asyncHandler(async (req, res) => {
     fs.unlinkSync(imagePath);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "خطأ في الخادم" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });

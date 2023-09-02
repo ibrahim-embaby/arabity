@@ -1,0 +1,23 @@
+{
+    "rating_deleted": "تم حذف المراجعة بنجاح", 
+    "rating_created": "تم إضافة التقييم بنجاح",
+    "user_not_found": "هذا المستخدم غير موجود" ,
+    "no_users": "لا يوجد مستخدمين",
+    "user_deleted": "تم حذف المستخدم بنجاح",
+    "data_updated": "تم تحديث بياناتك بنجاح",
+    "account_deleted": "تم حذف الحساب بنجاح",
+    "no_workshop": "هذه الورشة غير موجودة، أو ربما تم حذفها",
+    "workshop_updated": "تم تحديث بيانات الورشة بنجاح",
+    "attatch_image": "يرجي ارفاق الصورة",
+    "photo_uploaded": "تم تحميل الصورة بنجاح",
+    "cant_show_conversation": "لا يمكنك عرض هذه المحادثة" ,
+    "select_deleted_messages": "يرجي تحديد الرسائل التي تريد حذفها",
+    "message_deleted": "تم حذف الرسالة بنجاح",
+    "account_exist": "هذا الحساب موجود بالفعل، من فضلك قم بتسجيل الدخول" ,
+    "account_created": "تم إنشاء الحساب، من فضلك قم بتسجيل الدخول",
+    "incorrect_login_data": "خطأ في عنوان البريد الإلكتروني أو كلمة المرور",
+    "server_error": "خطأ في الخادم",
+    "forbidden": "دخول غير مسموح",
+    "not_deleted": "لم يتم الحذف بنجاح، اعد المحاولة",
+    "cloudinary_error": "خطأ في الخادم (cloudinary)"
+}

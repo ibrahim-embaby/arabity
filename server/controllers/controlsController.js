@@ -27,7 +27,7 @@ module.exports.addProvinceCtrl = asyncHandler(async (req, res) => {
     res.status(201).json({ data: newProvince, message: "تمت الإضافة" });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "خطأ في السيرفر" });
+    res.status(500).json({ message: req.t("server_error") });
   }
 });
 

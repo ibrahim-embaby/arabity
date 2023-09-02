@@ -20,7 +20,7 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
 
   const workshopOwner = await WorkshopOwner.findById(req.body.workshopOwner);
   if (!workshopOwner) {
-    return res.status(404).json({ message: "هذا المستخدم غير موجود" });
+    return res.status(404).json({ message: req.t("user_not_found") });
   }
   const user = await User.findById(req.user.id);
 
@@ -31,7 +31,7 @@ module.exports.rateWorkshopCtrl = asyncHandler(async (req, res) => {
     text: req.body.text,
   });
 
-  return res.status(201).json(rating);
+  return res.status(201).json({ rating, message: req.t("rating_created") });
 });
 
 /**
@@ -52,10 +52,10 @@ module.exports.deleteRatingCtrl = asyncHandler(async (req, res) => {
       const deletedRating = await WorkshopRatings.findByIdAndDelete(id);
       res.status(200).json({
         ratingId: deletedRating._id,
-        message: "تم حذف المراجعة بنجاح",
+        message: req.t("rating_deleted"),
       });
     } else {
-      res.status(500).json({ message: "لم يتم الحذف بنجاح، اعد المحاولة" });
+      res.status(500).json({ message: req.t("not_deleted") });
     }
   } catch (error) {
     console.log(error);
@@ -73,7 +73,7 @@ module.exports.getSingleUserRatings = asyncHandler(async (req, res) => {
   const { userId } = req.params;
 
   if (req.user.id !== userId) {
-    return res.status(400).json({ message: "دخول غير مسموح" });
+    return res.status(400).json({ message: req.t("forbidden") });
   }
   const userRatings = await WorkshopRatings.find({ user: userId }).populate(
     "workshopOwner"
@@ -90,7 +90,7 @@ module.exports.getSingleUserRatings = asyncHandler(async (req, res) => {
  */
 module.exports.getAllRatings = asyncHandler(async (req, res) => {
   if (!req.user.isAdmin) {
-    return res.status(403).json({ message: "دخول غير مسموح" });
+    return res.status(403).json({ message: req.t("forbidden") });
   }
 
   const ratings = await WorkshopRatings.find().populate("user", "username");

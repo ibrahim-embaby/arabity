@@ -9,7 +9,12 @@ import { messageActions } from "../slices/messageSlice";
 export function registerUser(user) {
   return async () => {
     try {
-      const { data } = await request.post("/api/auth/register", user);
+      const { data } = await request.post("/api/auth/register", user, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
       toast.success(data);
     } catch (err) {
       toast.error(err.response.data.message);
@@ -21,7 +26,12 @@ export function registerUser(user) {
 export function loginUser(user) {
   return async (dispatch) => {
     try {
-      const { data } = await request.post("/api/auth/login", user);
+      const { data } = await request.post("/api/auth/login", user, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
       dispatch(authActions.setUser(data));
     } catch (err) {
       console.log(err);
@@ -46,7 +56,13 @@ export function registerWorkshopOwner(user) {
     try {
       const { data } = await request.post(
         "/api/auth/workshop-owner/register",
-        user
+        user,
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
       );
       toast.success(data.message);
     } catch (err) {
@@ -62,7 +78,13 @@ export function loginWorkshopOwner(user) {
     try {
       const { data } = await request.post(
         "/api/auth/workshop-owner/login",
-        user
+        user,
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
       );
       dispatch(authActions.setUser(data));
     } catch (err) {

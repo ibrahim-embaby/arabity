@@ -10,7 +10,9 @@ export function fetchUserProfile(id) {
       const { data } = await request.get(`/api/user/profile/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(profileActions.setProfile(data));
     } catch (err) {
@@ -26,7 +28,9 @@ export function fetchAllUsers() {
       const { data } = await request.get("api/user/", {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(profileActions.setUsers(data));
     } catch (err) {
@@ -42,7 +46,9 @@ export function deleteUser(id) {
       const { data } = await request.delete(`/api/user/profile/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
 
       dispatch(profileActions.clearUser(id));
@@ -60,7 +66,9 @@ export function updateUserProfile(userInfo) {
       const { data } = await request.put("/api/user/profile/", userInfo, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(profileActions.setProfile(data.data));
       dispatch(authActions.setUser(data.data));

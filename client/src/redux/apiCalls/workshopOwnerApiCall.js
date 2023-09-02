@@ -9,7 +9,12 @@ export function fetchWorkshopOwner(id) {
   return async (dispatch) => {
     try {
       dispatch(workshopOwnerActions.setLoading());
-      const { data } = await request.get(`/api/workshop-owner/${id}`);
+      const { data } = await request.get(`/api/workshop-owner/${id}`, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
 
       dispatch(workshopOwnerActions.setWorkshopOwner(data));
       dispatch(workshopOwnerActions.clearLoading());
@@ -27,7 +32,9 @@ export function deleteWorkshop(id) {
       const { data } = await request.delete(`/api/workshop-owner/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(searchActions.deleteSearchResult(id));
       dispatch(ratingActions.deleteRatingsRelatedToWorkshop(id));
@@ -50,7 +57,9 @@ export function uploadWorkshopImg(id, workshopImg) {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
             "Content-Type": "multipart/form-data",
+            Cookie: document.cookie.i18next,
           },
+          withCredentials: true,
         }
       );
       dispatch(workshopOwnerActions.setWorkshopOwnerPhoto(data.workshopPhoto));

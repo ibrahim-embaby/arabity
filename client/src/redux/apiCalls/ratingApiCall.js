@@ -14,11 +14,13 @@ export function rateWorkshopOwner(rating, workshopOwner, text) {
         {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
+            Cookie: document.cookie.i18next,
           },
+          withCredentials: true,
         }
       );
-      dispatch(workshopOwnerActions.addRatingToWorkshopOwner(data));
-      toast.success("تم التقييم بنجاح");
+      dispatch(workshopOwnerActions.addRatingToWorkshopOwner(data.rating));
+      toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -31,12 +33,13 @@ export function deleteRating(id) {
       const { data } = await request.delete(`api/${routeName}/${id}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(
         workshopOwnerActions.clearRatingFromWorkshopOwner(data.ratingId)
       );
-      console.log(data);
       dispatch(ratingActions.deleteRating(data.ratingId));
       toast.success(data.message);
     } catch (err) {
@@ -53,7 +56,9 @@ export function fetchSingleUserRatings(userId) {
       const { data } = await request.get(`api/${routeName}/${userId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(ratingActions.setRatings(data));
       dispatch(ratingActions.clearLoading());
@@ -70,7 +75,9 @@ export function fetchAllRatings() {
       const { data } = await request.get(`/api/${routeName}/`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(ratingActions.setRatings(data));
     } catch (error) {

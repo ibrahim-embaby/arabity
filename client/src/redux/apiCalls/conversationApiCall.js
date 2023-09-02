@@ -8,7 +8,9 @@ export function createConversation(conversationInfo) {
       await request.post("/api/conversations/", conversationInfo, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
     } catch (error) {
       console.log(error);
@@ -24,11 +26,18 @@ export function fetchOtherUserData(userId, type) {
         const { data } = await request.get(`/api/user/profile/${userId}`, {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
+            Cookie: document.cookie.i18next,
           },
+          withCredentials: true,
         });
         dispatch(conversationActions.setOtherUser(data));
       } else {
-        const { data } = await request.get(`/api/workshop-owner/${userId}`);
+        const { data } = await request.get(`/api/workshop-owner/${userId}`, {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        });
         dispatch(conversationActions.setOtherUser(data));
       }
     } catch (error) {
@@ -45,7 +54,9 @@ export function fetchUserConversations(userId) {
       const { data } = await request.get(`/api/conversations/${userId}`, {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
         },
+        withCredentials: true,
       });
       dispatch(conversationActions.setConversations(data));
       dispatch(conversationActions.clearLoading());

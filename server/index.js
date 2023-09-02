@@ -5,6 +5,10 @@ const connectToDb = require("./config/connectToDb");
 const app = express();
 require("dotenv").config();
 
+const i18next = require("i18next");
+const i18nextMiddleware = require("i18next-http-middleware");
+const { configI18n } = require("./config/i18n");
+
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const searchRoute = require("./routes/searchRoute");
@@ -18,6 +22,9 @@ const production = require("./utils/constants");
 // connection to DB
 connectToDb();
 
+// i18n configuration
+configI18n();
+
 // middlewares
 app.use(express.json());
 
@@ -25,7 +32,15 @@ app.use(express.json());
 app.use(helmet());
 
 // Cors
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://arabity-fzmr.onrender.com"],
+    credentials: true,
+  })
+);
+
+// i18n
+app.use(i18nextMiddleware.handle(i18next));
 
 // Routes
 app.use("/api/user", userRoute);
