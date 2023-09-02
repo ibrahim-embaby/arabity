@@ -6,6 +6,7 @@ const mechanicSlice = createSlice({
     mechanic: null,
     loading: false,
     workshopsCount: null,
+    posts: [],
   },
   reducers: {
     setMechanic(state, action) {
@@ -24,6 +25,13 @@ const mechanicSlice = createSlice({
     },
     setWorkshopsCount(state, action) {
       state.workshopsCount = action.payload;
+    },
+    setPosts(state, action) {
+      state.posts = action.payload;
+    },
+
+    clearPosts(state) {
+      state.posts = [];
     },
     setLoading(state) {
       state.loading = true;

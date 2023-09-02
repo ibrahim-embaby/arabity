@@ -207,6 +207,24 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc get all mechanic posts
+ * @route /api/mechanic/:mechanicId/posts/
+ * @method GET
+ * @access public
+ */
+module.exports.getAllMechanicPostsCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { mechanicId } = req.params;
+    const posts = await MechanicPost.find({ mechanicId });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
  * @desc get single mechanic post
  * @route /api/mechanic/:mechanicId/posts/:postId
  * @method GET
