@@ -19,6 +19,8 @@ export function fetchWorkshopOwner(id) {
       dispatch(workshopOwnerActions.setWorkshopOwner(data));
       dispatch(workshopOwnerActions.clearLoading());
     } catch (err) {
+      console.log(err);
+      console.log(err.response.data.message);
       toast.error(err.response.data.message);
       dispatch(workshopOwnerActions.clearLoading());
     }
