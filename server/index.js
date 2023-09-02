@@ -34,7 +34,11 @@ app.use(helmet());
 // Cors
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://arabity-fzmr.onrender.com"],
+    origin: [
+      "http://localhost:3000",
+      "https://arabity-fzmr.onrender.com",
+      "https://arabity.netlify.app",
+    ],
     credentials: true,
   })
 );
