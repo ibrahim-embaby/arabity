@@ -3,9 +3,9 @@ const Joi = require("joi");
 
 const MechanicPostSchema = new mongoose.Schema(
   {
-    postCreator: {
+    mechanicId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "WorkshopOwnerSchema",
+      ref: "Mechanic",
     },
     text: {
       type: String,

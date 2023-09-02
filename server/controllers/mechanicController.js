@@ -8,6 +8,10 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const {
+  MechanicPost,
+  validateCreateMechanicPost,
+} = require("../models/MechanicPost");
 /**
  * @desc get workshop owner
  * @route /api/mechanic/:id
@@ -36,6 +40,7 @@ module.exports.getMechanicCtrl = asyncHandler(async (req, res) => {
  * @route /api/mechanic/:id
  * @method DELETE
  * @access private (only user himself & admin)
+ * TODO: delete mechanic photo
  */
 module.exports.deleteMechanicCtrl = asyncHandler(async (req, res) => {
   const mechanic = await Mechanic.findById(req.params.id);
@@ -169,6 +174,46 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
 
     // remove image from the server (images folder)
     fs.unlinkSync(imagePath);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc create mechanic post
+ * @route /api/mechanic/:mechanicId/posts/
+ * @method POST
+ * @access private (logged user only)
+ */
+module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { error } = validateCreateMechanicPost(req.body);
+    if (error) return res.status(400).json({ message: error.message });
+    const { text } = req.body;
+    const { mechanicId } = req.params;
+    const isMechanic = await Mechanic.findById(mechanicId);
+    if (!isMechanic || mechanicId !== req.user.id)
+      return res.status(400).json({ message: req.t("forbidden") });
+    const newPost = await MechanicPost.create({
+      mechanicId,
+      text,
+    });
+    res.status(201).json({ data: newPost, message: req.t("post_created") });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc get single mechanic post
+ * @route /api/mechanic/:mechanicId/posts/:postId
+ * @method GET
+ * @access public
+ */
+module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
+  try {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

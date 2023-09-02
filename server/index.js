@@ -17,7 +17,6 @@ const rateRoute = require("./routes/rateRoute");
 const messagesRoute = require("./routes/messageRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
 const controlsRoute = require("./routes/controlsRoute");
-const mechanicPostRoute = require("./routes/mechanicPostRoute");
 const production = require("./utils/constants");
 
 // connection to DB
@@ -56,7 +55,6 @@ app.use("/api/ratings", rateRoute);
 app.use("/api/messages", messagesRoute);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/controls", controlsRoute);
-app.use("/api/mechanic-posts", mechanicPostRoute);
 
 PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, console.log(`server is running on ${PORT}`));

@@ -4,12 +4,14 @@ const {
   deleteMechanicCtrl,
   getMechanicCtrl,
   updateMechanicCtrl,
+  createMechanicPostCtrl,
 } = require("../controllers/mechanicController");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
 const {
   verifyTokenAndAuthorization,
   verifyTokenAndOnlyUser,
+  verifyToken,
 } = require("../middlewares/verifyToken");
 const router = require("express").Router();
 
@@ -27,6 +29,9 @@ router
     photoUpload.single("image"),
     uploadMechanicPhotoCtrl
   );
+
+// /api/mechanic/:mechanicId/posts/
+router.route("/:mechanicId/posts").post(verifyToken, createMechanicPostCtrl);
 
 // /api/mechanic/:id
 router
