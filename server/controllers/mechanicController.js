@@ -214,6 +214,11 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
   try {
+    const { mechanicId, postId } = req.params;
+    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    if (!post)
+      return res.status(404).json({ message: req.t("post_not_found") });
+    res.status(200).json(post);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

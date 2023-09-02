@@ -5,6 +5,7 @@ const {
   getMechanicCtrl,
   updateMechanicCtrl,
   createMechanicPostCtrl,
+  getSingleMechanicPostCtrl,
 } = require("../controllers/mechanicController");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
@@ -32,6 +33,9 @@ router
 
 // /api/mechanic/:mechanicId/posts/
 router.route("/:mechanicId/posts").post(verifyToken, createMechanicPostCtrl);
+
+// /api/mechanic/:mechanicId/posts/
+router.route("/:mechanicId/posts/:postId").get(getSingleMechanicPostCtrl);
 
 // /api/mechanic/:id
 router

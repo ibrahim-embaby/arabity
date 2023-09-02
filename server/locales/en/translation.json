@@ -19,6 +19,7 @@
     "incorrect_login_data": "the email or password is not correct",
     "post_created": "post is created successfully",
     "rated_before": "you already rated this mechanic before",
+    "post_not_found": "this post doesn't exist",
     "forbidden": "forbidden",
     "not_deleted": "The deletion was not successful, please try again",
     "cloudinary_error": "internal server error (cloudinary)"
