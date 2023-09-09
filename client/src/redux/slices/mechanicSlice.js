@@ -40,7 +40,7 @@ const mechanicSlice = createSlice({
       state.posts = state.posts.filter((post) => post._id !== action.payload);
     },
     updatePost(state, action) {
-      const { id, text } = action.payload;
+      const { _id: id, text } = action.payload;
 
       state.posts = state.posts.map((post) => {
         if (post._id === id) {

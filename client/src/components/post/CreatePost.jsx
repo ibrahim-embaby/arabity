@@ -10,6 +10,7 @@ function CreatePost({ mechanicId }) {
   const handleCreatePost = (e) => {
     e.preventDefault();
     dispatch(createMechanicPost(mechanicId, post));
+    setPost("");
   };
   return (
     <div className="create-post">
@@ -17,6 +18,7 @@ function CreatePost({ mechanicId }) {
       <form onSubmit={handleCreatePost} className="create-post-form">
         <textarea
           onChange={(e) => setPost(e.target.value)}
+          value={post}
           type="text"
           className="post-input-text"
         ></textarea>

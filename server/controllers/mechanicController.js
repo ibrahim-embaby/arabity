@@ -272,7 +272,8 @@ module.exports.updateSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
         mechanicId,
         _id: postId,
       },
-      { text }
+      { text },
+      { new: true }
     );
     res.status(200).json({ data: updatedPost, message: req.t("post_edit") });
   } catch (error) {
