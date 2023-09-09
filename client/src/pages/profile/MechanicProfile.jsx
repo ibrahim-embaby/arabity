@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchMechanic,
+  fetchMechanicPosts,
   uploadWorkshopImg,
 } from "../../redux/apiCalls/mechanicApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
@@ -16,6 +17,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CameraIcon from "@mui/icons-material/Camera";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import Post from "../../components/post/Post";
+import CreatePost from "../../components/post/CreatePost";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -23,7 +26,10 @@ function WorkshopProfile() {
 
   const [avgRating, setAvgRating] = useState(0);
   const [workshopImg, setWorkshopImg] = useState(null);
-  const { mechanic, loading } = useSelector((state) => state.mechanic);
+  const [tab, setTab] = useState("mechanic_data");
+  const { mechanic, loading, posts, postLoading } = useSelector(
+    (state) => state.mechanic
+  );
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { t, i18n } = useTranslation();
@@ -79,6 +85,12 @@ function WorkshopProfile() {
     dispatch(uploadWorkshopImg(id, formData));
     setWorkshopImg(null);
   };
+
+  const handleMechanicPosts = () => {
+    setTab("mechanic_posts");
+    dispatch(fetchMechanicPosts(id));
+  };
+
   return loading ? (
     <div
       className="loading-page"
@@ -138,87 +150,128 @@ function WorkshopProfile() {
           </div>
           <div className="mechanic-profile-info-wrapper">
             <div className="mechanic-profile-info">
-              <div className="mechanic-profile-info-desc mechanic-profile-info-item">
-                <span className="mechanic-profile-info-title">
-                  {t("workshop_desc_title")}
-                </span>
-                {mechanic?.workshopDescription ? (
-                  <div className="workshop-desc">
-                    {mechanic?.workshopDescription}
+              <div className="tabs">
+                <div
+                  onClick={() => setTab("mechanic_data")}
+                  className="mechanic-data-tab mechanic-tab"
+                  style={{ backgroundColor: tab === "mechanic_data" && "#ddd" }}
+                >
+                  {t("mechanic_data")}
+                </div>
+                <div
+                  onClick={handleMechanicPosts}
+                  className="mechanic-posts-tab mechanic-tab"
+                  style={{
+                    backgroundColor: tab === "mechanic_posts" && "#ddd",
+                  }}
+                >
+                  {t("mechanic_posts")}
+                </div>
+              </div>
+              {tab === "mechanic_data" ? (
+                <>
+                  <div className="mechanic-profile-info-desc mechanic-profile-info-item">
+                    <span className="mechanic-profile-info-title">
+                      {t("workshop_desc_title")}
+                    </span>
+                    {mechanic?.workshopDescription ? (
+                      <div className="workshop-desc">
+                        {mechanic?.workshopDescription}
+                      </div>
+                    ) : (
+                      <p className="no-workshop-desc">
+                        {t("no_workshop_desc")}
+                      </p>
+                    )}
                   </div>
-                ) : (
-                  <p className="no-workshop-desc">{t("no_workshop_desc")}</p>
-                )}
-              </div>
 
-              <div className="mechanic-profile-info-item">
-                <span className="mechanic-profile-info-title">
-                  {t("workshop_services")}
-                </span>
-                <div className="mechanic-profile-info-services">
-                  {mechanic?.workshopServices.map((service, index) => (
-                    <p
-                      key={index}
-                      className="service-tag"
-                      onClick={() => searchTagHandler(service, "")}
-                    >
-                      {service}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mechanic-profile-info-item">
-                <span className="mechanic-profile-info-title">
-                  {t("workshop_cars")}
-                </span>
-                <div className="mechanic-profile-info-services">
-                  {mechanic?.cars.map((car, index) => (
-                    <p
-                      key={index}
-                      onClick={() => searchTagHandler("", car)}
-                      className="service-tag"
-                    >
-                      {car}
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mechanic-profile-info-item">
-                <span className="mechanic-profile-info-title">
-                  {t("workshop_branches")} ({mechanic?.workshopBranches.length})
-                </span>
-                <div className="mechanic-profile-info-branches">
-                  {mechanic?.workshopBranches.map((branch, index) => (
-                    <div key={index} className="mechanic-profile-info-branch">
-                      <h5 className="mechanic-profile-info-branch-title">
-                        <LocationOnIcon />
-                        {branch.branchProvince} - {branch.branchCity}
-                      </h5>
-                      <p>العنوان التفصيلي: {branch.branchAddress}</p>
-                      <p>تليفون الفرع: {branch.branchMobile}</p>
+                  <div className="mechanic-profile-info-item">
+                    <span className="mechanic-profile-info-title">
+                      {t("workshop_services")}
+                    </span>
+                    <div className="mechanic-profile-info-services">
+                      {mechanic?.workshopServices.map((service, index) => (
+                        <p
+                          key={index}
+                          className="service-tag"
+                          onClick={() => searchTagHandler(service, "")}
+                        >
+                          {service}
+                        </p>
+                      ))}
                     </div>
-                  ))}
+                  </div>
+
+                  <div className="mechanic-profile-info-item">
+                    <span className="mechanic-profile-info-title">
+                      {t("workshop_cars")}
+                    </span>
+                    <div className="mechanic-profile-info-services">
+                      {mechanic?.cars.map((car, index) => (
+                        <p
+                          key={index}
+                          onClick={() => searchTagHandler("", car)}
+                          className="service-tag"
+                        >
+                          {car}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mechanic-profile-info-item">
+                    <span className="mechanic-profile-info-title">
+                      {t("workshop_branches")} (
+                      {mechanic?.workshopBranches.length})
+                    </span>
+                    <div className="mechanic-profile-info-branches">
+                      {mechanic?.workshopBranches.map((branch, index) => (
+                        <div
+                          key={index}
+                          className="mechanic-profile-info-branch"
+                        >
+                          <h5 className="mechanic-profile-info-branch-title">
+                            <LocationOnIcon />
+                            {branch.branchProvince} - {branch.branchCity}
+                          </h5>
+                          <p>العنوان التفصيلي: {branch.branchAddress}</p>
+                          <p>تليفون الفرع: {branch.branchMobile}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mechanic-profile-info-item mechanic-profile-info-ratings">
+                    <span className="mechanic-profile-info-title">
+                      {t("workshop_ratings")} (
+                      {mechanic?.mechanicRatings.length})
+                    </span>
+                    {user &&
+                      !user.workshopName &&
+                      !mechanic?.mechanicRatings.filter(
+                        (item) => item.user._id === user.id
+                      ).length && <AddRating id={id} />}
+
+                    {mechanic?.mechanicRatings.length
+                      ? mechanic?.mechanicRatings.map((r, index) => (
+                          <RatingComponent key={index} userRate={r} />
+                        ))
+                      : t("no_workshop_ratings")}
+                  </div>
+                </>
+              ) : (
+                <div className="mechanic_posts">
+                  <CreatePost mechanicId={id} />
+                  <hr />
+                  {postLoading ? (
+                    <p>loading...</p>
+                  ) : posts.length ? (
+                    posts.map((post) => <Post key={post._id} post={post} />)
+                  ) : (
+                    <p>{t("no_posts")}</p>
+                  )}
                 </div>
-              </div>
-
-              <div className="mechanic-profile-info-item mechanic-profile-info-ratings">
-                <span className="mechanic-profile-info-title">
-                  {t("workshop_ratings")} ({mechanic?.mechanicRatings.length})
-                </span>
-                {user &&
-                  !user.workshopName &&
-                  !mechanic?.mechanicRatings.filter(
-                    (item) => item.user._id === user.id
-                  ).length && <AddRating id={id} />}
-
-                {mechanic?.mechanicRatings.length
-                  ? mechanic?.mechanicRatings.map((r, index) => (
-                      <RatingComponent key={index} userRate={r} />
-                    ))
-                  : t("no_workshop_ratings")}
-              </div>
+              )}
             </div>
 
             <div className="mechanic-profile-contact">

@@ -96,5 +96,13 @@
     "founder": "Ibrahim Mohamed",
     "home_card_create_account": "Create Account",
     "home_card_browse": "Browse Auto Service Centers",
-    "home_card_contact": "Contact with Auto Service Centers"
+    "home_card_contact": "Contact with Auto Service Centers",
+    "mechanic_data":"Mechanic Data",
+    "mechanic_posts":"Posts",
+    "no_posts": "no posts created yet",
+    "create_post": "create",
+    "post_like": "like",
+    "post_comment": "comment",
+    "post_edit": "edit",
+    "post_delete": "delete"
 }

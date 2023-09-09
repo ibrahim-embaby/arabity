@@ -7,6 +7,7 @@ const mechanicSlice = createSlice({
     loading: false,
     workshopsCount: null,
     posts: [],
+    postLoading: false,
   },
   reducers: {
     setMechanic(state, action) {
@@ -29,15 +30,41 @@ const mechanicSlice = createSlice({
     setPosts(state, action) {
       state.posts = action.payload;
     },
-
     clearPosts(state) {
       state.posts = [];
+    },
+    addPostToPosts(state, action) {
+      state.posts.unshift(action.payload);
+    },
+    removePostFromPosts(state, action) {
+      state.posts = state.posts.filter((post) => post._id !== action.payload);
+    },
+    updatePost(state, action) {
+      const { id, text } = action.payload;
+
+      state.posts = state.posts.map((post) => {
+        if (post._id === id) {
+          return {
+            ...post,
+            text: text,
+          };
+        }
+
+        return post;
+      });
     },
     setLoading(state) {
       state.loading = true;
     },
     clearLoading(state) {
       state.loading = false;
+    },
+
+    setPostLoading(state) {
+      state.postLoading = true;
+    },
+    clearPostLoading(state) {
+      state.postLoading = false;
     },
   },
 });

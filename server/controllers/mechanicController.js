@@ -195,10 +195,14 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
     const isMechanic = await Mechanic.findById(mechanicId);
     if (!isMechanic || mechanicId !== req.user.id)
       return res.status(400).json({ message: req.t("forbidden") });
-    const newPost = await MechanicPost.create({
+    let newPost = await MechanicPost.create({
       mechanicId,
       text,
     });
+    newPost = await newPost.populate(
+      "mechanicId",
+      "username workshopPhoto _id"
+    );
     res.status(201).json({ data: newPost, message: req.t("post_created") });
   } catch (error) {
     console.log(error);
@@ -215,7 +219,9 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
 module.exports.getAllMechanicPostsCtrl = asyncHandler(async (req, res) => {
   try {
     const { mechanicId } = req.params;
-    const posts = await MechanicPost.find({ mechanicId });
+    const posts = await MechanicPost.find({ mechanicId })
+      .populate("mechanicId", "username workshopPhoto _id")
+      .sort({ createdAt: -1 });
 
     res.status(200).json(posts);
   } catch (error) {
@@ -237,6 +243,66 @@ module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
     if (!post)
       return res.status(404).json({ message: req.t("post_not_found") });
     res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc update mechanic post
+ * @route /api/mechanic/:mechanicId/posts/:postId
+ * @method PUT
+ * @access private (only user himself)
+ */
+module.exports.updateSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { mechanicId, postId } = req.params;
+    const { text } = req.body;
+    const mechanic = await Mechanic.findById(mechanicId);
+    if (mechanic._id.toString() !== req.user.id) {
+      return res.status(301).json({ message: req.t("forbidden") });
+    }
+
+    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    if (!post)
+      return res.status(404).json({ message: req.t("post_not_found") });
+    const updatedPost = await MechanicPost.findOneAndUpdate(
+      {
+        mechanicId,
+        _id: postId,
+      },
+      { text }
+    );
+    res.status(200).json({ data: updatedPost, message: req.t("post_edit") });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc delete single mechanic post
+ * @route /api/mechanic/:mechanicId/posts/:postId
+ * @method DELETE
+ * @access private (only user himself)
+ */
+module.exports.deleteSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { mechanicId, postId } = req.params;
+    const mechanic = await Mechanic.findById(mechanicId);
+    if (mechanic._id.toString() !== req.user.id) {
+      return res.status(301).json({ message: req.t("forbidden") });
+    }
+
+    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    if (!post)
+      return res.status(404).json({ message: req.t("post_not_found") });
+    const deletedPost = await MechanicPost.findOneAndDelete({
+      mechanicId,
+      _id: postId,
+    });
+    res.status(200).json({ data: deletedPost, message: req.t("post_deleted") });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

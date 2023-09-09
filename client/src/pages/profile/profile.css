@@ -138,6 +138,18 @@
   gap: 20px;
 }
 
+.tabs {
+  display: flex;
+}
+
+.mechanic-tab {
+  padding: 10px;
+  cursor: pointer;
+}
+.mechanic-tab:hover {
+  background-color: #ddd;
+}
+
 .mechanic-profile-info-title {
   font-weight: bold;
 }
@@ -267,6 +279,12 @@
   cursor: pointer;
   font-family: var(--font-family);
   font-weight: bold;
+}
+
+.mechanic_posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* WorkshopProfile Settings */

@@ -7,6 +7,8 @@ const {
   createMechanicPostCtrl,
   getSingleMechanicPostCtrl,
   getAllMechanicPostsCtrl,
+  deleteSingleMechanicPostCtrl,
+  updateSingleMechanicPostCtrl,
 } = require("../controllers/mechanicController");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
@@ -38,8 +40,12 @@ router
   .post(verifyToken, createMechanicPostCtrl)
   .get(getAllMechanicPostsCtrl);
 
-// /api/mechanic/:mechanicId/posts/
-router.route("/:mechanicId/posts/:postId").get(getSingleMechanicPostCtrl);
+// /api/mechanic/:mechanicId/posts/:postId
+router
+  .route("/:mechanicId/posts/:postId")
+  .get(getSingleMechanicPostCtrl)
+  .delete(verifyToken, deleteSingleMechanicPostCtrl)
+  .put(verifyToken, updateSingleMechanicPostCtrl);
 
 // /api/mechanic/:id
 router

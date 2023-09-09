@@ -20,6 +20,8 @@
     "post_created": "post is created successfully",
     "rated_before": "you already rated this mechanic before",
     "post_not_found": "this post doesn't exist",
+    "post_deleted": "post is deleted successfully",
+    "post_edit": "post is edited successfully",
     "forbidden": "forbidden",
     "not_deleted": "The deletion was not successful, please try again",
     "cloudinary_error": "internal server error (cloudinary)"

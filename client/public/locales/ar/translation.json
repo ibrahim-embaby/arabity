@@ -96,5 +96,13 @@
     "founder": "إبراهيم محمد",
     "home_card_create_account": "انشأ حساب",
     "home_card_browse": "تصفح مراكز الصيانة",
-    "home_card_contact": "تواصل مع مركز الصيانة"
+    "home_card_contact": "تواصل مع مركز الصيانة",
+    "mechanic_data":"بيانات الورشة",
+    "mechanic_posts":"المنشورات",
+    "no_posts": "لا توجد منشورات",
+    "create_post": "نشر",
+    "post_like": "أعجبني",
+    "post_comment": "تعليق",
+    "post_edit": "تعديل",
+    "post_delete": "حذف"
 }
