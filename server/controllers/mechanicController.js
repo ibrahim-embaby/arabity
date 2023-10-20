@@ -8,10 +8,7 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
-const {
-  MechanicPost,
-  validateCreateMechanicPost,
-} = require("../models/MechanicPost");
+const { Post, validateCreatePost } = require("../models/Post");
 /**
  * @desc get workshop owner
  * @route /api/mechanic/:id
@@ -180,6 +177,8 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
   }
 });
 
+/* MECHANIC POST */
+
 /**
  * @desc create mechanic post
  * @route /api/mechanic/:mechanicId/posts/
@@ -188,21 +187,19 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
   try {
-    const { error } = validateCreateMechanicPost(req.body);
+    const { error } = validateCreatePost(req.body);
     if (error) return res.status(400).json({ message: error.message });
     const { text } = req.body;
     const { mechanicId } = req.params;
     const isMechanic = await Mechanic.findById(mechanicId);
     if (!isMechanic || mechanicId !== req.user.id)
       return res.status(400).json({ message: req.t("forbidden") });
-    let newPost = await MechanicPost.create({
-      mechanicId,
+    let newPost = await Post.create({
       text,
+      doc: mechanicId,
+      docModel: "Mechanic",
     });
-    newPost = await newPost.populate(
-      "mechanicId",
-      "username workshopPhoto _id"
-    );
+    newPost = await newPost.populate("doc", "username workshopPhoto _id");
     res.status(201).json({ data: newPost, message: req.t("post_created") });
   } catch (error) {
     console.log(error);
@@ -219,8 +216,11 @@ module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
 module.exports.getAllMechanicPostsCtrl = asyncHandler(async (req, res) => {
   try {
     const { mechanicId } = req.params;
-    const posts = await MechanicPost.find({ mechanicId })
-      .populate("mechanicId", "username workshopPhoto _id")
+    const posts = await Post.find({
+      docModel: "Mechanic",
+      doc: mechanicId,
+    })
+      .populate("doc", "username workshopPhoto _id")
       .sort({ createdAt: -1 });
 
     res.status(200).json(posts);
@@ -239,7 +239,7 @@ module.exports.getAllMechanicPostsCtrl = asyncHandler(async (req, res) => {
 module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
   try {
     const { mechanicId, postId } = req.params;
-    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    const post = await Post.findById(postId);
     if (!post)
       return res.status(404).json({ message: req.t("post_not_found") });
     res.status(200).json(post);
@@ -264,14 +264,11 @@ module.exports.updateSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
       return res.status(301).json({ message: req.t("forbidden") });
     }
 
-    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    const post = await Post.findById(postId);
     if (!post)
       return res.status(404).json({ message: req.t("post_not_found") });
-    const updatedPost = await MechanicPost.findOneAndUpdate(
-      {
-        mechanicId,
-        _id: postId,
-      },
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
       { text },
       { new: true }
     );
@@ -296,13 +293,10 @@ module.exports.deleteSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
       return res.status(301).json({ message: req.t("forbidden") });
     }
 
-    const post = await MechanicPost.findOne({ mechanicId, _id: postId });
+    const post = await Post.findById(postId);
     if (!post)
       return res.status(404).json({ message: req.t("post_not_found") });
-    const deletedPost = await MechanicPost.findOneAndDelete({
-      mechanicId,
-      _id: postId,
-    });
+    const deletedPost = await Post.findByIdAndDelete(postId);
     res.status(200).json({ data: deletedPost, message: req.t("post_deleted") });
   } catch (error) {
     console.log(error);

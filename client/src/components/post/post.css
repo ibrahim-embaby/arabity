@@ -39,6 +39,9 @@
 
 .post-options-icon {
   cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 20px;
 }
 .post-options-list {
   position: absolute;

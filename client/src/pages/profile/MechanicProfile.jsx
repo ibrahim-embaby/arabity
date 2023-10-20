@@ -261,7 +261,7 @@ function WorkshopProfile() {
                 </>
               ) : (
                 <div className="mechanic_posts">
-                  <CreatePost mechanicId={id} />
+                  {user?.id === id && <CreatePost mechanicId={id} />}
                   <hr />
                   {postLoading ? (
                     <p>loading...</p>

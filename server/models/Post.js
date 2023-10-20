@@ -1,11 +1,17 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const MechanicPostSchema = new mongoose.Schema(
+const PostSchema = new mongoose.Schema(
   {
-    mechanicId: {
+    doc: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Mechanic",
+      required: true,
+      refPath: "docModel",
+    },
+    docModel: {
+      type: String,
+      required: true,
+      enum: ["Mechanic", "User"],
     },
     text: {
       type: String,
@@ -27,7 +33,7 @@ const MechanicPostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-function validateCreateMechanicPost(object) {
+function validateCreatePost(object) {
   const schema = Joi.object({
     text: Joi.string().required(),
   });
@@ -35,9 +41,9 @@ function validateCreateMechanicPost(object) {
   return schema.validate(object);
 }
 
-const MechanicPost = mongoose.model("MechanicPost", MechanicPostSchema);
+const Post = mongoose.model("Post", PostSchema);
 
 module.exports = {
-  MechanicPost,
-  validateCreateMechanicPost,
+  Post,
+  validateCreatePost,
 };
