@@ -8,7 +8,6 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
-const { Post, validateCreatePost } = require("../models/Post");
 /**
  * @desc get workshop owner
  * @route /api/mechanic/:id
@@ -149,12 +148,12 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
     const mechanic = await Mechanic.findById(req.user.id);
 
     // delete the old profile photo if exist
-    if (mechanic.workshopPhoto.publicId !== null) {
-      await cloudinaryRemoveImage(mechanic.workshopPhoto.publicId);
+    if (mechanic.profilePhoto.publicId !== null) {
+      await cloudinaryRemoveImage(mechanic.profilePhoto.publicId);
     }
 
     // change the profilePhoto if exist
-    mechanic.workshopPhoto = {
+    mechanic.profilePhoto = {
       url: result.secure_url,
       publicId: result.public_id,
     };
@@ -163,7 +162,7 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
     // send response to client
     res.status(201).json({
       message: req.t("photo_uploaded"),
-      workshopPhoto: {
+      profilePhoto: {
         url: result.secure_url,
         publicId: result.public_id,
       },
@@ -171,133 +170,6 @@ module.exports.uploadMechanicPhotoCtrl = asyncHandler(async (req, res) => {
 
     // remove image from the server (images folder)
     fs.unlinkSync(imagePath);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: req.t("server_error") });
-  }
-});
-
-/* MECHANIC POST */
-
-/**
- * @desc create mechanic post
- * @route /api/mechanic/:mechanicId/posts/
- * @method POST
- * @access private (logged user only)
- */
-module.exports.createMechanicPostCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { error } = validateCreatePost(req.body);
-    if (error) return res.status(400).json({ message: error.message });
-    const { text } = req.body;
-    const { mechanicId } = req.params;
-    const isMechanic = await Mechanic.findById(mechanicId);
-    if (!isMechanic || mechanicId !== req.user.id)
-      return res.status(400).json({ message: req.t("forbidden") });
-    let newPost = await Post.create({
-      text,
-      doc: mechanicId,
-      docModel: "Mechanic",
-    });
-    newPost = await newPost.populate("doc", "username workshopPhoto _id");
-    res.status(201).json({ data: newPost, message: req.t("post_created") });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: req.t("server_error") });
-  }
-});
-
-/**
- * @desc get all mechanic posts
- * @route /api/mechanic/:mechanicId/posts/
- * @method GET
- * @access public
- */
-module.exports.getAllMechanicPostsCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { mechanicId } = req.params;
-    const posts = await Post.find({
-      docModel: "Mechanic",
-      doc: mechanicId,
-    })
-      .populate("doc", "username workshopPhoto _id")
-      .sort({ createdAt: -1 });
-
-    res.status(200).json(posts);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: req.t("server_error") });
-  }
-});
-
-/**
- * @desc get single mechanic post
- * @route /api/mechanic/:mechanicId/posts/:postId
- * @method GET
- * @access public
- */
-module.exports.getSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { mechanicId, postId } = req.params;
-    const post = await Post.findById(postId);
-    if (!post)
-      return res.status(404).json({ message: req.t("post_not_found") });
-    res.status(200).json(post);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: req.t("server_error") });
-  }
-});
-
-/**
- * @desc update mechanic post
- * @route /api/mechanic/:mechanicId/posts/:postId
- * @method PUT
- * @access private (only user himself)
- */
-module.exports.updateSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { mechanicId, postId } = req.params;
-    const { text } = req.body;
-    const mechanic = await Mechanic.findById(mechanicId);
-    if (mechanic._id.toString() !== req.user.id) {
-      return res.status(301).json({ message: req.t("forbidden") });
-    }
-
-    const post = await Post.findById(postId);
-    if (!post)
-      return res.status(404).json({ message: req.t("post_not_found") });
-    const updatedPost = await Post.findByIdAndUpdate(
-      postId,
-      { text },
-      { new: true }
-    );
-    res.status(200).json({ data: updatedPost, message: req.t("post_edit") });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: req.t("server_error") });
-  }
-});
-
-/**
- * @desc delete single mechanic post
- * @route /api/mechanic/:mechanicId/posts/:postId
- * @method DELETE
- * @access private (only user himself)
- */
-module.exports.deleteSingleMechanicPostCtrl = asyncHandler(async (req, res) => {
-  try {
-    const { mechanicId, postId } = req.params;
-    const mechanic = await Mechanic.findById(mechanicId);
-    if (mechanic._id.toString() !== req.user.id) {
-      return res.status(301).json({ message: req.t("forbidden") });
-    }
-
-    const post = await Post.findById(postId);
-    if (!post)
-      return res.status(404).json({ message: req.t("post_not_found") });
-    const deletedPost = await Post.findByIdAndDelete(postId);
-    res.status(200).json({ data: deletedPost, message: req.t("post_deleted") });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

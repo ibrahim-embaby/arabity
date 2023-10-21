@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { createMechanicPost } from "../../redux/apiCalls/mechanicApiCall";
+import { createPost } from "../../redux/apiCalls/postApiCall";
 
-function CreatePost({ mechanicId }) {
+function CreatePost() {
   const [post, setPost] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const handleCreatePost = (e) => {
     e.preventDefault();
-    dispatch(createMechanicPost(mechanicId, post));
+    dispatch(createPost(post));
     setPost("");
   };
   return (

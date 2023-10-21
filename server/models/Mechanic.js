@@ -28,8 +28,7 @@ const MechanicSchema = new mongoose.Schema(
     cars: {
       type: Array,
     },
-
-    workshopPhoto: {
+    profilePhoto: {
       type: Object,
       default: {
         url: "",
@@ -79,9 +78,13 @@ MechanicSchema.virtual("mechanicRatings", {
 
 // generate auth token
 MechanicSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: "10d",
-  });
+  return jwt.sign(
+    { id: this._id, userType: "Mechanic" },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "10m",
+    }
+  );
 };
 
 function validateCreateMechanic(obj) {

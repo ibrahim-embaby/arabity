@@ -15,6 +15,7 @@ const searchRoute = require("./routes/searchRoute");
 const mechanicRoute = require("./routes/mechanicRoute");
 const rateRoute = require("./routes/rateRoute");
 const messagesRoute = require("./routes/messageRoutes");
+const postRoutes = require("./routes/postRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
 const controlsRoute = require("./routes/controlsRoute");
 const production = require("./utils/constants");
@@ -53,6 +54,7 @@ app.use("/api/search", searchRoute);
 app.use("/api/mechanic", mechanicRoute);
 app.use("/api/ratings", rateRoute);
 app.use("/api/messages", messagesRoute);
+app.use("/api/posts", postRoutes);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/controls", controlsRoute);
 

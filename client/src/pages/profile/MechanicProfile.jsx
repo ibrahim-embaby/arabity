@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchMechanic,
-  fetchMechanicPosts,
   uploadWorkshopImg,
 } from "../../redux/apiCalls/mechanicApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
@@ -19,6 +18,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import Post from "../../components/post/Post";
 import CreatePost from "../../components/post/CreatePost";
+import { fetchUserPosts } from "../../redux/apiCalls/postApiCall";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -27,9 +27,8 @@ function WorkshopProfile() {
   const [avgRating, setAvgRating] = useState(0);
   const [workshopImg, setWorkshopImg] = useState(null);
   const [tab, setTab] = useState("mechanic_data");
-  const { mechanic, loading, posts, postLoading } = useSelector(
-    (state) => state.mechanic
-  );
+  const { mechanic, loading } = useSelector((state) => state.mechanic);
+  const { posts, postLoading } = useSelector((state) => state.post);
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { t, i18n } = useTranslation();
@@ -88,7 +87,7 @@ function WorkshopProfile() {
 
   const handleMechanicPosts = () => {
     setTab("mechanic_posts");
-    dispatch(fetchMechanicPosts(id));
+    dispatch(fetchUserPosts(id));
   };
 
   return loading ? (
@@ -115,8 +114,8 @@ function WorkshopProfile() {
                   src={
                     workshopImg
                       ? URL.createObjectURL(workshopImg)
-                      : mechanic?.workshopPhoto.url
-                      ? mechanic?.workshopPhoto.url
+                      : mechanic?.profilePhoto.url
+                      ? mechanic?.profilePhoto.url
                       : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
                   }
                   alt=""
@@ -261,7 +260,7 @@ function WorkshopProfile() {
                 </>
               ) : (
                 <div className="mechanic_posts">
-                  {user?.id === id && <CreatePost mechanicId={id} />}
+                  {user?.id === id && <CreatePost />}
                   <hr />
                   {postLoading ? (
                     <p>loading...</p>

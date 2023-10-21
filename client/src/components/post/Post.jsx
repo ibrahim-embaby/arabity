@@ -3,13 +3,10 @@ import formatTime from "../../utils/formatTime";
 import "./post.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteMechanicPost,
-  updateMechanicPost,
-} from "../../redux/apiCalls/mechanicApiCall";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useTranslation } from "react-i18next";
+import { deletePost, updatePost } from "../../redux/apiCalls/postApiCall";
 
 function Post({ post }) {
   const [openOptions, setOpenOptions] = useState(false);
@@ -19,11 +16,11 @@ function Post({ post }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const handleDeletePost = () => {
-    dispatch(deleteMechanicPost(post.doc._id, post._id));
+    dispatch(deletePost(post._id));
   };
   const handleEditPost = (e) => {
     e.preventDefault();
-    dispatch(updateMechanicPost(post.doc._id, post._id, newPost));
+    dispatch(updatePost(post._id, newPost));
     setPostEdit(false);
   };
   return (
@@ -33,7 +30,7 @@ function Post({ post }) {
           <Link to={`/mechanic/profile/${post.doc._id}`}>
             <img
               className="post-owner-photo"
-              src={post.doc.workshopPhoto.url}
+              src={post.doc.profilePhoto.url}
               alt=""
             />
           </Link>

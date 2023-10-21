@@ -6,6 +6,7 @@ import { ratingReducer } from "./slices/ratingSlice";
 import { messageReducer } from "./slices/messageSlice";
 import { conversationReducer } from "./slices/conversationSlice";
 import { mechanicReducer } from "./slices/mechanicSlice";
+import { postReducer } from "./slices/postSlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -15,6 +16,7 @@ const store = configureStore({
     rating: ratingReducer,
     message: messageReducer,
     conversation: conversationReducer,
+    post: postReducer,
   },
 });
 

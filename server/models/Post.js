@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema(
     },
     docModel: {
       type: String,
-      required: true,
+      required: [true, "post docModel is required"],
       enum: ["Mechanic", "User"],
     },
     text: {
@@ -26,7 +26,8 @@ const PostSchema = new mongoose.Schema(
     ],
     likes: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
       },
     ],
   },

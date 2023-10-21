@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema(
     favorites: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "WorkshopOwner",
+        ref: "Mechanic",
       },
     ],
     isAdmin: {
@@ -43,8 +43,11 @@ const UserSchema = new mongoose.Schema(
 // Generate Auth Token
 UserSchema.methods.generateAuthToken = function () {
   return jwt.sign(
-    { id: this._id, isAdmin: this.isAdmin },
-    process.env.JWT_SECRET
+    { id: this._id, isAdmin: this.isAdmin, userType: "User" },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "10m",
+    }
   );
 };
 
