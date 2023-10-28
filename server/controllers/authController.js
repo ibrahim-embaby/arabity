@@ -72,6 +72,7 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res) => {
     email: user.email,
     isAdmin: user.isAdmin,
     username: user.username,
+    profilePhoto: user.profilePhoto,
   });
 });
 
@@ -146,5 +147,6 @@ module.exports.loginMechanicCtrl = asyncHandler(async (req, res) => {
     token,
     username: mechanic.username,
     workshopName: mechanic.workshopName,
+    profilePhoto: mechanic.profilePhoto,
   });
 });

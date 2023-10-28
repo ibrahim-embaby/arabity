@@ -18,12 +18,6 @@ const PostSchema = new mongoose.Schema(
       min: 3,
       required: true,
     },
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
     likes: {
       type: Number,
       default: 0,
@@ -35,8 +29,14 @@ const PostSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } }
 );
+
+PostSchema.virtual("comments", {
+  ref: "Comment",
+  foreignField: "postId",
+  localField: "_id",
+});
 
 function validateCreatePost(object) {
   const schema = Joi.object({

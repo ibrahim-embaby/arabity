@@ -24,6 +24,8 @@
     "post_edit": "post is edited successfully",
     "liked_already": "You already liked this post",
     "unliked_yet": "You haven't liked this post yet",
+    "comment_not_found": "comment not found",
+    "comment_deleted":"comment deleted successfully",
     "forbidden": "forbidden",
     "not_deleted": "The deletion was not successful, please try again",
     "cloudinary_error": "internal server error (cloudinary)",

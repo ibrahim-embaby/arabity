@@ -36,6 +36,7 @@ function WorkshopProfile() {
   document.title = t("workshop_profile_page_title");
 
   useEffect(() => {
+    setTab("mechanic_data");
     dispatch(fetchMechanic(id));
     if (mechanic?.mechanicRatings?.length) {
       let sum = 0;

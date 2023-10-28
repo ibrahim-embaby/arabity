@@ -15,6 +15,7 @@
     "navbar_main": "Home",
     "navbar_contact": "About Us",
     "navbar_admin": "Admin",
+    "navbar_posts": "Posts",
     "dropdown_account": "my account",
     "dropdown_conversations": "conversations",
     "dropdown_settings": "settings",
@@ -100,11 +101,17 @@
     "mechanic_data":"Mechanic Data",
     "mechanic_posts":"Posts",
     "no_posts": "no posts created yet",
+    "create_post_header": "Create Post",
     "create_post": "create",
     "post_like": "like",
     "post_dislike": "dislike",
     "post_comment": "comment",
     "post_edit": "edit",
     "post_delete": "delete",
-    "login_required": "please login first"
+    "post_empty": "please write anything to post",
+    "login_required": "please login first",
+    "create_comment":"comment",
+    "comment_empty": "please write anything to comment",
+    "comment_edit":"edit",
+    "comment_delete":"delete"
 }

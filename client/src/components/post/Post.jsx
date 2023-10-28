@@ -14,6 +14,8 @@ import {
   updatePost,
 } from "../../redux/apiCalls/postApiCall";
 import { toast } from "react-toastify";
+import Comment from "../comment/Comment";
+import CreateComment from "../comment/CreateComment";
 
 function Post({ post }) {
   const [openOptions, setOpenOptions] = useState(false);
@@ -53,7 +55,7 @@ function Post({ post }) {
           </Link>
         </div>
         <div className="post-owner-info">
-          <div className="post-owner-username">{post.doc.username}</div>
+          <h4 className="post-owner-username">{post.doc.username}</h4>
           <p className="post-date">{formatTime(post.createdAt)}</p>
         </div>
         {user?.id === post.doc._id && (
@@ -108,6 +110,14 @@ function Post({ post }) {
           <CommentIcon />
           <span>{t("post_comment")}</span>
         </div>
+      </div>
+      <div className="post-comments-wrapper">
+        <div className="post-comments">
+          {post.comments?.map((comment, index) => (
+            <Comment key={index} comment={comment} post={post} />
+          ))}
+        </div>
+        {user && <CreateComment post={post} />}
       </div>
     </div>
   );

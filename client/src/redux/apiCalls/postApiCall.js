@@ -28,6 +28,30 @@ export function createPost(text) {
   };
 }
 
+// /api/posts/
+export function fetchAllPosts() {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(postActions.setPostLoading());
+      const { data } = await request.get(`/api/posts/`, {
+        headers: {
+          Cookie: document.i18next,
+        },
+        withCredentials: true,
+      });
+      const payload = data.map((post) => ({
+        ...post,
+        liked: post.likedBy.includes(getState().auth.user?.id),
+      }));
+      dispatch(postActions.setPosts(payload));
+      dispatch(postActions.clearPostLoading());
+    } catch (error) {
+      toast.error(error.response.data.message);
+      dispatch(postActions.clearPostLoading());
+    }
+  };
+}
+
 // /api/posts/user/:userId
 export function fetchUserPosts(userId) {
   return async (dispatch, getState) => {

@@ -14,12 +14,14 @@ function Navbar({ toggle, setToggle }) {
       setCurrentTab(1);
     } else if (location.pathname === "/about-us") {
       setCurrentTab(2);
-    } else if (location.pathname === "/admin") {
+    } else if (location.pathname === "/posts") {
       setCurrentTab(3);
-    } else if (location.pathname === "/login") {
+    } else if (location.pathname === "/admin") {
       setCurrentTab(4);
-    } else if (location.pathname === "/register") {
+    } else if (location.pathname === "/login") {
       setCurrentTab(5);
+    } else if (location.pathname === "/register") {
+      setCurrentTab(6);
     } else {
       setCurrentTab(0);
     }
@@ -59,16 +61,29 @@ function Navbar({ toggle, setToggle }) {
         >
           {t("navbar_contact")}
         </Link>
+        <Link
+          onClick={() => {
+            setCurrentTab(3);
+            setToggle(false);
+          }}
+          style={{
+            color: currentTab === 3 && selectedTabColor,
+            fontWeight: currentTab === 3 && "bolder",
+          }}
+          to={"/posts"}
+        >
+          {t("navbar_posts")}
+        </Link>
         {user?.isAdmin && (
           <Link
             to={"/admin"}
             onClick={() => {
-              setCurrentTab(3);
+              setCurrentTab(4);
               setToggle(false);
             }}
             style={{
-              color: currentTab === 3 && selectedTabColor,
-              fontWeight: currentTab === 3 && "bolder",
+              color: currentTab === 4 && selectedTabColor,
+              fontWeight: currentTab === 4 && "bolder",
             }}
           >
             {t("navbar_admin")}
@@ -84,8 +99,8 @@ function Navbar({ toggle, setToggle }) {
               to={"/login"}
               className="login-button auth-link"
               style={{
-                color: currentTab === 4 && selectedTabColor,
-                fontWeight: currentTab === 4 && "bolder",
+                color: currentTab === 5 && selectedTabColor,
+                fontWeight: currentTab === 5 && "bolder",
               }}
             >
               {t("login")}
@@ -98,8 +113,8 @@ function Navbar({ toggle, setToggle }) {
               to={"/register"}
               className="register-button auth-link"
               style={{
-                color: currentTab === 5 && selectedTabColor,
-                fontWeight: currentTab === 5 && "bolder",
+                color: currentTab === 6 && selectedTabColor,
+                fontWeight: currentTab === 6 && "bolder",
               }}
             >
               {t("register")}

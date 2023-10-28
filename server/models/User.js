@@ -36,6 +36,13 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    profilePhoto: {
+      type: Object,
+      default: {
+        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1698526360/df9ucku2gdjixyavkoul.png",
+        publicId: "df9ucku2gdjixyavkoul",
+      },
+    },
   },
   { timestamps: true }
 );
@@ -46,7 +53,7 @@ UserSchema.methods.generateAuthToken = function () {
     { id: this._id, isAdmin: this.isAdmin, userType: "User" },
     process.env.JWT_SECRET,
     {
-      expiresIn: "10m",
+      expiresIn: "1y",
     }
   );
 };

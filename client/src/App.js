@@ -18,6 +18,7 @@ import Conversations from "./pages/conversations/Conversations";
 import ContactUs from "./pages/contact-us/ContactUs";
 import MechanicSettings from "./pages/profile/MechanicSettings";
 import "./i18n";
+import Posts from "./pages/posts/Posts";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -53,6 +54,7 @@ function App() {
         />
         <Route path="/search/workshops" element={<SearchResults />} />
         <Route path="/mechanic/profile/:id" element={<MechanicProfile />} />
+        <Route path="/posts" element={<Posts />} />
         <Route
           path="/conversations"
           element={user ? <Conversations /> : <Navigate to={"/login"} />}

@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { validateCreatePost, Post } = require("../models/Post");
-const mongoose = require("mongoose");
+const { Comment } = require("../models/Comment");
 
 /**
  * @desc create post
@@ -20,7 +20,39 @@ module.exports.createPostCtrl = asyncHandler(async (req, res) => {
       docModel: req.user.userType,
     });
     newPost = await newPost.populate("doc", "username profilePhoto _id");
-    res.status(201).json({ data: newPost, message: req.t("post_created") });
+
+    res.status(201).json({
+      data: { ...newPost._doc, comments: [] },
+      message: req.t("post_created"),
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc get posts
+ * @route /api/posts/
+ * @method GET
+ * @access public
+ */
+module.exports.getAllPostsCtrl = asyncHandler(async (req, res) => {
+  try {
+    const posts = await Post.find()
+      .populate("doc", "username profilePhoto _id")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "doc",
+          select: "username _id profilePhoto",
+        },
+        // sort not work
+        sort: { createdAt: -1 },
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(posts);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });
@@ -38,6 +70,15 @@ module.exports.getAllUserPostsCtrl = asyncHandler(async (req, res) => {
     const { userId } = req.params;
     const posts = await Post.find({ doc: userId })
       .populate("doc", "username profilePhoto _id")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "doc",
+          select: "username _id profilePhoto",
+        },
+        // sort not work
+        sort: { createdAt: -1 },
+      })
       .sort({ createdAt: -1 });
 
     res.status(200).json(posts);
@@ -56,8 +97,17 @@ module.exports.getAllUserPostsCtrl = asyncHandler(async (req, res) => {
 module.exports.getSinglePostCtrl = asyncHandler(async (req, res) => {
   try {
     const { postId } = req.params;
-    console.log(postId);
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId)
+      .populate("doc", "username profilePhoto _id")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "doc",
+          select: "username _id profilePhoto",
+        },
+        // sort not work
+        sort: { createdAt: -1 },
+      });
     if (!post)
       return res.status(404).json({ message: req.t("post_not_found") });
     res.status(200).json(post);
@@ -89,7 +139,15 @@ module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
       postId,
       { text },
       { new: true }
-    );
+    )
+      .populate("doc", "username _id profilePhoto")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "doc",
+          select: "username _id profilePhoto",
+        },
+      });
     res.status(200).json({ data: updatedPost, message: req.t("post_edit") });
   } catch (error) {
     console.log(error);
@@ -114,6 +172,7 @@ module.exports.deleteSinglePostCtrl = asyncHandler(async (req, res) => {
       return res.status(301).json({ message: req.t("forbidden") });
     }
     const deletedPost = await Post.findByIdAndDelete(postId);
+    await Comment.deleteMany({ postId });
     res.status(200).json({ data: deletedPost, message: req.t("post_deleted") });
   } catch (error) {
     console.log(error);

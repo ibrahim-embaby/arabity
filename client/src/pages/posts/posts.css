@@ -1,0 +1,6 @@
+.posts {
+  min-height: calc(100vh - var(--difference-value));
+  direction: rtl;
+  display: flex;
+  justify-content: center;
+}

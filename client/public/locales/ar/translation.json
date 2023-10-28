@@ -15,6 +15,7 @@
     "navbar_main": "الرئيسية",
     "navbar_contact": "عنّا",
     "navbar_admin": "صفحة المسؤول",
+    "navbar_posts": "المنشورات",
     "dropdown_account": "حسابي",
     "dropdown_conversations": "المحادثات",
     "dropdown_settings": "اعدادات",
@@ -100,11 +101,17 @@
     "mechanic_data":"بيانات الورشة",
     "mechanic_posts":"المنشورات",
     "no_posts": "لا توجد منشورات",
+    "create_post_header": "إنشاء منشور",
     "create_post": "نشر",
     "post_like": "إعجاب",
     "post_dislike": "إالغاء الإعجاب",
     "post_comment": "تعليق",
     "post_edit": "تعديل",
     "post_delete": "حذف",
-    "login_required": "من فضلك قم بتسجيل الدخول أولًا"
+    "post_empty": "من فضلك اكتب شيئًا لنشره",
+    "login_required": "من فضلك قم بتسجيل الدخول أولًا",
+    "create_comment": "تعليق",
+    "comment_empty": "من فضلك اكتب شيئًا لنشره",
+    "comment_edit":"تعديل",
+    "comment_delete":"حذف"
 }

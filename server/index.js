@@ -18,6 +18,7 @@ const messagesRoute = require("./routes/messageRoutes");
 const postRoutes = require("./routes/postRoutes");
 const conversationsRoute = require("./routes/conversationRoute");
 const controlsRoute = require("./routes/controlsRoute");
+const commentRoute = require("./routes/commentRoute");
 const production = require("./utils/constants");
 
 // connection to DB
@@ -57,6 +58,7 @@ app.use("/api/messages", messagesRoute);
 app.use("/api/posts", postRoutes);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/controls", controlsRoute);
+app.use("/api/comments", commentRoute);
 
 PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
