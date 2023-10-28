@@ -36,7 +36,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 - ✅ Results Pagination
 - ✅ View Mechanic Profiles
 - ✅ Rate on Mechanic
-- ✅ Delete Own Rate
+- ✅ User/Mechanic Post & Comment feature
 - ✅ Real Time User-to-Mechanic Chat
 - ✅ Multilingual (Arabic/English)
 - ✅ Emoji Enabled (Emoji Mart)
@@ -44,9 +44,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 ## ⌛ Upcoming Features
 
 - 🚧 Follow a Mechanic
-- 🚧 Mechanic Posts
 - 🚧 User Notfications
-- 🚧 User Post His Order/Service with Comment Feature
 - 🚧 Search Results Sorting
 - 🚧 Search By City After Selecting Province
 - 🚧 Admin Dashboard
