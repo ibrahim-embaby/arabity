@@ -33,6 +33,32 @@ const postSlice = createSlice({
         return post;
       });
     },
+    likePost(state, action) {
+      const likedPost = action.payload;
+      state.posts = state.posts.map((post) =>
+        post._id === likedPost._id
+          ? {
+              ...post,
+              likes: likedPost.likes,
+              likedBy: likedPost.likedBy,
+              liked: true,
+            }
+          : post
+      );
+    },
+    unlikePost(state, action) {
+      const unlikedPost = action.payload;
+      state.posts = state.posts.map((post) =>
+        post._id === unlikedPost._id
+          ? {
+              ...post,
+              likes: unlikedPost.likes,
+              likedBy: unlikedPost.likedBy,
+              liked: false,
+            }
+          : post
+      );
+    },
     setPostLoading(state) {
       state.postLoading = true;
     },

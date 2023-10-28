@@ -5,6 +5,8 @@ const {
   getSinglePostCtrl,
   updateSinglePostCtrl,
   deleteSinglePostCtrl,
+  unlikePostCtrl,
+  likePostCtrl,
 } = require("../controllers/postController");
 const { verifyToken } = require("../middlewares/verifyToken");
 
@@ -20,5 +22,10 @@ router
   .get(getSinglePostCtrl)
   .put(verifyToken, updateSinglePostCtrl)
   .delete(verifyToken, deleteSinglePostCtrl);
+
+// /api/posts/:postId/like
+router.route("/:postId/like").put(verifyToken, likePostCtrl);
+// /api/posts/:postId/like
+router.route("/:postId/unlike").put(verifyToken, unlikePostCtrl);
 
 module.exports = router;

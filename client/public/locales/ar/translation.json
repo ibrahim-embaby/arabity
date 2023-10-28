@@ -101,8 +101,10 @@
     "mechanic_posts":"المنشورات",
     "no_posts": "لا توجد منشورات",
     "create_post": "نشر",
-    "post_like": "أعجبني",
+    "post_like": "إعجاب",
+    "post_dislike": "إالغاء الإعجاب",
     "post_comment": "تعليق",
     "post_edit": "تعديل",
-    "post_delete": "حذف"
+    "post_delete": "حذف",
+    "login_required": "من فضلك قم بتسجيل الدخول أولًا"
 }

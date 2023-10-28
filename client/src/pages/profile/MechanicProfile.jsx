@@ -62,7 +62,7 @@ function WorkshopProfile() {
 
   const handleCreateConversation = () => {
     if (!user) {
-      return toast.info("يرجي تسجيل الدخول أولًا");
+      return toast.info(t("login_required"));
     }
     try {
       const conversationInfo = {

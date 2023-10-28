@@ -21,8 +21,11 @@
     "post_not_found": "هذا المنشور غير موجود",
     "post_deleted": "تم حذف المنشور بنجاح",
     "post_edit": "تم التعديل بنجاح",
+    "liked_already":"لقد ابديت اعجابك بهذا المنشور بالفعل",
+    "unliked_yet":"لم تبدي إعجابك بهذا المنشور من قبل",
     "server_error": "خطأ في الخادم",
     "forbidden": "دخول غير مسموح",
     "not_deleted": "لم يتم الحذف بنجاح، اعد المحاولة",
-    "cloudinary_error": "خطأ في الخادم (cloudinary)"
+    "cloudinary_error": "خطأ في الخادم (cloudinary)",
+    "success": "تم بنجاح"
 }

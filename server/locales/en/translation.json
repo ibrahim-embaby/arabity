@@ -22,8 +22,10 @@
     "post_not_found": "this post doesn't exist",
     "post_deleted": "post is deleted successfully",
     "post_edit": "post is edited successfully",
+    "liked_already": "You already liked this post",
+    "unliked_yet": "You haven't liked this post yet",
     "forbidden": "forbidden",
     "not_deleted": "The deletion was not successful, please try again",
-    "cloudinary_error": "internal server error (cloudinary)"
-    
+    "cloudinary_error": "internal server error (cloudinary)",
+    "success":"succeeded"
 }

@@ -102,7 +102,9 @@
     "no_posts": "no posts created yet",
     "create_post": "create",
     "post_like": "like",
+    "post_dislike": "dislike",
     "post_comment": "comment",
     "post_edit": "edit",
-    "post_delete": "delete"
+    "post_delete": "delete",
+    "login_required": "please login first"
 }

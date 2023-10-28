@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { validateCreatePost, Post } = require("../models/Post");
+const mongoose = require("mongoose");
 
 /**
  * @desc create post
@@ -114,6 +115,58 @@ module.exports.deleteSinglePostCtrl = asyncHandler(async (req, res) => {
     }
     const deletedPost = await Post.findByIdAndDelete(postId);
     res.status(200).json({ data: deletedPost, message: req.t("post_deleted") });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc like post
+ * @route /api/posts/:postId/like
+ * @method PUT
+ * @access private (logged user)
+ */
+module.exports.likePostCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (!post)
+      return res.status(404).json({ message: req.t("post_not_found") });
+    const likedPost = await Post.findOneAndUpdate(
+      { _id: postId, likedBy: { $nin: req.user.id } },
+      { $push: { likedBy: req.user.id }, $inc: { likes: 1 } },
+      { new: true }
+    );
+    if (!likedPost)
+      return res.status(403).json({ message: req.t("liked_already") });
+    res.status(200).json({ data: likedPost, message: req.t("success") });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc dislike post
+ * @route /api/posts/:postId/unlike
+ * @method PUT
+ * @access private (logged user)
+ */
+module.exports.unlikePostCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (!post)
+      return res.status(404).json({ message: req.t("post_not_found") });
+    const unlikedPost = await Post.findOneAndUpdate(
+      { _id: postId, likedBy: { $in: req.user.id } },
+      { $pull: { likedBy: req.user.id }, $inc: { likes: -1 } },
+      { new: true }
+    );
+    if (!unlikedPost)
+      return res.status(403).json({ message: req.t("unliked_yet") });
+    res.status(200).json({ data: unlikedPost, message: req.t("success") });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

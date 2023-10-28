@@ -4,9 +4,16 @@ import "./post.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useTranslation } from "react-i18next";
-import { deletePost, updatePost } from "../../redux/apiCalls/postApiCall";
+import {
+  deletePost,
+  likePost,
+  unlikePost,
+  updatePost,
+} from "../../redux/apiCalls/postApiCall";
+import { toast } from "react-toastify";
 
 function Post({ post }) {
   const [openOptions, setOpenOptions] = useState(false);
@@ -22,6 +29,16 @@ function Post({ post }) {
     e.preventDefault();
     dispatch(updatePost(post._id, newPost));
     setPostEdit(false);
+  };
+  const handleToggleLike = () => {
+    if (!user) {
+      return toast.info(t("login_required"));
+    }
+    if (post.liked) {
+      dispatch(unlikePost(post._id));
+    } else {
+      dispatch(likePost(post._id));
+    }
   };
   return (
     <div className="post">
@@ -82,9 +99,10 @@ function Post({ post }) {
       </div>
       <hr />
       <div className="post-controls">
-        <div className="post-like">
-          <ThumbUpOffAltIcon />
+        <div className="post-like" onClick={handleToggleLike}>
+          {post.liked ? <ThumbUpIcon /> : <ThumbUpOffAltIcon />}
           <span>{t("post_like")}</span>
+          {post.likes}
         </div>
         <div className="post-comment">
           <CommentIcon />

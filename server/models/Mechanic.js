@@ -82,7 +82,7 @@ MechanicSchema.methods.generateAuthToken = function () {
     { id: this._id, userType: "Mechanic" },
     process.env.JWT_SECRET,
     {
-      expiresIn: "10m",
+      expiresIn: "1y",
     }
   );
 };

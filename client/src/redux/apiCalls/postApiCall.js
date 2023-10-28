@@ -30,7 +30,7 @@ export function createPost(text) {
 
 // /api/posts/user/:userId
 export function fetchUserPosts(userId) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       dispatch(postActions.setPostLoading());
       const { data } = await request.get(`/api/posts/user/${userId}`, {
@@ -39,7 +39,11 @@ export function fetchUserPosts(userId) {
         },
         withCredentials: true,
       });
-      dispatch(postActions.setPosts(data));
+      const payload = data.map((post) => ({
+        ...post,
+        liked: post.likedBy.includes(getState().auth.user?.id),
+      }));
+      dispatch(postActions.setPosts(payload));
       dispatch(postActions.clearPostLoading());
     } catch (error) {
       toast.error(error.response.data.message);
@@ -92,6 +96,43 @@ export function deletePost(postId) {
     } catch (error) {
       toast.error(error.response.data.message);
       dispatch(postActions.clearPostLoading());
+    }
+  };
+}
+
+// /api/posts/:postId/like
+export function likePost(postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/posts/${postId}/like`, null, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.i18next,
+        },
+        withCredentials: true,
+      });
+      dispatch(postActions.likePost(data.data));
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
+}
+
+// /api/posts/:postId/like
+export function unlikePost(postId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/posts/${postId}/unlike`, null, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.i18next,
+        },
+        withCredentials: true,
+      });
+      dispatch(postActions.unlikePost(data.data));
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
 }
