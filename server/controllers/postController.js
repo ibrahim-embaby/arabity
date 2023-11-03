@@ -38,9 +38,9 @@ module.exports.createPostCtrl = asyncHandler(async (req, res) => {
  * @method GET
  * @access public
  */
-module.exports.getAllPostsCtrl = asyncHandler(async (req, res) => {
+module.exports.getAllPublicPostsCtrl = asyncHandler(async (req, res) => {
   try {
-    const posts = await Post.find()
+    const posts = await Post.find({ privacy: "public" })
       .populate("doc", "username profilePhoto _id")
       .populate({
         path: "comments",

@@ -7,12 +7,12 @@ const {
   deleteSinglePostCtrl,
   unlikePostCtrl,
   likePostCtrl,
-  getAllPostsCtrl,
+  getAllPublicPostsCtrl,
 } = require("../controllers/postController");
 const { verifyToken } = require("../middlewares/verifyToken");
 
 // /api/posts
-router.route("/").post(verifyToken, createPostCtrl).get(getAllPostsCtrl);
+router.route("/").post(verifyToken, createPostCtrl).get(getAllPublicPostsCtrl);
 
 // /api/posts/:userId
 router.route("/user/:userId").get(getAllUserPostsCtrl);
