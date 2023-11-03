@@ -45,15 +45,16 @@ function Post({ post }) {
   return (
     <div className="post">
       <div className="post-owner">
-        <div className="post-owner-photo-wrapper">
-          <Link to={`/mechanic/profile/${post.doc._id}`}>
-            <img
-              className="post-owner-photo"
-              src={post.doc.profilePhoto.url}
-              alt=""
-            />
-          </Link>
-        </div>
+        <Link
+          className="post-owner-photo-wrapper"
+          to={`/mechanic/profile/${post.doc._id}`}
+        >
+          <img
+            className="post-owner-photo"
+            src={post.doc.profilePhoto.url}
+            alt=""
+          />
+        </Link>
         <div className="post-owner-info">
           <h4 className="post-owner-username">{post.doc.username}</h4>
           <p className="post-date">{formatTime(post.createdAt)}</p>

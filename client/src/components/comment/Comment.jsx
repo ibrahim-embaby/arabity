@@ -6,6 +6,7 @@ import {
 } from "../../redux/apiCalls/commentApiCall";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 function Comment({ post, comment }) {
   const [openOptions, setOpenOptions] = useState(false);
@@ -27,16 +28,23 @@ function Comment({ post, comment }) {
     dispatch(updateComment(post, commentData));
     setCommentEdit(false);
   };
-  console.log(comment);
   return (
     <div className="comment">
       <div className="comment-header">
         <div className="comment-user-info">
-          <img
-            className="comment-user-photo"
-            src={comment.doc.profilePhoto.url}
-            alt=""
-          />
+          <Link
+            className="comment-owner-photo-wrapper"
+            to={
+              comment.docModel === "Mechanic" &&
+              `/mechanic/profile/${comment.doc._id}`
+            }
+          >
+            <img
+              className="comment-user-photo"
+              src={comment.doc.profilePhoto.url}
+              alt=""
+            />
+          </Link>
           <p>{comment.doc.username}</p>
         </div>
         {user?.id === comment.doc._id && (

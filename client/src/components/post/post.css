@@ -4,7 +4,11 @@
   background-color: #eee;
   padding: 10px;
 }
-
+.posts-container {
+  width: 100%;
+  max-width: 700px;
+  padding: 20px;
+}
 .post-owner {
   display: flex;
   align-items: center;
