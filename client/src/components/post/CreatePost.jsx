@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 
 function CreatePost() {
   const [post, setPost] = useState("");
+  const [privacy, setPrivacy] = useState("public");
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const handleCreatePost = (e) => {
     e.preventDefault();
     if (!post) return toast.info(t("post_empty"));
-    dispatch(createPost(post));
+    dispatch(createPost(post, privacy));
     setPost("");
   };
   return (
@@ -24,13 +25,23 @@ function CreatePost() {
           type="text"
           className="post-input-text"
         ></textarea>
-        <button
-          className={`create-post-btn`}
-          disabled={!post ? true : false}
-          type="submit"
-        >
-          {t("create_post")}
-        </button>
+        <div className="create-post-controllers">
+          <select
+            value={privacy}
+            onChange={(e) => setPrivacy(e.target.value)}
+            className="create-post-privacy"
+          >
+            <option value="public">Public</option>
+            <option value="restricted">Restricted</option>
+          </select>
+          <button
+            className={`create-post-btn`}
+            disabled={!post ? true : false}
+            type="submit"
+          >
+            {t("create_post")}
+          </button>
+        </div>
       </form>
     </div>
   );

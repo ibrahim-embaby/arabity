@@ -3,13 +3,13 @@ import request from "../../utils/request";
 import { postActions } from "../slices/postSlice";
 
 // /api/posts/
-export function createPost(text) {
+export function createPost(text, privacy) {
   return async (dispatch, getState) => {
     try {
       dispatch(postActions.setPostLoading());
       const { data } = await request.post(
         "/api/posts",
-        { text },
+        { text, privacy },
         {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
@@ -77,13 +77,13 @@ export function fetchUserPosts(userId) {
 }
 
 // /api/posts/:postId
-export function updatePost(postId, text) {
+export function updatePost(postId, text, privacy) {
   return async (dispatch, getState) => {
     try {
       dispatch(postActions.setPostLoading());
       const { data } = await request.put(
         `/api/posts/${postId}`,
-        { text },
+        { text, privacy },
         {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,

@@ -30,7 +30,7 @@
   line-height: 1.5;
 }
 
-.post-date {
+.post-metadata {
   font-size: 12px;
 }
 
@@ -70,6 +70,7 @@
 .edit-post-form {
   display: flex;
   gap: 10px;
+  flex-direction: column;
 }
 
 .edit-post-input {
@@ -77,7 +78,19 @@
   padding: 10px;
 }
 
-.edit-post-btn {
+.edit-post-controllers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-post-btns-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-post-btn,
+.edit-post-cancel-btn {
   padding: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -85,6 +98,10 @@
   background-color: orange;
   color: white;
   cursor: pointer;
+}
+
+.edit-post-cancel-btn {
+  background-color: rgb(238, 56, 56);
 }
 
 .post-controls {
@@ -106,7 +123,6 @@
 .create-post-form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   gap: 15px;
 }
 
@@ -118,6 +134,19 @@
   max-height: 230px;
 }
 
+.create-post-controllers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-post-privacy {
+  padding: 0px 10px;
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
 .create-post-btn {
   padding: 5px 20px;
   color: var(--white-color);
@@ -132,6 +161,7 @@
   cursor: not-allowed;
 }
 
+/* Comments */
 .post-comments {
   display: flex;
   flex-direction: column;

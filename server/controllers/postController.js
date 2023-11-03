@@ -13,11 +13,12 @@ module.exports.createPostCtrl = asyncHandler(async (req, res) => {
     const { error } = validateCreatePost(req.body);
     if (error)
       return res.status(400).json({ message: error.details[0].message });
-    const { text } = req.body;
+    const { text, privacy } = req.body;
     let newPost = await Post.create({
       text,
       doc: req.user.id,
       docModel: req.user.userType,
+      privacy,
     });
     newPost = await newPost.populate("doc", "username profilePhoto _id");
 
@@ -126,7 +127,7 @@ module.exports.getSinglePostCtrl = asyncHandler(async (req, res) => {
 module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
   try {
     const { postId } = req.params;
-    const { text } = req.body;
+    const { text, privacy } = req.body;
 
     const post = await Post.findById(postId);
     if (!post)
@@ -137,7 +138,7 @@ module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
     }
     const updatedPost = await Post.findByIdAndUpdate(
       postId,
-      { text },
+      { text, privacy },
       { new: true }
     )
       .populate("doc", "username _id profilePhoto")

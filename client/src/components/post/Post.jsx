@@ -20,6 +20,7 @@ import CreateComment from "../comment/CreateComment";
 function Post({ post }) {
   const [openOptions, setOpenOptions] = useState(false);
   const [postEdit, setPostEdit] = useState(false);
+  const [privacy, setPrivacy] = useState(post.privacy);
   const [newPost, setNewPost] = useState(post.text);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function Post({ post }) {
   };
   const handleEditPost = (e) => {
     e.preventDefault();
-    dispatch(updatePost(post._id, newPost));
+    dispatch(updatePost(post._id, newPost, privacy));
     setPostEdit(false);
   };
   const handleToggleLike = () => {
@@ -57,7 +58,15 @@ function Post({ post }) {
         </Link>
         <div className="post-owner-info">
           <h4 className="post-owner-username">{post.doc.username}</h4>
-          <p className="post-date">{formatTime(post.createdAt)}</p>
+          <div className="post-metadata">
+            <span className="post-date">{formatTime(post.createdAt)}</span>
+            <span> - </span>
+            <span className="post-privacy-status">
+              {post.privacy === "public"
+                ? t("public_privacy")
+                : t("restricted_privacy")}
+            </span>
+          </div>
         </div>
         {user?.id === post.doc._id && (
           <div
@@ -92,9 +101,28 @@ function Post({ post }) {
               value={newPost}
               onChange={(e) => setNewPost(e.target.value)}
             />
-            <button className="edit-post-btn" type="submit">
-              {t("post_edit")}
-            </button>
+            <div className="edit-post-controllers">
+              <select
+                value={privacy}
+                onChange={(e) => setPrivacy(e.target.value)}
+                className="create-post-privacy"
+              >
+                <option value="public">{t("public_privacy")}</option>
+                <option value="restricted">{t("restricted_privacy")}</option>
+              </select>
+
+              <div className="edit-post-btns-wrapper">
+                <button
+                  onClick={() => setPostEdit(false)}
+                  className="edit-post-cancel-btn"
+                >
+                  {t("post_edit_cancel")}
+                </button>
+                <button className="edit-post-btn" type="submit">
+                  {t("post_edit")}
+                </button>
+              </div>
+            </div>
           </form>
         ) : (
           post.text

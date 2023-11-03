@@ -18,12 +18,15 @@ function Posts() {
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
         className="posts-container"
       >
-        {posts?.map((post) => (
-          <>
-            <Post key={post._id} post={post} />
-            <br />
-          </>
-        ))}
+        {posts?.map(
+          (post) =>
+            post.privacy === "public" && (
+              <>
+                <Post key={post._id} post={post} />
+                <br />
+              </>
+            )
+        )}
       </div>
     </div>
   );

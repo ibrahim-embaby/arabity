@@ -28,6 +28,12 @@ const PostSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    privacy: {
+      type: String,
+      enum: ["restricted", "public"],
+      required: true,
+      lowercase: true,
+    },
   },
   { timestamps: true, toObject: { virtuals: true }, toJSON: { virtuals: true } }
 );
@@ -41,6 +47,7 @@ PostSchema.virtual("comments", {
 function validateCreatePost(object) {
   const schema = Joi.object({
     text: Joi.string().required(),
+    privacy: Joi.string().lowercase().valid("restricted", "public").required(),
   });
 
   return schema.validate(object);
