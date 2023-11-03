@@ -31,8 +31,8 @@ function CreatePost() {
             onChange={(e) => setPrivacy(e.target.value)}
             className="create-post-privacy"
           >
-            <option value="public">Public</option>
-            <option value="restricted">Restricted</option>
+            <option value="public">{t("public_privacy")}</option>
+            <option value="restricted">{t("restricted_privacy")}</option>
           </select>
           <button
             className={`create-post-btn`}
