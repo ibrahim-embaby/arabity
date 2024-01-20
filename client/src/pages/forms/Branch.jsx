@@ -1,15 +1,23 @@
 import { useTranslation } from "react-i18next";
-import { provinces } from "../../dummyData";
 
-function Branch({ index, branch, onBranchChange, canRemove }) {
+function Branch({ index, branch, onBranchChange, canRemove, provinces, lang }) {
   const handleProvinceChange = (event) => {
     const { value } = event.target;
-    const province = provinces.find((province) => province.name === value);
-    const cities = province ? province.cities : [];
+    const province = provinces.find((province) => province._id === value);
+
+    const cities = province
+      ? lang === "ar"
+        ? province.cities.map((city) => {
+            return { value: city.label.ar, _id: city._id };
+          })
+        : province.cities.map((city) => {
+            return { value: city.label.en, _id: city._id };
+          })
+      : [];
     onBranchChange(index, {
       ...branch,
-      branchProvince: value,
-      branchCity: "",
+      province: value,
+      city: "",
       cities,
     });
   };
@@ -18,7 +26,7 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
 
   const handleCityChange = (event) => {
     const { value } = event.target;
-    onBranchChange(index, { ...branch, branchCity: value });
+    onBranchChange(index, { ...branch, city: value });
   };
 
   const handleInputChange = (event) => {
@@ -38,32 +46,32 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
         {t("register_workshop_province")}
         <select
           name={`province${index}`}
-          value={branch.branchProvince}
+          value={branch.province}
           onChange={handleProvinceChange}
           required
         >
           <option value="">{t("choose_province")}</option>
           {provinces.map((province) => (
-            <option key={province.name} value={province.name}>
-              {province.name}
+            <option key={province._id} value={province._id}>
+              {province.label[lang]}
             </option>
           ))}
         </select>
       </label>
 
-      {branch.cities.length > 0 && (
+      {branch.cities?.length > 0 && (
         <label className="workshop-city branch-item">
           {t("register_workshop_city")}
           <select
             name={`city${index}`}
-            value={branch.branchCity}
+            value={branch.city}
             onChange={handleCityChange}
             required
           >
             <option value="">{t("choose_city")}</option>
-            {branch.cities.map((city) => (
-              <option key={city} value={city}>
-                {city}
+            {branch.cities.map((city, index) => (
+              <option key={index} value={city._id}>
+                {city.value}
               </option>
             ))}
           </select>
@@ -74,8 +82,8 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
         {t("register_workshop_address")}
         <input
           type="text"
-          name={`branchAddress`}
-          value={branch.branchAddress}
+          name={`address`}
+          value={branch.address}
           onChange={handleInputChange}
           required
         />
@@ -85,8 +93,8 @@ function Branch({ index, branch, onBranchChange, canRemove }) {
         {t("register_workshop_mobile")}
         <input
           type="text"
-          name={`branchMobile`}
-          value={branch.branchMobile}
+          name={`mobile`}
+          value={branch.mobile}
           onChange={handleInputChange}
           required
         />

@@ -1,9 +1,9 @@
-function SelectedTags({ selectedOptions, onRemoveTag }) {
+function SelectedTags({ selectedOptions, onRemoveTag, lang }) {
   return (
     <div className="selected-tags-container">
       {selectedOptions.map((option, index) => (
-        <div key={index} className="selected-tag">
-          {option.label}
+        <div key={option._id} className="selected-tag">
+          {option.label[lang]}
           <button
             className="selected-tag-remove"
             onClick={() => onRemoveTag(option)}

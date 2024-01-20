@@ -1,16 +1,24 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const ServiceSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
+    label: {
+      ar: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      en: {
+        type: String,
+        required: true,
+        trim: true,
+      },
     },
-    code: {
+    value: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
     isActive: {
@@ -23,8 +31,11 @@ const ServiceSchema = new mongoose.Schema(
 
 function validateService(object) {
   const schema = Joi.object({
-    name: Joi.string().required().trim().unique(),
-    code: Joi.string().required(),
+    value: Joi.string().trim().required(),
+    label: Joi.object({
+      ar: Joi.string().required(),
+      en: Joi.string().required(),
+    }).required(),
     isActive: Joi.boolean(),
   });
 

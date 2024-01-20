@@ -3,13 +3,19 @@ const Joi = require("joi");
 
 const CarSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      unique: true,
-      required: true,
-      trim: true,
+    label: {
+      ar: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      en: {
+        type: String,
+        required: true,
+        trim: true,
+      },
     },
-    code: {
+    value: {
       type: String,
       required: true,
       unique: true,
@@ -25,8 +31,11 @@ const CarSchema = new mongoose.Schema(
 
 function validateCar(object) {
   const schema = Joi.object({
-    name: Joi.string().required().trim().unique(),
-    code: Joi.string().required(),
+    value: Joi.string().trim().required(),
+    label: Joi.object({
+      ar: Joi.string().required(),
+      en: Joi.string().required(),
+    }).required(),
     isActive: Joi.boolean(),
   });
 

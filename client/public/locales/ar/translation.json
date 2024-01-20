@@ -33,6 +33,8 @@
     "workshop_services": "الخدمات",
     "workshop_cars": "ماركات السيارات",
     "workshop_branches": "الفروع",
+    "workshop_address": "عنوان الفرع",
+    "workshop_mobile": "رقم الهاتف",
     "workshop_ratings": "التقييمات",
     "no_workshop_ratings": "لا توجد تقييمات",
     "add_rating": "أضف تقييم",

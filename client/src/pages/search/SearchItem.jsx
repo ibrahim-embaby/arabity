@@ -5,9 +5,11 @@ import limitText from "../../utils/limitText";
 import PersonIcon from "@mui/icons-material/Person";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useTranslation } from "react-i18next";
 
 function SearchItem({ item }) {
   const [avgRating, setAvgRating] = useState(0);
+  const { i18n } = useTranslation();
   useEffect(() => {
     if (item.mechanicRatings.length) {
       let sum = 0;
@@ -45,7 +47,7 @@ function SearchItem({ item }) {
             <div className="info-item-data">
               {item.cars.map((car, index) => (
                 <span className="info-item-data-text" key={index}>
-                  {car}
+                  {car.label[i18n.language]}
                 </span>
               ))}
             </div>
@@ -55,7 +57,7 @@ function SearchItem({ item }) {
             <div className="info-item-data">
               {item.workshopBranches.map((branch, index) => (
                 <span className="info-item-data-text" key={index}>
-                  {branch.branchProvince}
+                  {branch.province.label[i18n.language]}
                 </span>
               ))}
             </div>

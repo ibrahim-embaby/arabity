@@ -23,6 +23,22 @@ module.exports.getMechanicCtrl = asyncHandler(async (req, res) => {
         path: "user",
         select: "username",
       },
+    })
+    .populate("cars")
+    .populate("workshopServices")
+    .populate({
+      path: "workshopBranches",
+      populate: {
+        path: "province",
+        select: "_id label value",
+      },
+    })
+    .populate({
+      path: "workshopBranches",
+      populate: {
+        path: "city",
+        select: "_id label value",
+      },
     });
 
   if (!mechanic) {

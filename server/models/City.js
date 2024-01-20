@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
-const ProvinceSchema = new mongoose.Schema(
+const CitySchema = new mongoose.Schema(
   {
     label: {
       ar: {
@@ -21,27 +21,26 @@ const ProvinceSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    province: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Province",
+    },
     isActive: {
       type: Boolean,
       default: true,
     },
   },
-  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+  { timestamps: true }
 );
 
-ProvinceSchema.virtual("cities", {
-  ref: "City",
-  foreignField: "province",
-  localField: "_id",
-});
-
-function validateCreateProvince(object) {
+function validateCreateCity(object) {
   const schema = Joi.object({
     value: Joi.string().trim().required(),
     label: Joi.object({
       ar: Joi.string().required(),
       en: Joi.string().required(),
     }).required(),
+    province: Joi.string().id().required(),
   });
 
   return schema.validate(object, {
@@ -54,9 +53,9 @@ function validateCreateProvince(object) {
   });
 }
 
-const Province = mongoose.model("Province", ProvinceSchema);
+const City = mongoose.model("City", CitySchema);
 
 module.exports = {
-  Province,
-  validateCreateProvince,
+  City,
+  validateCreateCity,
 };

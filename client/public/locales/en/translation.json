@@ -33,6 +33,8 @@
     "workshop_services": "Services",
     "workshop_cars": "Cars",
     "workshop_branches": "Branches",
+    "workshop_address": "Branch Address",
+    "workshop_mobile": "Mobile Number",
     "workshop_ratings": "Ratings",
     "no_workshop_ratings": "no ratings yet",
     "add_rating": "Add Rating",

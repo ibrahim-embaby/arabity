@@ -43,7 +43,6 @@
 .search-bar {
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
   justify-content: space-evenly;
   padding: 0px 5px 0px 10px;
   background-color: var(--white-color);

@@ -145,6 +145,7 @@ module.exports.loginMechanicCtrl = asyncHandler(async (req, res) => {
   return res.status(200).json({
     id: mechanic._id,
     token,
+    email: mechanic.email,
     username: mechanic.username,
     workshopName: mechanic.workshopName,
     profilePhoto: mechanic.profilePhoto,

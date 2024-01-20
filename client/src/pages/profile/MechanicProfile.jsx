@@ -90,7 +90,6 @@ function WorkshopProfile() {
     setTab("mechanic_posts");
     dispatch(fetchUserPosts(id));
   };
-
   return loading ? (
     <div
       className="loading-page"
@@ -192,11 +191,11 @@ function WorkshopProfile() {
                     <div className="mechanic-profile-info-services">
                       {mechanic?.workshopServices.map((service, index) => (
                         <p
-                          key={index}
+                          key={service._id}
                           className="service-tag"
                           onClick={() => searchTagHandler(service, "")}
                         >
-                          {service}
+                          {service.label[i18n.language]}
                         </p>
                       ))}
                     </div>
@@ -209,11 +208,11 @@ function WorkshopProfile() {
                     <div className="mechanic-profile-info-services">
                       {mechanic?.cars.map((car, index) => (
                         <p
-                          key={index}
+                          key={car._id}
                           onClick={() => searchTagHandler("", car)}
                           className="service-tag"
                         >
-                          {car}
+                          {car.label[i18n.language]}
                         </p>
                       ))}
                     </div>
@@ -232,10 +231,15 @@ function WorkshopProfile() {
                         >
                           <h5 className="mechanic-profile-info-branch-title">
                             <LocationOnIcon />
-                            {branch.branchProvince} - {branch.branchCity}
+                            {branch.province.label[i18n.language]} -{" "}
+                            {branch.city.label[i18n.language]}
                           </h5>
-                          <p>العنوان التفصيلي: {branch.branchAddress}</p>
-                          <p>تليفون الفرع: {branch.branchMobile}</p>
+                          <p className="branch-address">
+                            {t("workshop_address")}: {branch.address}
+                          </p>
+                          <p className="branch-mobile">
+                            {t("workshop_mobile")}: {branch.mobile}
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -249,7 +253,7 @@ function WorkshopProfile() {
                     {user &&
                       !user.workshopName &&
                       !mechanic?.mechanicRatings.filter(
-                        (item) => item.user._id === user.id
+                        (item) => item.user?._id === user.id
                       ).length && <AddRating id={id} />}
 
                     {mechanic?.mechanicRatings.length

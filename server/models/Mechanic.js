@@ -25,9 +25,12 @@ const MechanicSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    cars: {
-      type: Array,
-    },
+    cars: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Car",
+      },
+    ],
     profilePhoto: {
       type: Object,
       default: {
@@ -35,15 +38,29 @@ const MechanicSchema = new mongoose.Schema(
         publicId: "pjdpumsqyjvrodbamcfa",
       },
     },
-    workshopBranches: {
-      type: Array,
-    },
+    workshopBranches: [
+      {
+        province: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Province",
+        },
+        city: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "City",
+        },
+        address: String,
+        mobile: String,
+      },
+    ],
     workshopDescription: {
       type: String,
     },
-    workshopServices: {
-      type: Array,
-    },
+    workshopServices: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Service",
+      },
+    ],
     // reports: [
     //   {
     //     user: {
@@ -96,10 +113,10 @@ function validateCreateMechanic(obj) {
     workshopBranches: Joi.array()
       .items(
         Joi.object({
-          branchProvince: Joi.string().min(1).required(),
-          branchCity: Joi.string().min(1).required(),
-          branchAddress: Joi.string().min(1).required(),
-          branchMobile: Joi.string().min(1).required(),
+          province: Joi.string().id().required(),
+          city: Joi.string().id().required(),
+          address: Joi.string().min(3).required(),
+          mobile: Joi.string().min(1).required(),
         })
       )
       .required(),

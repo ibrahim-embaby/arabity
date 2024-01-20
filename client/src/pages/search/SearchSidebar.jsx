@@ -7,11 +7,13 @@ function SearchSidebar({
   province,
   provinces,
   setProvince,
+  setPage,
   car,
   cars,
   setCar,
   t,
   resetFormHandler,
+  lang,
 }) {
   return (
     <div className="search-results-sidebar">
@@ -20,10 +22,11 @@ function SearchSidebar({
         <form className="search-results-form">
           <div className="select-wrapper">
             <select
-              value={service}
+              value={service?._id ? JSON.stringify(service) : ""}
               onChange={(e) => {
-                setService(e.target.value);
-                params.set("service", e.target.value);
+                setService(JSON.parse(e.target.value));
+                setPage(1);
+                params.set("service", JSON.parse(e.target.value).value);
               }}
               className="siderbar-select"
             >
@@ -31,27 +34,34 @@ function SearchSidebar({
                 {t("service_select")}
               </option>
               {services.map((service) => (
-                <option key={service.value} value={service.label}>
-                  {service.label}
+                <option
+                  key={service.value}
+                  value={JSON.stringify({
+                    value: service.value,
+                    _id: service._id,
+                  })}
+                >
+                  {service.label[lang]}
                 </option>
               ))}
             </select>
-            {service && (
+            {service?._id && (
               <HighlightOffIcon
                 sx={{
                   color: "red",
                   cursor: "pointer",
                 }}
-                onClick={() => setService("")}
+                onClick={() => setService(null)}
               />
             )}
           </div>
           <div className="select-wrapper">
             <select
-              value={car}
+              value={car?._id ? JSON.stringify(car) : ""}
               onChange={(e) => {
-                setCar(e.target.value);
-                params.set("car", e.target.value);
+                setCar(JSON.parse(e.target.value));
+                setPage(1);
+                params.set("car", JSON.parse(e.target.value).value);
               }}
               className="siderbar-select"
             >
@@ -59,28 +69,35 @@ function SearchSidebar({
                 {t("car_select")}
               </option>
               {cars.map((car) => (
-                <option key={car.value} value={car.value}>
-                  {car.label}
+                <option
+                  key={car.value}
+                  value={JSON.stringify({
+                    value: car.value,
+                    _id: car._id,
+                  })}
+                >
+                  {car.label[lang]}
                 </option>
               ))}
             </select>
-            {car && (
+            {car?._id && (
               <HighlightOffIcon
                 sx={{
                   color: "red",
                   cursor: "pointer",
                 }}
-                onClick={() => setCar("")}
+                onClick={() => setCar(null)}
               />
             )}
           </div>
 
           <div className="select-wrapper">
             <select
-              value={province}
+              value={province?._id ? JSON.stringify(province) : ""}
               onChange={(e) => {
-                setProvince(e.target.value);
-                params.set("province", e.target.value);
+                setProvince(JSON.parse(e.target.value));
+                setPage(1);
+                params.set("province", JSON.parse(e.target.value).value);
               }}
               className="siderbar-select"
             >
@@ -88,12 +105,18 @@ function SearchSidebar({
                 {t("province_select")}
               </option>
               {provinces.map((province) => (
-                <option key={province.name} value={province.name}>
-                  {province.name}
+                <option
+                  key={province.value}
+                  value={JSON.stringify({
+                    value: province.value,
+                    _id: province._id,
+                  })}
+                >
+                  {province.label[lang]}
                 </option>
               ))}
             </select>
-            {province && (
+            {province?._id && (
               <HighlightOffIcon
                 sx={{
                   color: "red",

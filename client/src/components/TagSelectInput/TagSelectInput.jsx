@@ -1,5 +1,3 @@
-import { useState } from "react";
-import Select from "react-select";
 import "./TagSelectInput.css";
 import SelectedTags from "./SelectedTags";
 import { useTranslation } from "react-i18next";
@@ -7,64 +5,44 @@ import { useTranslation } from "react-i18next";
 function TagSelectInput({
   selectedOptions,
   setSelectedOptions,
-  options,
+  selectOptions,
+  setSelectOptions,
   placeholder,
-  input_placeholder,
 }) {
-  const [newTag, setNewTag] = useState("");
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedOptions(selectedOptions);
-  };
-  const { t } = useTranslation();
-
+  const { i18n } = useTranslation();
   const handleRemoveTag = (tagToRemove) => {
     setSelectedOptions(
       selectedOptions.filter((tag) => tag.value !== tagToRemove.value)
     );
+    setSelectOptions([
+      ...selectOptions,
+      selectedOptions.find((tag) => tag.value === tagToRemove.value),
+    ]);
   };
 
-  const customComponents = {
-    MultiValueLabel: ({ children }) => null,
-    MultiValueRemove: ({ innerProps }) => null,
+  const handleOptionsChange = (event) => {
+    const newValue = event.target.value;
+    const newOption = selectOptions.find((option) => option.value === newValue);
+    setSelectOptions(
+      selectOptions.filter((option) => option.value !== newValue)
+    );
+    setSelectedOptions([...selectedOptions, newOption]);
   };
+
   return (
     <div className="tag-select-input-container">
-      <Select
-        options={options}
-        value={selectedOptions}
-        onChange={handleSelectChange}
-        isMulti
-        components={customComponents}
-        className="tag-select-input"
-        placeholder={placeholder}
-      />
-      <div className="tag-select-add-container">
-        <input
-          type="text"
-          placeholder={input_placeholder}
-          value={newTag}
-          onChange={(e) => setNewTag(e.target.value)}
-          className="tag-select-add-input"
-        />
-        <button
-          onClick={() => {
-            if (newTag !== "") {
-              setSelectedOptions([
-                ...selectedOptions,
-                { value: newTag, label: newTag },
-              ]);
-              setNewTag("");
-            }
-          }}
-          type="button"
-          className="tag-select-add-button"
-        >
-          {t("add")}
-        </button>
-      </div>
+      <select onChange={handleOptionsChange} className="tag-select-input">
+        <option value="">{placeholder}</option>
+        {selectOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label[i18n.language]}
+          </option>
+        ))}
+      </select>
       <SelectedTags
         selectedOptions={selectedOptions}
         onRemoveTag={handleRemoveTag}
+        lang={i18n.language}
       />
     </div>
   );

@@ -219,6 +219,11 @@
   color: var(--white-color);
 }
 
+.branch-address,
+.branch-mobile {
+  font-size: 14px;
+}
+
 .mechanic-profile-contact-btn {
   padding: 5px;
   font-size: 15px;
@@ -287,11 +292,75 @@
   gap: 20px;
 }
 
-/* WorkshopProfile Settings */
-.workshopProfileSettings {
+/* Mechanic Profile Settings */
+.mechanic-settings {
   min-height: calc(100vh - var(--difference-value));
+  display: flex;
+  justify-content: center;
 }
 
+.mechanic-profile-settings-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.mechanic-settings-sidebar {
+  flex: 3;
+}
+.mechanic-settings-components {
+  flex: 9;
+  display: flex;
+  flex-direction: column;
+}
+.mechanic-account-settings {
+  display: flex;
+  justify-content: center;
+}
+.mechanic-account-settings-form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  gap: 10px;
+}
+.mechanic-account-settings-form-input {
+  padding: 10px;
+  font-size: 18px;
+}
+.mechanic-account-settings-form-btn {
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: var(--font-family);
+}
+.mechanic-profile-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+}
+.mechanic-profile-form-group,
+.mechanic-profile-form-group-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mechanic-profile-form-group-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mechanic-profile-form-input {
+  font-size: 18px;
+  padding: 5px;
+}
+.mechanic-profile-info-input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.mechanic-profile-branch {
+  display: block;
+}
 /* Media Query */
 
 @media (max-width: 720px) {

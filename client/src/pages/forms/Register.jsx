@@ -1,15 +1,15 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   registerUser,
   registerMechanic,
 } from "../../redux/apiCalls/authApiCall";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
 import Branch from "./Branch";
-import { cars, services } from "../../dummyData";
 import { useTranslation } from "react-i18next";
+import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 
 function Register() {
   const dispatch = useDispatch();
@@ -26,18 +26,33 @@ function Register() {
   const [workshopOwnerPassword, setWorkshopOwnerPassword] = useState("");
   const [branches, setBranches] = useState([
     {
-      branchProvince: "",
-      branchCity: "",
+      province: "",
+      city: "",
       cities: [],
-      branchAddress: "",
-      branchMobile: "",
+      address: "",
+      mobile: "",
     },
   ]);
 
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedCars, setSelectedCars] = useState([]);
 
+  const [selectServices, setSelectServices] = useState([]);
+  const [selectCars, setSelectCars] = useState([]);
+
   const [visibleForm, setVisibleForm] = useState(1);
+
+  const { services, cars, provinces } = useSelector((state) => state.controls);
+  useEffect(() => {
+    dispatch(fetchControls());
+  }, []);
+
+  useEffect(() => {
+    setSelectServices(services);
+    setSelectCars(cars);
+    setSelectedServices([]);
+    setSelectedCars([]);
+  }, [services, cars]);
 
   const registerFormHandler = (e) => {
     e.preventDefault();
@@ -59,17 +74,17 @@ function Register() {
   const registerMechanicFormHandler = (e) => {
     e.preventDefault();
     const workshopServices = selectedServices.map((service) => {
-      return service.label;
+      return service._id;
     });
-    const cars = selectedCars.map((car) => {
-      return car.label;
+    const workshopCars = selectedCars.map((car) => {
+      return car._id;
     });
     const workshopBranches = branches.map((branch) => {
       return {
-        branchProvince: branch.branchProvince,
-        branchCity: branch.branchCity,
-        branchAddress: branch.branchAddress,
-        branchMobile: branch.branchMobile,
+        province: branch.province,
+        city: branch.city,
+        address: branch.address,
+        mobile: branch.mobile,
       };
     });
     if (workshopOwnerUsername.trim() === "") return toast.error("ادخل الاسم");
@@ -90,20 +105,22 @@ function Register() {
         workshopName: workshopName,
         workshopBranches: workshopBranches,
         workshopServices: workshopServices,
-        cars: cars,
+        cars: workshopCars,
       })
     );
     setWorkshopOwnerUsername("");
     setWorkshopOwnerEmail("");
     setWorkshopName("");
     setWorkshopOwnerPassword("");
+    setSelectServices(services);
+    setSelectCars(cars);
     setBranches([
       {
-        branchProvince: "",
-        branchCity: "",
+        province: "",
+        city: "",
         cities: [],
-        branchAddress: "",
-        branchMobile: "",
+        address: "",
+        mobile: "",
       },
     ]);
     setSelectedServices([]);
@@ -118,11 +135,11 @@ function Register() {
     // Ensure at least one address input group is always present
     if (filteredAddresses.length === 0) {
       filteredAddresses.push({
-        street: "",
+        address: "",
         province: "",
         city: "",
         cities: [],
-        postalCode: "",
+        mobile: "",
       });
     }
     setBranches(filteredAddresses);
@@ -132,11 +149,11 @@ function Register() {
     const newBranches = [
       ...branches,
       {
-        branchProvince: "",
-        branchCity: "",
+        province: "",
+        city: "",
         cities: [],
-        branchAddress: "",
-        branchMobile: "",
+        address: "",
+        mobile: "",
       },
     ];
     setBranches(newBranches);
@@ -270,9 +287,9 @@ function Register() {
                 <TagSelectInput
                   selectedOptions={selectedServices}
                   setSelectedOptions={setSelectedServices}
-                  options={services}
+                  selectOptions={selectServices}
+                  setSelectOptions={setSelectServices}
                   placeholder={t("choose_service")}
-                  input_placeholder={t("add_another_service")}
                 />
               </div>
 
@@ -281,9 +298,9 @@ function Register() {
                 <TagSelectInput
                   selectedOptions={selectedCars}
                   setSelectedOptions={setSelectedCars}
-                  options={cars}
+                  selectOptions={selectCars}
+                  setSelectOptions={setSelectCars}
                   placeholder={t("choose_model")}
-                  input_placeholder={t("add_another_model")}
                 />
               </div>
 
@@ -294,8 +311,10 @@ function Register() {
                     key={index}
                     index={index}
                     branch={branch}
+                    provinces={provinces}
                     onBranchChange={handleBranchChange}
                     canRemove={branches.length > 1 && branch !== null}
+                    lang={i18n.language}
                   />
                 ))}
                 <button

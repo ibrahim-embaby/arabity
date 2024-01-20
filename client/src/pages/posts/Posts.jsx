@@ -10,6 +10,7 @@ function Posts() {
   const { posts } = useSelector((state) => state.post);
   const { i18n } = useTranslation();
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
     dispatch(fetchAllPosts());
   }, []);
   return (

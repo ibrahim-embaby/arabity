@@ -22,7 +22,7 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
-          branchProvince: province,
+          province,
         },
       },
       cars: { $in: car },
@@ -30,13 +30,29 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
       await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
-            branchProvince: province,
+            province,
           },
         },
         cars: { $in: car },
@@ -49,20 +65,36 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
-          branchProvince: province,
+          province,
         },
       },
       cars: { $in: car },
     })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
       await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
-            branchProvince: province,
+            province,
           },
         },
         cars: { $in: car },
@@ -75,20 +107,36 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
-          branchProvince: province,
+          province,
         },
       },
       workshopServices: { $in: service },
     })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
       await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
-            branchProvince: province,
+            province,
           },
         },
         workshopServices: { $in: service },
@@ -104,6 +152,22 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
@@ -120,19 +184,35 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({
       workshopBranches: {
         $elemMatch: {
-          branchProvince: province,
+          province,
         },
       },
     })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
     count = (
       await Mechanic.find({
         workshopBranches: {
           $elemMatch: {
-            branchProvince: province,
+            province,
           },
         },
       })
@@ -144,6 +224,22 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({ cars: { $in: car } })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
@@ -155,6 +251,22 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
     workshops = await Mechanic.find({ workshopServices: { $in: service } })
       .select("-password")
       .populate("mechanicRatings", "", MechanicRating)
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      })
       .skip((currentPage - 1) * pageSize)
       .limit(pageSize);
 
@@ -165,6 +277,22 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res) => {
   workshops = await Mechanic.find()
     .select("-password")
     .populate("mechanicRatings", "", MechanicRating)
+    .populate("cars")
+    .populate("workshopServices")
+    .populate({
+      path: "workshopBranches",
+      populate: {
+        path: "province",
+        select: "_id label value",
+      },
+    })
+    .populate({
+      path: "workshopBranches",
+      populate: {
+        path: "city",
+        select: "_id label value",
+      },
+    })
     .sort({ mechanicRatings: -1 })
     .skip((currentPage - 1) * pageSize)
     .limit(pageSize);
