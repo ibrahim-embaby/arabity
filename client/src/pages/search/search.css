@@ -67,6 +67,7 @@
   border: none;
   cursor: pointer;
   font-family: var(--font-family);
+  background-color: var(--white-color);
 }
 
 .search-results-form-btn {
