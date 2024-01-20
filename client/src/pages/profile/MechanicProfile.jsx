@@ -49,16 +49,21 @@ function WorkshopProfile() {
     }
   }, [id, mechanic?.mechanicRatings?.length, dispatch]);
 
-  const searchTagHandler = (service = "", car = "") => {
+  const searchTagHandler = (service, car) => {
     const queryParams = new URLSearchParams();
     if (service) {
-      queryParams.append("service", service);
+      queryParams.append("service", service.value);
     }
 
     if (car) {
-      queryParams.append("car", car);
+      queryParams.append("car", car.value);
     }
-    navigate(`/search/workshops?${queryParams.toString()}`);
+    navigate(`/search/workshops?${queryParams.toString()}`, {
+      state: {
+        car: { value: car?.value, _id: car?._id },
+        service: { value: service?.value, _id: service?._id },
+      },
+    });
   };
 
   const handleCreateConversation = () => {
