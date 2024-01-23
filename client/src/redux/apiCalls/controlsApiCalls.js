@@ -105,3 +105,24 @@ export function fetchProvinces() {
     }
   };
 }
+
+// /api/controls/province/:id
+export function fetchProvince(id) {
+  return async (dispatch) => {
+    try {
+      dispatch(controlsActions.setLoading());
+      const { data } = await request.get(`api/controls/province/${id}`, {
+        headers: {
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
+      dispatch(controlsActions.setProvince(data));
+      dispatch(controlsActions.clearLoading());
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+      dispatch(controlsActions.clearLoading());
+    }
+  };
+}

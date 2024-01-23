@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { mechanicActions } from "../slices/mechanicSlice";
+import { authActions } from "../slices/authSlice";
 import { searchActions } from "../slices/searchSlice";
 import { ratingActions } from "../slices/ratingSlice";
 
@@ -21,6 +22,26 @@ export function fetchMechanic(id) {
       console.log(error);
       toast.error(error.response.data.message);
       dispatch(mechanicActions.clearLoading());
+    }
+  };
+}
+
+// /api/mechanic/:id
+export function updateMechanic(id, newData) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.put(`/api/mechanic/${id}`, newData, {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
+      dispatch(mechanicActions.setMechanic(data.data));
+      dispatch(authActions.updateUser(data.data));
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
 }

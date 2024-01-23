@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMechanic } from "../../redux/apiCalls/mechanicApiCall";
+import {
+  fetchMechanic,
+  updateMechanic,
+} from "../../redux/apiCalls/mechanicApiCall";
 import { useParams } from "react-router-dom";
 import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
-import Branch from "../forms/Branch";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
+import BranchesList from "../../components/branch-list/BranchList";
+import CircularProgress from "@mui/joy/CircularProgress";
+import { toast } from "react-toastify";
 
 function MechanicSettings() {
   const [currentComponent, setCurrentComponent] = useState(1);
@@ -23,33 +28,10 @@ function MechanicSettings() {
   const [selectServices, setSelectServices] = useState([]);
   const [selectCars, setSelectCars] = useState([]);
   const [workshopName, setWorkshopName] = useState(user.workshopName);
+  const [workshopDescription, setWorkshopDescription] = useState("");
+
   const [newPassword, setNewPassword] = useState("");
-  const [branches, setBranches] = useState(
-    mechanic?.workshopBranches
-      ? mechanic.workshopBranches.map((branch) => {
-          return {
-            province: {
-              value: branch.province.label[i18n.language],
-              _id: branch.province._id,
-            },
-            city: {
-              value: branch.city.label[i18n.language],
-              _id: branch.city._id,
-            },
-            address: branch.address,
-            mobile: branch.mobile,
-          };
-        })
-      : [
-          {
-            province: "",
-            city: "",
-            cities: [],
-            address: "",
-            mobile: "",
-          },
-        ]
-  );
+  const [branches, setBranches] = useState([]);
   const [selectedServices, setSelectedServices] = useState([]);
   const [selectedCars, setSelectedCars] = useState([]);
 
@@ -75,11 +57,14 @@ function MechanicSettings() {
         mechanic.workshopBranches.map((branch) => {
           return {
             province: {
-              value: branch.province.label[i18n.language],
+              label: branch.province.label,
+              value: branch.province.value,
+              cities: branch.province.cities,
               _id: branch.province._id,
             },
             city: {
-              value: branch.city.label[i18n.language],
+              label: branch.city.label,
+              value: branch.city.value,
               _id: branch.city._id,
             },
             address: branch.address,
@@ -91,64 +76,88 @@ function MechanicSettings() {
     if (mechanic?.workshopServices) {
       setSelectedServices(mechanic.workshopServices);
     }
-  }, [mechanic]);
-  const handleUpdateAccount = () => {};
-  const handleBranchChange = (index, newBranch) => {
-    const newBranches = [...branches];
-    newBranches[index] = newBranch;
-    // Remove null addresses
-    const filteredAddresses = newBranches.filter((branch) => branch !== null);
-    // Ensure at least one address input group is always present
-    if (filteredAddresses.length === 0) {
-      filteredAddresses.push({
-        province: "",
-        city: "",
-        cities: [],
-        address: "",
-        mobile: "",
-      });
+    if (mechanic?.workshopDescription) {
+      setWorkshopDescription(mechanic.workshopDescription);
     }
-    setBranches(filteredAddresses);
+  }, [mechanic, i18n.language]);
+
+  const handleUpdateAccount = (e) => {
+    e.preventDefault();
+    if (!selectedCars.length) {
+      return toast.warning("اختر سيارة واحدة علي الأقل");
+    }
+    if (!selectedServices.length) {
+      return toast.warning("اختر خدمة واحدة علي الأقل");
+    }
+    if (!selectedServices.length) {
+      return toast.warning("اختر خدمة واحدة علي الأقل");
+    }
+    const workshopCars = selectedCars.map((car) => car._id);
+    const workshopServices = selectedServices.map((service) => service._id);
+    const workshopBranches = branches.map((branch) => {
+      return {
+        province: branch.province._id,
+        city: branch.city._id,
+        address: branch.address,
+        mobile: branch.mobile,
+      };
+    });
+    let fieldsToUpdate = {
+      username: workshopOwnerUsername,
+      workshopName,
+      cars: workshopCars,
+      workshopBranches,
+      workshopDescription,
+      workshopServices,
+    };
+    if (newPassword) {
+      fieldsToUpdate.password = newPassword;
+    }
+
+    dispatch(updateMechanic(mechanic._id, fieldsToUpdate));
+    setSelectCars(cars);
+    setSelectServices(services);
   };
 
-  const handleAddBranch = () => {
-    const newBranches = [
-      ...branches,
-      {
-        province: "",
-        city: "",
-        cities: [],
-        address: "",
-        mobile: "",
-      },
-    ];
-    setBranches(newBranches);
-  };
   return (
     <div className="mechanic-settings">
       <div
         className="container"
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
       >
-        <div className="mechanic-profile-settings-wrapper">
-          <div className="mechanic-settings-sidebar">
-            <div
-              onClick={() => setCurrentComponent(1)}
-              style={{ backgroundColor: currentComponent === 1 && "#ffd1d1da" }}
-              className="admin-sidebar-component"
-            >
-              <p className="admin-sidebar-text">اعدادت الحساب </p>
+        {loading && !mechanic ? (
+          <div
+            className="loading-page"
+            style={{
+              minHeight: "calc(100vh - var(--difference-value))",
+            }}
+          >
+            <CircularProgress color="primary" />
+          </div>
+        ) : (
+          <div className="mechanic-profile-settings-wrapper">
+            <div className="mechanic-settings-sidebar">
+              <div
+                onClick={() => setCurrentComponent(1)}
+                style={{
+                  backgroundColor: currentComponent === 1 && "#ffd1d1da",
+                }}
+                className="admin-sidebar-component"
+              >
+                <p className="admin-sidebar-text">اعدادت الحساب </p>
+              </div>
+
+              <div
+                onClick={() => setCurrentComponent(2)}
+                style={{
+                  backgroundColor: currentComponent === 2 && "#ffd1d1da",
+                }}
+                className="admin-sidebar-component"
+              >
+                <p className="admin-sidebar-text">اعدادات الورشة </p>
+              </div>
             </div>
 
-            <div
-              onClick={() => setCurrentComponent(2)}
-              style={{ backgroundColor: currentComponent === 2 && "#ffd1d1da" }}
-              className="admin-sidebar-component"
-            >
-              <p className="admin-sidebar-text">اعدادات الورشة </p>
-            </div>
-          </div>
-          {!loading && mechanic && (
             <div className="mechanic-settings-components">
               {currentComponent === 1 ? (
                 <div className="mechanic-account-settings">
@@ -193,7 +202,10 @@ function MechanicSettings() {
                 </div>
               ) : (
                 <div className="mechanic-profile-settings">
-                  <form className="mechanic-profile-settings-form">
+                  <form
+                    className="mechanic-profile-settings-form"
+                    onSubmit={handleUpdateAccount}
+                  >
                     <div className="mechanic-profile-form-group">
                       <div className="mechanic-profile-info-input-wrapper">
                         <label htmlFor="workshopName">
@@ -206,6 +218,21 @@ function MechanicSettings() {
                           onChange={(e) => setWorkshopName(e.target.value)}
                           className="mechanic-profile-form-input"
                         />
+                      </div>
+
+                      <div className="mechanic-profile-info-input-wrapper">
+                        <label htmlFor="description">
+                          {t("workshop_description")}
+                        </label>
+                        <textarea
+                          type="text"
+                          id="description"
+                          value={workshopDescription}
+                          onChange={(e) =>
+                            setWorkshopDescription(e.target.value)
+                          }
+                          className="mechanic-profile-form-input"
+                        ></textarea>
                       </div>
 
                       <div className="mechanic-profile-info-input-wrapper">
@@ -237,26 +264,15 @@ function MechanicSettings() {
                       <label htmlFor="">
                         {t("register_workshop_branches")}
                       </label>
+
                       <div className="branches">
-                        {branches?.map((branch, index) => (
-                          <Branch
-                            key={Math.random(100000)}
-                            index={index}
-                            branch={branch}
-                            provinces={provinces}
-                            onBranchChange={handleBranchChange}
-                            canRemove={branches.length > 1 && branch !== null}
-                            lang={i18n.language}
-                            className="mechanic-profile-branch"
-                          />
-                        ))}
-                        <button
-                          className="branch-btn add-branch-btn"
-                          type="button"
-                          onClick={handleAddBranch}
-                        >
-                          {t("register_workshop_add_branch")}
-                        </button>
+                        <BranchesList
+                          provinces={provinces}
+                          branches={branches}
+                          setBranches={setBranches}
+                          lang={i18n.language}
+                          t={t}
+                        />
                       </div>
                     </div>
 
@@ -267,8 +283,8 @@ function MechanicSettings() {
                 </div>
               )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

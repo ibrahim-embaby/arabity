@@ -31,8 +31,14 @@ function TagSelectInput({
 
   return (
     <div className="tag-select-input-container">
-      <select onChange={handleOptionsChange} className="tag-select-input">
-        <option value="">{placeholder}</option>
+      <select
+        value={""}
+        onChange={handleOptionsChange}
+        className="tag-select-input"
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
         {selectOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label[i18n.language]}

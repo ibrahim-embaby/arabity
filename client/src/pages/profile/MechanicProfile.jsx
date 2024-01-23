@@ -169,7 +169,7 @@ function WorkshopProfile() {
                     backgroundColor: tab === "mechanic_posts" && "#ddd",
                   }}
                 >
-                  {t("mechanic_posts")}
+                  {t("posts_title")}
                 </div>
               </div>
               {tab === "mechanic_data" ? (

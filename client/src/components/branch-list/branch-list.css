@@ -1,0 +1,51 @@
+.branch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.branch {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.branch-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.branch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.branch-province-select,
+.branch-city-select {
+  cursor: pointer;
+}
+.branch-province-select,
+.branch-city-select,
+.branch-address-input,
+.branch-mobile-input {
+  width: 50%;
+  padding: 5px;
+  font-size: 15px;
+}
+
+.branch-btn {
+  padding: 5px;
+  width: 90px;
+  color: var(--white-color);
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  padding-right: 0px;
+  align-self: flex-end;
+}
+.branch-add-btn {
+  background-color: var(--green-color);
+}
+
+.branch-delete-btn {
+  background-color: var(--red-color);
+}

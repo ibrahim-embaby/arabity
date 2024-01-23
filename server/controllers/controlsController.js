@@ -35,7 +35,10 @@ module.exports.addProvinceCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getProvincesCtrl = asyncHandler(async (req, res) => {
   try {
-    const provinces = await Province.find().populate("cities");
+    const provinces = await Province.find().populate({
+      path: "cities",
+      select: "label value _id -province",
+    });
     res.status(200).json(provinces);
   } catch (error) {
     console.log(error);
@@ -44,7 +47,23 @@ module.exports.getProvincesCtrl = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc create province
+ * @desc get single province
+ * @route /api/controls/provinces/:id
+ * @method GET
+ * @access public
+ */
+module.exports.getSingleProvinceCtrl = asyncHandler(async (req, res) => {
+  try {
+    const province = await Province.findById(req.params.id).populate("cities");
+    res.status(200).json(province);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
+
+/**
+ * @desc create city
  * @route /api/controls/cities
  * @method POST
  * @access private (admin only)

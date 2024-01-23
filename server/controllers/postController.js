@@ -20,7 +20,10 @@ module.exports.createPostCtrl = asyncHandler(async (req, res) => {
       docModel: req.user.userType,
       privacy,
     });
-    newPost = await newPost.populate("doc", "username profilePhoto _id");
+    newPost = await newPost.populate(
+      "doc",
+      "username profilePhoto _id workshopName"
+    );
 
     res.status(201).json({
       data: { ...newPost._doc, comments: [] },
@@ -41,12 +44,12 @@ module.exports.createPostCtrl = asyncHandler(async (req, res) => {
 module.exports.getAllPublicPostsCtrl = asyncHandler(async (req, res) => {
   try {
     const posts = await Post.find({ privacy: "public" })
-      .populate("doc", "username profilePhoto _id")
+      .populate("doc", "username profilePhoto _id workshopName")
       .populate({
         path: "comments",
         populate: {
           path: "doc",
-          select: "username _id profilePhoto",
+          select: "username _id profilePhoto workshopName",
         },
         // sort not work
         sort: { createdAt: -1 },
@@ -70,12 +73,12 @@ module.exports.getAllUserPostsCtrl = asyncHandler(async (req, res) => {
   try {
     const { userId } = req.params;
     const posts = await Post.find({ doc: userId })
-      .populate("doc", "username profilePhoto _id")
+      .populate("doc", "username profilePhoto _id workshopName")
       .populate({
         path: "comments",
         populate: {
           path: "doc",
-          select: "username _id profilePhoto",
+          select: "username _id profilePhoto workshopName",
         },
         // sort not work
         sort: { createdAt: -1 },
@@ -99,12 +102,12 @@ module.exports.getSinglePostCtrl = asyncHandler(async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await Post.findById(postId)
-      .populate("doc", "username profilePhoto _id")
+      .populate("doc", "username profilePhoto _id workshopName")
       .populate({
         path: "comments",
         populate: {
           path: "doc",
-          select: "username _id profilePhoto",
+          select: "username _id profilePhoto workshopName",
         },
         // sort not work
         sort: { createdAt: -1 },
@@ -141,12 +144,12 @@ module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
       { text, privacy },
       { new: true }
     )
-      .populate("doc", "username _id profilePhoto")
+      .populate("doc", "username _id profilePhoto workshopName")
       .populate({
         path: "comments",
         populate: {
           path: "doc",
-          select: "username _id profilePhoto",
+          select: "username _id profilePhoto workshopName",
         },
       });
     res.status(200).json({ data: updatedPost, message: req.t("post_edit") });

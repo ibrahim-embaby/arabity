@@ -6,6 +6,7 @@ const controlsSlice = createSlice({
     services: [],
     cars: [],
     provinces: [],
+    province: null,
     loading: false,
   },
   reducers: {
@@ -17,6 +18,9 @@ const controlsSlice = createSlice({
     },
     setProvinces(state, action) {
       state.provinces = action.payload;
+    },
+    setProvince(state, action) {
+      state.province = action.payload;
     },
     setLoading(state) {
       state.loading = true;

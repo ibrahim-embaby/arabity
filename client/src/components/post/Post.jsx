@@ -57,7 +57,9 @@ function Post({ post }) {
           />
         </Link>
         <div className="post-owner-info">
-          <h4 className="post-owner-username">{post.doc.username}</h4>
+          <h4 className="post-owner-username">
+            {post.doc.workshopName ? post.doc.workshopName : post.doc.username}
+          </h4>
           <div className="post-metadata">
             <span className="post-date">{formatTime(post.createdAt)}</span>
             <span> - </span>

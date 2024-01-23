@@ -133,15 +133,15 @@ function validateUpdateMechanic(obj) {
     workshopName: Joi.string().min(1),
     workshopBranches: Joi.array().items(
       Joi.object({
-        branchProvince: Joi.string().min(1).required(),
-        branchCity: Joi.string().min(1).required(),
-        branchAddress: Joi.string().min(1).required(),
-        branchMobile: Joi.string().min(1).required(),
+        province: Joi.string().id().required(),
+        city: Joi.string().id().required(),
+        address: Joi.string().min(1).required(),
+        mobile: Joi.string().min(1).required(),
       })
     ),
     workshopServices: Joi.array(),
     cars: Joi.array(),
-    workshopDescription: Joi.string(),
+    workshopDescription: Joi.string().allow(""),
   });
   return schema.validate(obj);
 }

@@ -30,6 +30,10 @@ module.exports.getMechanicCtrl = asyncHandler(async (req, res) => {
       path: "workshopBranches",
       populate: {
         path: "province",
+        populate: {
+          path: "cities",
+          select: "label value _id -province",
+        },
         select: "_id label value",
       },
     })
@@ -136,7 +140,35 @@ module.exports.updateMechanicCtrl = asyncHandler(async (req, res) => {
       id,
       { ...req.body, password: hashedPassword },
       { new: true }
-    );
+    )
+      .select("-password")
+      .populate({
+        path: "mechanicRatings",
+        populate: {
+          path: "user",
+          select: "username",
+        },
+      })
+      .populate("cars")
+      .populate("workshopServices")
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "province",
+          populate: {
+            path: "cities",
+            select: "label value _id -province",
+          },
+          select: "_id label value",
+        },
+      })
+      .populate({
+        path: "workshopBranches",
+        populate: {
+          path: "city",
+          select: "_id label value",
+        },
+      });
     res
       .status(200)
       .json({ data: updatedMechanic, message: req.t("workshop_updated") });

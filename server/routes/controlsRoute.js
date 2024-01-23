@@ -6,6 +6,7 @@ const {
   getCarsCtrl,
   getServicesCtrl,
   addCityCtrl,
+  getSingleProvinceCtrl,
 } = require("../controllers/controlsController");
 const { verifyTokenAndAdmin } = require("../middlewares/verifyToken");
 
@@ -15,6 +16,9 @@ const router = require("express").Router();
 
 // /api/controls/provinces
 router.route("/provinces").post(addProvinceCtrl).get(getProvincesCtrl);
+
+// /api/controls/provinces/:id
+router.route("/province/:id").get(getSingleProvinceCtrl);
 
 // /api/controls/cities
 router.route("/cities").post(addCityCtrl);
