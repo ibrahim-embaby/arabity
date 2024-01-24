@@ -55,6 +55,8 @@
     "user_settings_edit": "تعديل",
     "user_settings_mobile_placeholder": "رقم الموبايل",
     "user_settings_name_placeholder": "اكتب اسمك",
+    "account_settings": "اعدادت الحساب",
+    "mechanic_settings": "اعدادات الورشة",
     "loading": "يتم التحميل...",
     "logout": "تسجيل الخروج",
     "login": "تسجيل الدخول",
@@ -71,6 +73,7 @@
     "founders_title": "المؤسسين",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
+    "new_password": "كلمة المرور الجديدة",
     "login_as_user":"تسجيل دخول كمالك سيارة",
     "login_as_workshop_owner":"تسجيل دخول كمالك ورشة",
     "register_as_user":"تسجيل كمالك سيارة",
@@ -119,5 +122,7 @@
     "create_comment": "تعليق",
     "comment_empty": "من فضلك اكتب شيئًا لنشره",
     "comment_edit":"تعديل",
-    "comment_delete":"حذف"
+    "comment_delete":"حذف",
+    "upload": "تحميل",
+    "branch": "فرع"
 }

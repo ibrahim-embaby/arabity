@@ -83,11 +83,11 @@ export function uploadWorkshopImg(id, workshopImg) {
           withCredentials: true,
         }
       );
-      dispatch(mechanicActions.setMechanicPhoto(data.workshopPhoto));
+      dispatch(mechanicActions.setMechanicPhoto(data.profilePhoto));
       dispatch(mechanicActions.clearLoading());
       toast.success(data.message);
       const user = JSON.parse(localStorage.getItem("userInfo"));
-      user.profilePhoto = data?.workshopPhoto;
+      user.profilePhoto = data?.profilePhoto;
       localStorage.setItem("userInfo", JSON.stringify(user));
     } catch (error) {
       dispatch(mechanicActions.clearLoading());

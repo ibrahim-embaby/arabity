@@ -21,6 +21,9 @@ function CreateComment({ post }) {
       text: comment,
       postId: post._id,
     };
+    if (user.workshopName) {
+      commentData.doc.workshopName = user.workshopName;
+    }
     dispatch(createComment(post, commentData));
     setComment("");
   };

@@ -49,10 +49,11 @@ const BranchesList = ({ provinces, branches, setBranches, lang, t }) => {
       {branches.map((branch, index) => (
         <div key={index} className="branch">
           <div className="branch-details">
-            <p>فرع {index + 1}</p>
+            <p>
+              {t("branch")} {index + 1}
+            </p>
             <label className="workshop-province branch-item">
               {t("register_workshop_province")}
-              {console.log(branch.province)}
               <select
                 value={
                   (branch.province && JSON.stringify(branch.province)) || ""

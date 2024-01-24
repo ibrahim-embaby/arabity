@@ -45,7 +45,11 @@ function Comment({ post, comment }) {
               alt=""
             />
           </Link>
-          <p>{comment.doc.username}</p>
+          <p>
+            {comment.doc.workshopName
+              ? comment.doc.workshopName
+              : comment.doc.username}
+          </p>
         </div>
         {user?.id === comment.doc._id && (
           <div

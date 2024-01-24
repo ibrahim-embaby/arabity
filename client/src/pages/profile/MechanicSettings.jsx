@@ -92,9 +92,24 @@ function MechanicSettings() {
     if (!selectedServices.length) {
       return toast.warning("اختر خدمة واحدة علي الأقل");
     }
+    if (!branches.length) {
+      return toast.warning("اضف فرع واحد علي الأقل");
+    }
     const workshopCars = selectedCars.map((car) => car._id);
     const workshopServices = selectedServices.map((service) => service._id);
     const workshopBranches = branches.map((branch) => {
+      if (!branch.province?._id) {
+        return toast.warning("اختر المحافظة");
+      }
+      if (!branch.city?._id) {
+        return toast.warn("اختر المدينة");
+      }
+      if (!branch.address) {
+        return toast.warn("اضف العنوان");
+      }
+      if (!branch.mobile) {
+        return toast.warn("اضف هاتف الفرع");
+      }
       return {
         province: branch.province._id,
         city: branch.city._id,
@@ -102,6 +117,10 @@ function MechanicSettings() {
         mobile: branch.mobile,
       };
     });
+    if (typeof workshopBranches[0] === "string") {
+      return;
+    }
+
     let fieldsToUpdate = {
       username: workshopOwnerUsername,
       workshopName,
@@ -144,7 +163,7 @@ function MechanicSettings() {
                 }}
                 className="admin-sidebar-component"
               >
-                <p className="admin-sidebar-text">اعدادت الحساب </p>
+                <p className="admin-sidebar-text"> {t("account_settings")} </p>
               </div>
 
               <div
@@ -154,7 +173,7 @@ function MechanicSettings() {
                 }}
                 className="admin-sidebar-component"
               >
-                <p className="admin-sidebar-text">اعدادات الورشة </p>
+                <p className="admin-sidebar-text"> {t("mechanic_settings")} </p>
               </div>
             </div>
 
@@ -175,28 +194,28 @@ function MechanicSettings() {
                       onChange={(e) => setWorkshopOwnerUsername(e.target.value)}
                       className="mechanic-account-settings-form-input"
                     />
-                    <label htmlFor="workshopOwnerUsername">
-                      البريد الإلكتروني
-                    </label>
+                    <label htmlFor="workshopOwnerUsername">{t("email")}</label>
                     <input
                       type="text"
                       className="mechanic-account-settings-form-input"
                       disabled
                       value={user.email}
                     />
-                    <label htmlFor="workshopOwnerUsername">كلمة المرور </label>
+                    <label htmlFor="workshopOwnerUsername">
+                      {t("password")}
+                    </label>
                     <input
                       type="password"
                       value={newPassword}
                       className="mechanic-account-settings-form-input"
-                      placeholder="new password"
+                      placeholder={t("new_password")}
                       onChange={(e) => setNewPassword(e.target.value)}
                     />
                     <button
                       type="submit"
                       className="mechanic-account-settings-form-btn"
                     >
-                      حفظ التغييرات
+                      {t("user_settings_edit")}
                     </button>
                   </form>
                 </div>

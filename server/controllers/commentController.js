@@ -24,7 +24,10 @@ module.exports.createCommentCtrl = asyncHandler(async (req, res) => {
       text,
       postId,
     });
-    comment = await comment.populate("doc", "username profilePhoto _id");
+    comment = await comment.populate(
+      "doc",
+      "username profilePhoto _id workshopName"
+    );
     res.status(201).json(comment);
   } catch (error) {
     console.log(error);
@@ -52,7 +55,7 @@ module.exports.updateCommentCtrl = asyncHandler(async (req, res) => {
       id,
       { text },
       { new: true }
-    ).populate("doc", "username profilePhoto _id");
+    ).populate("doc", "username profilePhoto _id workshopName");
     res.status(200).json(comment);
   } catch (error) {
     console.log(error);

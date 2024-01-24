@@ -55,6 +55,8 @@
     "user_settings_edit": "edit",
     "user_settings_mobile_placeholder": "mobile",
     "user_settings_name_placeholder": "your name",
+    "account_settings": "Account Settings",
+    "mechanic_settings": "Mechanic Settings",
     "loading": "loading...",
     "logout": "logout",
     "login": "Login",
@@ -71,6 +73,7 @@
     "founders_title": "Founders",
     "email": "email",
     "password": "password",
+    "new_password": "new password",
     "login_as_user":"login as car owner",
     "login_as_workshop_owner":"login as workshop owner",
     "register_as_user":"register as car owner",
@@ -119,5 +122,7 @@
     "create_comment":"comment",
     "comment_empty": "please write anything to comment",
     "comment_edit":"edit",
-    "comment_delete":"delete"
+    "comment_delete":"delete",
+    "upload": "upload",
+    "branch": "branch"
 }

@@ -12,7 +12,7 @@ const mechanicSlice = createSlice({
       state.mechanic = action.payload;
     },
     setMechanicPhoto(state, action) {
-      state.mechanic.workshopPhoto = action.payload;
+      state.mechanic.profilePhoto = action.payload;
     },
     addRatingToMechanic(state, action) {
       state.mechanic.mechanicRatings.push(action.payload);

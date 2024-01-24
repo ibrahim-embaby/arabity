@@ -81,6 +81,7 @@ function WorkshopProfile() {
       console.log(error);
     }
   };
+  console.log(mechanic);
 
   const handleUploadWorkshopImg = (e) => {
     e.preventDefault();
@@ -112,7 +113,6 @@ function WorkshopProfile() {
       <div className="container">
         <div className="mechanic-profile-wrapper">
           <div className="mechanic-profile-top">
-            {user?.id === id && <button className="edit-profile">تعديل</button>}
             <div className="mechanic-profile-image-wrapper">
               <Zoom>
                 <img
@@ -142,7 +142,7 @@ function WorkshopProfile() {
                   />
                   {workshopImg && (
                     <button type="submit" className="upload-workshop-img-btn">
-                      upload
+                      {t("upload")}
                     </button>
                   )}
                 </form>
@@ -273,7 +273,7 @@ function WorkshopProfile() {
                   {user?.id === id && <CreatePost />}
                   <hr />
                   {postLoading ? (
-                    <p>loading...</p>
+                    <p>{t("loading")}</p>
                   ) : posts.length ? (
                     posts.map((post) => <Post key={post._id} post={post} />)
                   ) : (
