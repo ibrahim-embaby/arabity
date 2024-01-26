@@ -81,7 +81,6 @@ function WorkshopProfile() {
       console.log(error);
     }
   };
-  console.log(mechanic);
 
   const handleUploadWorkshopImg = (e) => {
     e.preventDefault();
@@ -270,7 +269,7 @@ function WorkshopProfile() {
                 </>
               ) : (
                 <div className="mechanic_posts">
-                  {user?.id === id && <CreatePost />}
+                  {user?.id === id && <CreatePost privacy={"restricted"} />}
                   <hr />
                   {postLoading ? (
                     <p>{t("loading")}</p>

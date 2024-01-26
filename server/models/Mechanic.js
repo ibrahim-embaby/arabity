@@ -34,8 +34,8 @@ const MechanicSchema = new mongoose.Schema(
     profilePhoto: {
       type: Object,
       default: {
-        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1698526533/pjdpumsqyjvrodbamcfa.webp",
-        publicId: "pjdpumsqyjvrodbamcfa",
+        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1706237423/h70y8aiuzfqyrzrzlyth.webp",
+        publicId: "h70y8aiuzfqyrzrzlyth",
       },
     },
     workshopBranches: [

@@ -46,7 +46,7 @@ function MechanicSettings() {
   useEffect(() => {
     setSelectCars(cars);
     setSelectServices(services);
-  }, []);
+  }, [cars, services]);
 
   useEffect(() => {
     if (mechanic?.cars) {
@@ -262,7 +262,6 @@ function MechanicSettings() {
                           selectedOptions={selectedServices}
                           setSelectedOptions={setSelectedServices}
                           selectOptions={selectServices}
-                          setSelectOptions={setSelectServices}
                           placeholder={t("choose_service")}
                         />
                       </div>
@@ -275,7 +274,6 @@ function MechanicSettings() {
                           selectedOptions={selectedCars}
                           setSelectedOptions={setSelectedCars}
                           selectOptions={selectCars}
-                          setSelectOptions={setSelectCars}
                           placeholder={t("choose_model")}
                         />
                       </div>

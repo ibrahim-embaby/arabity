@@ -40,8 +40,8 @@ module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
     const conversations = await Conversation.find({
       $or: [{ userId: id }, { mechanicId: id }],
     })
-      .populate("userId", "username")
-      .populate("mechanicId", "username")
+      .populate("userId", "username profilePhoto")
+      .populate("mechanicId", "username profilePhoto workshopName")
       .sort({ updatedAt: -1 });
 
     const startedConversations = conversations.filter(

@@ -10,14 +10,26 @@
 
 .conversation-item {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  gap: 15px;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid var(--primary-color);
   cursor: pointer;
   text-decoration: none;
   color: var(--black-color);
+  align-items: center;
+}
+
+.conversation-item-photo-wrapper {
+  width: 70px;
+  height: 70px;
+}
+
+.conversation-item-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .conversation-item-sender {

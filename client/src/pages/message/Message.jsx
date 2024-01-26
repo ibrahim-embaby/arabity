@@ -118,19 +118,17 @@ function Message() {
       user.id === conversationId.substring(24, 48) ? (
         <div className="message-container">
           <div
-            className="message-bar-info"
+            className="message-bar-info-wrapper"
             style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
           >
-            <p>
-              {t("you_are_messaging")}
-              {otherUser?.username}{" "}
-            </p>
-            {otherUser?.workshopName && (
-              <p>
-                {t("workshop")}
-                {otherUser?.workshopName}
-              </p>
-            )}
+            <img
+              className="message-bar-info-photo"
+              src={otherUser?.profilePhoto.url}
+              alt=""
+            />
+            {otherUser?.workshopName
+              ? otherUser.workshopName
+              : otherUser?.username}
           </div>
           <div className="messages-container-body">
             <div ref={messagesContainerRef} className="sent-messages">

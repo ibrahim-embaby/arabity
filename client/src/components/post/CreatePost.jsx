@@ -4,9 +4,8 @@ import { useDispatch } from "react-redux";
 import { createPost } from "../../redux/apiCalls/postApiCall";
 import { toast } from "react-toastify";
 
-function CreatePost() {
+function CreatePost({ privacy }) {
   const [post, setPost] = useState("");
-  const [privacy, setPrivacy] = useState("public");
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const handleCreatePost = (e) => {
@@ -26,14 +25,6 @@ function CreatePost() {
           className="post-input-text"
         ></textarea>
         <div className="create-post-controllers">
-          <select
-            value={privacy}
-            onChange={(e) => setPrivacy(e.target.value)}
-            className="create-post-privacy"
-          >
-            <option value="public">{t("public_privacy")}</option>
-            <option value="restricted">{t("restricted_privacy")}</option>
-          </select>
           <button
             className={`create-post-btn`}
             disabled={!post ? true : false}

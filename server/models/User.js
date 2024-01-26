@@ -39,8 +39,8 @@ const UserSchema = new mongoose.Schema(
     profilePhoto: {
       type: Object,
       default: {
-        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1698526360/df9ucku2gdjixyavkoul.png",
-        publicId: "df9ucku2gdjixyavkoul",
+        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1706238234/oqjxuv7aof6vo4esteyd.jpg",
+        publicId: "oqjxuv7aof6vo4esteyd",
       },
     },
   },

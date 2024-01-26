@@ -6,7 +6,6 @@ function TagSelectInput({
   selectedOptions,
   setSelectedOptions,
   selectOptions,
-  setSelectOptions,
   placeholder,
 }) {
   const { i18n } = useTranslation();
@@ -14,18 +13,12 @@ function TagSelectInput({
     setSelectedOptions(
       selectedOptions.filter((tag) => tag.value !== tagToRemove.value)
     );
-    setSelectOptions([
-      ...selectOptions,
-      selectedOptions.find((tag) => tag.value === tagToRemove.value),
-    ]);
   };
 
   const handleOptionsChange = (event) => {
     const newValue = event.target.value;
     const newOption = selectOptions.find((option) => option.value === newValue);
-    setSelectOptions(
-      selectOptions.filter((option) => option.value !== newValue)
-    );
+
     setSelectedOptions([...selectedOptions, newOption]);
   };
 
@@ -39,11 +32,16 @@ function TagSelectInput({
         <option value="" disabled>
           {placeholder}
         </option>
-        {selectOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label[i18n.language]}
-          </option>
-        ))}
+        {selectOptions?.map(
+          (option) =>
+            !selectedOptions
+              .map((selectedOption) => selectedOption.value)
+              ?.includes(option.value) && (
+              <option key={option.value} value={option.value}>
+                {option.label[i18n.language]}
+              </option>
+            )
+        )}
       </select>
       <SelectedTags
         selectedOptions={selectedOptions}

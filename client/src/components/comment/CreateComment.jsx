@@ -48,4 +48,17 @@ function CreateComment({ post }) {
   );
 }
 
+/**
+ * for creating mentions
+ * 
+ * <MentionsInput
+          value={comment}
+          style={MentionStyle}
+          onChange={(e) => setComment(e.target.value)}
+          className="comment-input-text"
+        >
+          <Mention style={{ backgroundColor: "#ccc" }} data={postUsers} />
+        </MentionsInput>
+ */
+
 export default CreateComment;

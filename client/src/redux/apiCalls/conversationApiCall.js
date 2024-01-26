@@ -23,6 +23,7 @@ export function fetchOtherUserData(userId, type) {
   return async (dispatch, getState) => {
     try {
       if (type === "user") {
+        console.log("object");
         const { data } = await request.get(`/api/user/profile/${userId}`, {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,

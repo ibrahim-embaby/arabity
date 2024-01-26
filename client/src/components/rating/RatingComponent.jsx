@@ -16,15 +16,15 @@ function RatingComponent({ userRate }) {
   };
   return (
     <div className="rating-item">
-      <p className="rating-item-info">
+      <div className="rating-item-info">
         <span className="rating-item-info-name-wrapper">
           <PersonIcon sx={{ color: "#333" }} />
           {limitText(userRate.user?.username, 10)}
         </span>
         <RatingMui rating={userRate.rating} />
-      </p>
+      </div>
       <p className="rating-item-text">{userRate.text}</p>
-      <p className="rating-item-date-wrapper">
+      <div className="rating-item-date-wrapper">
         <p className="rating-item-date">{formatTime(userRate.createdAt)}</p>
         {(user?.isAdmin || user?.id === userRate.user?._id) && (
           <button
@@ -35,7 +35,7 @@ function RatingComponent({ userRate }) {
             <DeleteIcon />
           </button>
         )}
-      </p>
+      </div>
     </div>
   );
 }

@@ -38,17 +38,32 @@ function Conversations() {
               className="conversation-item"
               key={conversation._id}
             >
-              <span className="conversation-item-sender">
-                {user.workshopName
-                  ? conversation.userId.username
-                  : conversation.mechanicId.username}
+              <span className="conversation-item-photo-wrapper">
+                {user.workshopName ? (
+                  <img
+                    className="conversation-item-photo"
+                    src={conversation.userId.profilePhoto.url}
+                  />
+                ) : (
+                  <img
+                    className="conversation-item-photo"
+                    src={conversation.mechanicId.profilePhoto.url}
+                  />
+                )}
               </span>
-              <p className="conversation-item-text">
-                {limitText(conversation.lastMessage, 30)}
-              </p>
-              <span className="conversation-item-time">
-                {formatTime(conversation.updatedAt)}
-              </span>
+              <div className="conversation-item-info">
+                <span className="conversation-item-sender">
+                  {user.workshopName
+                    ? conversation.userId.username
+                    : conversation.mechanicId.workshopName}
+                </span>
+                <p className="conversation-item-text">
+                  {limitText(conversation.lastMessage, 30)}
+                </p>
+                <span className="conversation-item-time">
+                  {formatTime(conversation.updatedAt)}
+                </span>
+              </div>
             </Link>
           ))
         ) : (

@@ -4,7 +4,11 @@
   display: flex;
   justify-content: center;
 }
-
+.posts-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .create-public-post {
   margin-bottom: 20px;
 }
