@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "../../redux/apiCalls/profileApiCall";
 import { Link, useParams } from "react-router-dom";
@@ -9,18 +9,38 @@ import {
 } from "../../redux/apiCalls/ratingApiCall";
 import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { fetchUserPosts } from "../../redux/apiCalls/postApiCall";
+import Post from "../../components/post/Post";
 
 function Profile() {
+  const { t, i18n } = useTranslation();
+  const sidebarItems = [
+    {
+      title: t("profile_ratings"),
+      value: 1,
+    },
+    {
+      title: t("posts_title"),
+      value: 2,
+    },
+  ];
   const dispatch = useDispatch();
+  const [currentComponent, setCurrentComponent] = useState(
+    sidebarItems[0].value
+  );
+  const [selectedComponent, setSelectedComponent] = useState(
+    sidebarItems[0].value
+  );
   const { user } = useSelector((state) => state.auth);
   const { ratings, loading } = useSelector((state) => state.rating);
+  const { posts, postLoading } = useSelector((state) => state.post);
   const { id } = useParams();
-  const { t, i18n } = useTranslation();
   document.title = t("user_profile_page_title");
 
   useEffect(() => {
     dispatch(fetchUserProfile(id));
     dispatch(fetchSingleUserRatings(id));
+    dispatch(fetchUserPosts(id));
   }, [id]);
 
   const handleDeleteRating = (ratingId) => {
@@ -31,39 +51,77 @@ function Profile() {
       className="profile"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
-      <div className="profile-top">{user.username}</div>
+      <div className="profile-sidebar">
+        <div className="sidebar-account-info">
+          <p className="sidebar-account-username">{user.username}</p>
+          <p className="sidebar-account-email">{user.email}</p>
+        </div>
+        <hr />
+        <div className="profile-sidebar-items">
+          {sidebarItems.map((item) => (
+            <p
+              className="profile-sidebar-item"
+              key={item.value}
+              onClick={() => {
+                setCurrentComponent(item.value);
+                setSelectedComponent(item.value);
+              }}
+              style={{
+                backgroundColor:
+                  item.value === selectedComponent && "#ffd1d1da",
+              }}
+            >
+              {item.title}
+            </p>
+          ))}
+        </div>
+      </div>
       <div className="container">
-        <div className="profile-bottom">
-          <div className="profile-bottom-right">
-            <h2>{t("profile_favorites")}</h2>
-          </div>
-          <div className="profile-bottom-left">
-            <h2>{t("profile_ratings")}</h2>
+        <div className="profile-data">
+          {currentComponent === 1 ? (
             <div className="user-ratings-wrapper">
-              {loading ? (
-                <p>{t("loading")}</p>
-              ) : ratings.length ? (
-                ratings.map((rating) => (
-                  <div className="user-rating" key={rating._id}>
-                    <Link to={`/mechanic/profile/${rating.mechanic._id}`}>
-                      <p>{rating.mechanic.workshopName}</p>
-                      <p>{rating.rating} / 5</p>
-                      <p>{rating.text}</p>
-                    </Link>
-                    <button
-                      className="delete-rating-btn"
-                      onClick={() => handleDeleteRating(rating._id)}
-                    >
-                      <span> {t("delete_btn")}</span>
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <p>{t("no_workshop_ratings")}</p>
-              )}
+              <h2>{t("profile_ratings")}</h2>
+              <div className="profile-user-ratings">
+                {loading ? (
+                  <p>{t("loading")}</p>
+                ) : ratings.length ? (
+                  ratings.map((rating) => (
+                    <div className="user-rating" key={rating._id}>
+                      <Link to={`/mechanic/profile/${rating.mechanic._id}`}>
+                        <p>{rating.mechanic.workshopName}</p>
+                        <p>{rating.rating} / 5</p>
+                        <p>{rating.text}</p>
+                      </Link>
+                      <button
+                        className="delete-rating-btn"
+                        onClick={() => handleDeleteRating(rating._id)}
+                      >
+                        <span> {t("delete_btn")}</span>
+                        <DeleteIcon />
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <p>{t("no_workshop_ratings")}</p>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            currentComponent === 2 && (
+              <div className="user-posts-wrapper">
+                <h2>{t("posts_title")}</h2>
+                <div className="profile-user-posts">
+                  {postLoading ? (
+                    <p>{t("loading")}</p>
+                  ) : posts.length ? (
+                    posts.map((post) => <Post key={post._id} post={post} />)
+                  ) : (
+                    <p>{t("no_posts")}</p>
+                  )}
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </div>

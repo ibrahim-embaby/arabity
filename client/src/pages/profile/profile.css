@@ -1,38 +1,51 @@
 .profile {
-  min-height: calc(100vh - var(--difference-value));
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  direction: rtl;
-}
-.profile-top {
-  height: 300px;
-  background-color: var(--main-color);
-  width: 100%;
+  height: calc(100vh - var(--difference-value));
   display: flex;
   justify-content: center;
-  align-items: center;
+  position: relative;
+  overflow-y: scroll;
 }
-.profile-bottom {
-  display: flex;
-  width: 100%;
-}
-.profile-bottom-right {
-  flex: 1;
-}
-.profile-bottom-left {
-  flex: 1;
+
+.profile-sidebar {
+  width: 300px;
+  background-color: var(--main-color);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar-account-info {
+  padding: 10px;
+}
+
+.sidebar-account-username {
+  line-height: 1;
+}
+.sidebar-account-email {
+  font-size: 13px;
+  color: var(--gray-color);
+}
+
+.profile-sidebar-item {
+  cursor: pointer;
+  padding: 10px;
+}
+.profile-data {
+  flex: 8;
+  display: flex;
 }
 
 .user-ratings-wrapper {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.profile-user-ratings {
+  display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-
 .user-rating {
   display: flex;
   flex-direction: column;
@@ -44,6 +57,17 @@
 .user-rating a {
   text-decoration: none;
   color: var(--dark-color);
+}
+.user-posts-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.profile-user-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* workshop Owner profile */

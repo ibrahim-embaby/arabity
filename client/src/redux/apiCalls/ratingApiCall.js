@@ -38,7 +38,6 @@ export function deleteRating(id) {
         },
         withCredentials: true,
       });
-      dispatch(mechanicActions.clearRatingFromMechanic(data.ratingId));
       dispatch(ratingActions.deleteRating(data.ratingId));
       toast.success(data.message);
     } catch (err) {
