@@ -190,3 +190,9 @@
     font-size: 20px;
   }
 }
+
+@media (max-width: 485px) {
+  .info-item-data-text {
+    font-size: 10px;
+  }
+}

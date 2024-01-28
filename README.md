@@ -11,7 +11,8 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 ![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
 ![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
 ![redux-toolkit](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)&nbsp;
-![mui](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)&nbsp;
+![mui](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=mui&logoColor=white)&nbsp;
+![PWA](https://img.shields.io/badge/pwa-570fc2?style=for-the-badge&logo=PWA&logoColor=white)&nbsp;
 
 **Backend:**
 
@@ -43,7 +44,6 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 
 ## ⌛ Upcoming Features
 
-- 🚧 Follow a Mechanic
 - 🚧 User Notfications
 - 🚧 Search Results Sorting
 - 🚧 Search By City After Selecting Province

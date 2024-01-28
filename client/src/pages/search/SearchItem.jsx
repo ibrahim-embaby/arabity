@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RatingMui from "../../components/rating/RatingMui";
 import limitText from "../../utils/limitText";
-import PersonIcon from "@mui/icons-material/Person";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import { useTranslation } from "react-i18next";
 
 function SearchItem({ item }) {
@@ -39,14 +39,20 @@ function SearchItem({ item }) {
         </div>
         <div className="info-items">
           <div className="info-item-wrapper">
-            <PersonIcon sx={{ color: "#aaa" }} />
-            {limitText(item.username, 10)}
+            <MiscellaneousServicesIcon sx={{ color: "#aaa" }} />
+            <div className="info-item-data">
+              {item.workshopServices.map((service) => (
+                <span className="info-item-data-text" key={service._id}>
+                  {service.label[i18n.language]}
+                </span>
+              ))}
+            </div>
           </div>
           <div className="info-item-wrapper">
             <CarRepairIcon sx={{ color: "#aaa" }} />
             <div className="info-item-data">
-              {item.cars.map((car, index) => (
-                <span className="info-item-data-text" key={index}>
+              {item.cars.map((car) => (
+                <span className="info-item-data-text" key={car._id}>
                   {car.label[i18n.language]}
                 </span>
               ))}
@@ -55,8 +61,8 @@ function SearchItem({ item }) {
           <div className="info-item-wrapper">
             <LocationOnIcon sx={{ color: "#aaa" }} />
             <div className="info-item-data">
-              {item.workshopBranches.map((branch, index) => (
-                <span className="info-item-data-text" key={index}>
+              {item.workshopBranches.map((branch) => (
+                <span className="info-item-data-text" key={branch._id}>
                   {branch.province.label[i18n.language]}
                 </span>
               ))}
