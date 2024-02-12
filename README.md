@@ -71,7 +71,48 @@ easy to find a reputable mechanic who can get the job done.
   </tr>
 </table>
 
-<h2>📬 Contact</h2>
+## Usage
+
+### Env Variables
+
+Create a .env file in the server folder and add the following
+
+```
+PORT=8000
+MONGO_URI= your mongodb uri
+CLOUDINARY_CLOUD_NAME= your cloudinary Cloud name
+CLOUDINARY_API_KEY= your cloudinary API key
+CLOUDINARY_API_SECRET= your cloudinary API secret
+ACCESS_TOKEN_SECRET=access_token_secret
+REFRESH_TOKEN_SECRET=refresh_token_secret
+ACTIVATION_SECRET_KEY=activation_secret_key
+RESET_PASSWORD_SECRET_KEY=reset_password_secret_key
+CLIENT_DEV_URL=http://localhost:3000/
+CLIENT_PROD_URL= your frontend production link
+SEND_IN_BLUE_USERNAME= your sendinblue username
+SEND_IN_BLUE_PASSWORD= your sendinblue password
+```
+
+### Install Dependencies (frontend & backend)
+
+```
+cd client
+npm i
+cd ../server
+npm i
+```
+
+### Run
+
+```
+# Run frontend (:3000)
+npm start
+
+# Run backend (:8000)
+npm run dev
+```
+
+## 📬 Contact
 
 If you want to contact me, you can reach me through below handles.
 
