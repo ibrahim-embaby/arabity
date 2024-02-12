@@ -338,7 +338,7 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
         },
         process.env.ACTIVATION_SECRET_KEY,
         {
-          expiresIn: "2min"
+          expiresIn: "1h"
         }
       );
       const verifiactionToken = await VerificationToken.create({
@@ -410,7 +410,7 @@ module.exports.verifyEmailCtrl = asyncHandler(async (req, res, next) => {
                 }
               });
           } else if (user?.isAccountVerified) {
-            return next(new ErrorResponse(req.t("account_already_verified"), 200));
+            return next(new ErrorResponse(req.t("account_already_verified"), 400));
           } else if (!verificationToken) {
             return next(new ErrorResponse(req.t("invalid_verification_token"), 404))
           }
@@ -522,7 +522,7 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
       },
       process.env.RESET_PASSWORD_SECRET_KEY,
       {
-        expiresIn: "20min",
+        expiresIn: "30min",
       }
     );
     const verifiactionToken = await VerificationToken.create({

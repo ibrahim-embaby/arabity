@@ -5,7 +5,7 @@ import { profileActions } from "../slices/profileSlice";
 import { ratingActions } from "../slices/ratingSlice";
 import { messageActions } from "../slices/messageSlice";
 
-// register user
+// /api/auth/register
 export function registerUser(user) {
   return async () => {
     try {
@@ -22,7 +22,7 @@ export function registerUser(user) {
   };
 }
 
-// login user
+// /api/auth/login
 export function loginUser(user) {
   return async (dispatch) => {
     try {
@@ -40,7 +40,7 @@ export function loginUser(user) {
   };
 }
 
-// fetch current user
+// /api/auth/me
 export function fetchMe() {
   return async (dispatch, getState) => {
     try {
@@ -62,7 +62,7 @@ export function fetchMe() {
   };
 }
 
-// logout user
+// /api/auth/signout
 export function logoutUser() {
   return async (dispatch) => {
     dispatch(profileActions.clearProfile());
@@ -73,7 +73,7 @@ export function logoutUser() {
   };
 }
 
-// register Mechanic
+// /api/auth/mechanic/register
 export function registerMechanic(user) {
   return async () => {
     try {
@@ -91,7 +91,7 @@ export function registerMechanic(user) {
   };
 }
 
-// login Mechanic
+// /api/auth/mechanic/login
 export function loginMechanic(user) {
   return async (dispatch) => {
     try {
@@ -108,7 +108,7 @@ export function loginMechanic(user) {
   };
 }
 
-// send verification mail
+// /api/auth/send-verification-mail
 export function sendVerificationMail(email) {
   return async (dispatch) => {
     try {
@@ -130,7 +130,7 @@ export function sendVerificationMail(email) {
   };
 }
 
-// verify email
+// /api/auth/verify-email
 export function verifyEmail(token) {
   return async (dispatch) => {
     try {
@@ -154,7 +154,7 @@ export function verifyEmail(token) {
   };
 }
 
-// forgot password
+// /api/auth/forgot-password
 export function forgotPassword(email) {
   return async () => {
     try {
@@ -173,7 +173,7 @@ export function forgotPassword(email) {
   };
 }
 
-// reset password
+// /api/auth/reset-password
 export function resetPassword(token, password) {
   return async () => {
     try {
@@ -192,7 +192,7 @@ export function resetPassword(token, password) {
   };
 }
 
-// refresh token
+// /api/auth/refresh-token
 export function refreshToken() {
   return async (dispatch) => {
     try {

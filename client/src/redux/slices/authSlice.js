@@ -27,7 +27,7 @@ const authSlice = createSlice({
       state.user = updatedUserData;
     },
     verifyAccount(state, action) {
-      let user = JSON.parse(localStorage.getItem('userInfo'))
+      let user = localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined" ? JSON.parse(localStorage.getItem('userInfo')) : null
       if (user) {
         user = action.payload
         localStorage.setItem("userInfo", JSON.stringify(user));
@@ -35,7 +35,7 @@ const authSlice = createSlice({
       }
     },
     updateToken(state, action) {
-      let user = JSON.parse(localStorage.getItem('userInfo'))
+      let user = localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined" ? JSON.parse(localStorage.getItem('userInfo')) : null
       if (user) {
         user = { ...user, token: action.payload }
         localStorage.setItem("userInfo", JSON.stringify(user));
