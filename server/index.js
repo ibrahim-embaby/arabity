@@ -8,6 +8,7 @@ require("dotenv").config();
 const i18next = require("i18next");
 const i18nextMiddleware = require("i18next-http-middleware");
 const { configI18n } = require("./config/i18n");
+const cookieParser = require("cookie-parser");
 
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
@@ -20,6 +21,7 @@ const conversationsRoute = require("./routes/conversationRoute");
 const controlsRoute = require("./routes/controlsRoute");
 const commentRoute = require("./routes/commentRoute");
 const production = require("./utils/constants");
+const { notFound, errorHandler } = require("./middlewares/error");
 
 // connection to DB
 connectToDb();
@@ -29,6 +31,7 @@ configI18n();
 
 // middlewares
 app.use(express.json());
+app.use(cookieParser());
 
 // Security Headers (helmet)
 app.use(helmet());
@@ -59,6 +62,9 @@ app.use("/api/posts", postRoutes);
 app.use("/api/conversations", conversationsRoute);
 app.use("/api/controls", controlsRoute);
 app.use("/api/comments", commentRoute);
+
+app.use(notFound);
+app.use(errorHandler);
 
 PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, console.log(`server is running on ${PORT}`));

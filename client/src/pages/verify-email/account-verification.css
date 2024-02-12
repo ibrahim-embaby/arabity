@@ -1,0 +1,7 @@
+.verify-account {
+  height: calc(100vh - var(--difference-value));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

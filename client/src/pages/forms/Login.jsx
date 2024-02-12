@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { loginUser, loginMechanic } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import { useTranslation } from "react-i18next";
+import LoginForm from "./LoginForm";
 
 function Login() {
   const dispatch = useDispatch();
@@ -53,55 +54,21 @@ function Login() {
           setVisibleForm={setVisibleForm}
         />
         {visibleForm === 1 ? (
-          <form className="login-form" onSubmit={loginFormHandler}>
-            <div className="login-form-input-wrapper">
-              <label htmlFor="email">{t("email")}</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="login-form-input-wrapper">
-              <label htmlFor="password"> {t("password")}</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <button className="login-form-btn" type="submit">
-              {t("login")}
-            </button>
-          </form>
+          <LoginForm
+            loginFunc={loginFormHandler}
+            userEmail={email}
+            setUserEmail={setEmail}
+            userPassword={password}
+            setUserPassword={setPassword}
+          />
         ) : (
-          <form className="login-form" onSubmit={loginMechanicFormHandler}>
-            <div className="login-form-input-wrapper">
-              <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
-              <input
-                type="email"
-                id="workshopOwnerEmail"
-                value={workshopOwnerEmail}
-                onChange={(e) => setWorkshopOwnerEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="login-form-input-wrapper">
-              <label htmlFor="workshopOwnerPassword"> {t("password")}</label>
-              <input
-                type="password"
-                id="workshopOwnerPassword"
-                value={workshopOwnerPassword}
-                onChange={(e) => setWorkshopOwnerPassword(e.target.value)}
-              />
-            </div>
-            <button className="login-form-btn" type="submit">
-              {t("login")}
-            </button>
-          </form>
+          <LoginForm
+            loginFunc={loginMechanicFormHandler}
+            userEmail={workshopOwnerEmail}
+            setUserEmail={setWorkshopOwnerEmail}
+            userPassword={workshopOwnerPassword}
+            setUserPassword={setWorkshopOwnerPassword}
+          />
         )}
       </div>
     </div>

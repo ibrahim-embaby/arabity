@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { profileActions } from "../slices/profileSlice";
 import { authActions } from "../slices/authSlice";
+import { refreshToken } from "./authApiCall";
 
 // get user profile
 export function fetchUserProfile(id) {
@@ -15,8 +16,16 @@ export function fetchUserProfile(id) {
         withCredentials: true,
       });
       dispatch(profileActions.setProfile(data));
-    } catch (err) {
-      toast.error(err.response.data.message);
+    } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchUserProfile(id));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -33,8 +42,16 @@ export function fetchAllUsers() {
         withCredentials: true,
       });
       dispatch(profileActions.setUsers(data));
-    } catch (err) {
-      toast.error(err.response.data.message);
+    } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchAllUsers());
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -53,8 +70,16 @@ export function deleteUser(id) {
 
       dispatch(profileActions.clearUser(id));
       toast.success(data.message);
-    } catch (err) {
-      toast.error(err.response.data.message);
+    } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(deleteUser(id));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -74,8 +99,15 @@ export function updateUserProfile(userInfo) {
       dispatch(authActions.setUser(data.data));
       toast.success(data.message);
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(updateUserProfile(userInfo));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }

@@ -2,9 +2,11 @@ import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { mechanicActions } from "../slices/mechanicSlice";
 import { ratingActions } from "../slices/ratingSlice";
+import { refreshToken } from "./authApiCall";
 
 const routeName = "ratings";
 
+// rate a mechanic
 export function rateMechanic(rating, mechanic, text) {
   return async (dispatch, getState) => {
     try {
@@ -22,12 +24,20 @@ export function rateMechanic(rating, mechanic, text) {
       dispatch(mechanicActions.addRatingToMechanic(data.rating));
       toast.success(data.message);
     } catch (error) {
-      console.log(error.response.data);
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(rateMechanic(rating, mechanic, text));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
 
+// delete rating
 export function deleteRating(id) {
   return async (dispatch, getState) => {
     try {
@@ -40,12 +50,21 @@ export function deleteRating(id) {
       });
       dispatch(ratingActions.deleteRating(data.ratingId));
       toast.success(data.message);
-    } catch (err) {
-      toast.error(err.response.data.message);
+    } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(deleteRating(id));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
 
+// fetch single user ratings
 export function fetchSingleUserRatings(userId) {
   return async (dispatch, getState) => {
     try {
@@ -61,12 +80,23 @@ export function fetchSingleUserRatings(userId) {
       dispatch(ratingActions.setRatings(data));
       dispatch(ratingActions.clearLoading());
     } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchSingleUserRatings(userId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(ratingActions.clearLoading());
-      toast.error(error.response.data.message);
+
     }
   };
 }
 
+// fetch all mechanic ratings
 export function fetchAllRatings() {
   return async (dispatch, getState) => {
     try {
@@ -79,7 +109,15 @@ export function fetchAllRatings() {
       });
       dispatch(ratingActions.setRatings(data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchAllRatings());
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }

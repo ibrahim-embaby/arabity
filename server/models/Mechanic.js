@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const MechanicSchema = new mongoose.Schema(
   {
@@ -61,6 +62,10 @@ const MechanicSchema = new mongoose.Schema(
         ref: "Service",
       },
     ],
+    isAccountVerified: {
+      type: Boolean,
+      default: false
+    },
     // reports: [
     //   {
     //     user: {
@@ -93,15 +98,49 @@ MechanicSchema.virtual("mechanicRatings", {
   localField: "_id",
 });
 
-// generate auth token
-MechanicSchema.methods.generateAuthToken = function () {
-  return jwt.sign(
+MechanicSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(this.password, salt);
+  this.password = hashedPassword;
+  next();
+});
+
+MechanicSchema.methods.getSignedToken = function () {
+  const accessToken = jwt.sign(
     { id: this._id, userType: "Mechanic" },
-    process.env.JWT_SECRET,
+    process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "1y",
+      expiresIn: "1min",
     }
   );
+  const refreshToken = jwt.sign(
+    { id: this._id },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: "60d",
+    }
+  );
+  return { accessToken, refreshToken };
+};
+
+MechanicSchema.methods.getActivationToken = async function () {
+  const randomstring = crypto.randomBytes(20).toString("hex");
+  const resetPasswordToken = jwt.sign(
+    {
+      randomstring,
+      id: this._id,
+      email: this.email,
+    },
+    process.env.ACTIVATION_SECRET_KEY,
+    {
+      expiresIn: "1d",
+    }
+  );
+
+  return resetPasswordToken;
 };
 
 function validateCreateMechanic(obj) {

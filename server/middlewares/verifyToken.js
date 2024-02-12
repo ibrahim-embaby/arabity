@@ -7,7 +7,7 @@ function verifyToken(req, res, next) {
   if (authToken) {
     const token = authToken.split(" ")[1];
     try {
-      const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
+      const decodedPayload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       req.user = decodedPayload;
       next();
     } catch (err) {

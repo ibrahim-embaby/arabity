@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { postActions } from "../slices/postSlice";
 import request from "../../utils/request";
+import { refreshToken } from "./authApiCall";
 
 // /api/comments/
 export function createComment(post, comment) {
@@ -22,7 +23,15 @@ export function createComment(post, comment) {
       const newPost = { ...post, comments: [...post.comments, data] };
       dispatch(postActions.updatePost(newPost));
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(createComment(post, comment));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -59,7 +68,15 @@ export function updateComment(post, comment) {
       };
       dispatch(postActions.updatePost(newPost));
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(updateComment(post, comment));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -82,7 +99,15 @@ export function deleteComment(post, commentId) {
       });
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(deleteComment(post, commentId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }

@@ -35,6 +35,7 @@ function Register() {
   const [visibleForm, setVisibleForm] = useState(1);
 
   const { services, cars, provinces } = useSelector((state) => state.controls);
+
   useEffect(() => {
     dispatch(fetchControls());
   }, []);
@@ -51,6 +52,8 @@ function Register() {
     if (username.trim() === "") return toast.error("username is empty");
     if (email.trim() === "") return toast.error("email is empty");
     if (mobile.trim() === "") return toast.error("mobile is empty");
+    if (mobile.length < 11)
+      return toast.error("mobile should be at least 11 characters");
     if (password.trim() === "") return toast.error("password is empty");
 
     dispatch(
@@ -61,6 +64,10 @@ function Register() {
         username,
       })
     );
+    setUsername("");
+    setEmail("");
+    setMobile("");
+    setPassword("");
   };
 
   const registerMechanicFormHandler = (e) => {

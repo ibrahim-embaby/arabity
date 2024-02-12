@@ -76,6 +76,7 @@
     "new_password": "كلمة المرور الجديدة",
     "login_as_user":"تسجيل دخول كمالك سيارة",
     "login_as_workshop_owner":"تسجيل دخول كمالك ورشة",
+    "forgot_password": "هل نسيت كلمة المرور؟",
     "register_as_user":"تسجيل كمالك سيارة",
     "register_as_workshop_owner":"تسجيل كمالك ورشة" ,
     "register_mobile": "رقم الموبايل",
@@ -124,5 +125,6 @@
     "comment_edit":"تعديل",
     "comment_delete":"حذف",
     "upload": "تحميل",
-    "branch": "فرع"
+    "branch": "فرع",
+    "confirm": "تأكيد"
 }

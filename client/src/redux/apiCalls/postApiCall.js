@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { postActions } from "../slices/postSlice";
+import { refreshToken } from "./authApiCall";
 
 // /api/posts/
 export function createPost(text, privacy) {
@@ -22,8 +23,18 @@ export function createPost(text, privacy) {
       dispatch(postActions.clearPostLoading());
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(createPost(text, privacy));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(postActions.clearPostLoading());
+
     }
   };
 }
@@ -70,8 +81,18 @@ export function fetchUserPosts(userId) {
       dispatch(postActions.setPosts(payload));
       dispatch(postActions.clearPostLoading());
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchUserPosts(userId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(postActions.clearPostLoading());
+
     }
   };
 }
@@ -96,8 +117,18 @@ export function updatePost(postId, text, privacy) {
       dispatch(postActions.clearPostLoading());
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(updatePost(postId, text, privacy));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(postActions.clearPostLoading());
+
     }
   };
 }
@@ -118,8 +149,18 @@ export function deletePost(postId) {
       dispatch(postActions.clearPostLoading());
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(deletePost(postId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(postActions.clearPostLoading());
+
     }
   };
 }
@@ -137,8 +178,15 @@ export function likePost(postId) {
       });
       dispatch(postActions.likePost(data.data));
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(likePost(postId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -156,7 +204,15 @@ export function unlikePost(postId) {
       });
       dispatch(postActions.unlikePost(data.data));
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(unlikePost(postId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }

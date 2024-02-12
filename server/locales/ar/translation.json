@@ -29,5 +29,9 @@
     "forbidden": "دخول غير مسموح",
     "not_deleted": "لم يتم الحذف بنجاح، اعد المحاولة",
     "cloudinary_error": "خطأ في الخادم (cloudinary)",
-    "success": "تم بنجاح"
+    "success": "تم بنجاح",
+    "session_expired": "انتهت صلاحية الجلسة",
+    "account_verified": "تم تفعيل حسابك",
+    "account_already_verified": "تم تفعيل حسابك بالفعل",
+    "invalid_verification_token": "تم انتهاء صلاحية هذا الرابط، اعد ارسال رابط اخر"
 }

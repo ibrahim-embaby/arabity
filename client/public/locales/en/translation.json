@@ -76,6 +76,7 @@
     "new_password": "new password",
     "login_as_user":"login as car owner",
     "login_as_workshop_owner":"login as workshop owner",
+    "forgot_password": "Forgot your password?",
     "register_as_user":"register as car owner",
     "register_as_workshop_owner":"register as workshop owner",
     "register_mobile": "mobile number",
@@ -124,5 +125,6 @@
     "comment_edit":"edit",
     "comment_delete":"delete",
     "upload": "upload",
-    "branch": "branch"
+    "branch": "branch",
+    "confirm": "Confirm"
 }

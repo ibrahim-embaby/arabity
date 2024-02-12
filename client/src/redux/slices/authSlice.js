@@ -3,9 +3,10 @@ const { createSlice } = require("@reduxjs/toolkit");
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: localStorage.getItem("userInfo")
+    user: localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined"
       ? JSON.parse(localStorage.getItem("userInfo"))
       : null,
+    loading: false
   },
   reducers: {
     setUser(state, action) {
@@ -17,6 +18,7 @@ const authSlice = createSlice({
         id: state.user.id,
         email: state.user.email,
         token: state.user.token,
+        isAccountVerified: state.user.isAccountVerified,
         profilePhoto: action.payload.profilePhoto,
         username: action.payload.username,
         workshopName: action.payload.workshopName,
@@ -24,9 +26,31 @@ const authSlice = createSlice({
       localStorage.setItem("userInfo", JSON.stringify(updatedUserData));
       state.user = updatedUserData;
     },
+    verifyAccount(state, action) {
+      let user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user) {
+        user = action.payload
+        localStorage.setItem("userInfo", JSON.stringify(user));
+        state.user = JSON.parse(localStorage.getItem("userInfo"))
+      }
+    },
+    updateToken(state, action) {
+      let user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user) {
+        user = { ...user, token: action.payload }
+        localStorage.setItem("userInfo", JSON.stringify(user));
+        state.user = JSON.parse(localStorage.getItem("userInfo"))
+      }
+    },
     logout(state) {
       state.user = null;
       localStorage.removeItem("userInfo");
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    clearLoading(state) {
+      state.loading = false;
     },
   },
 });

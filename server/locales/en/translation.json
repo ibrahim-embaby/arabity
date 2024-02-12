@@ -29,5 +29,9 @@
     "forbidden": "forbidden",
     "not_deleted": "The deletion was not successful, please try again",
     "cloudinary_error": "internal server error (cloudinary)",
-    "success":"succeeded"
+    "success":"succeeded",
+    "session_expired": "session expired",
+    "account_verified": "your account verified successfully",
+    "account_already_verified": "your account is verified already",
+    "invalid_verification_token":"this link is expired, try to send another link"
 }

@@ -18,7 +18,7 @@ module.exports.getUserCtrl = asyncHandler(async (req, res) => {
 
 /**
  * @desc get all user
- * @route /api/user/profile/:id
+ * @route /api/user/
  * @method GET
  * @access private ( admin)
  */

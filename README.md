@@ -1,6 +1,8 @@
 # Arabity
 
-Arabity is designed to connect car owners with qualified mechanics in their area. Whether you need routine maintenance, or repairs, our platform makes it easy to find a reputable mechanic who can get the job done.
+Arabity is designed to connect car owners with qualified mechanics in their
+area. Whether you need routine maintenance, or repairs, our platform makes it
+easy to find a reputable mechanic who can get the job done.
 
 [Demo - Visit Now](https://arabity-fzmr.onrender.com) 🚀
 
@@ -32,6 +34,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 ## 🚀 Features
 
 - ✅ Login/Signup User/Mechanic Account
+- ✅ Full Authentication & Authorization System
 - ✅ Update Profile/Password User Account
 - ✅ Search Mechanic Accounts by Province, Car Model, and Service Type
 - ✅ Results Pagination
@@ -41,6 +44,7 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 - ✅ Real Time User-to-Mechanic Chat
 - ✅ Multilingual (Arabic/English)
 - ✅ Emoji Enabled (Emoji Mart)
+- ✅ Reset Password Mail using Nodemailer
 
 ## ⌛ Upcoming Features
 
@@ -48,7 +52,6 @@ Arabity is designed to connect car owners with qualified mechanics in their area
 - 🚧 Search Results Sorting
 - 🚧 Search By City After Selecting Province
 - 🚧 Admin Dashboard
-- 🚧 Reset Password Mail using Nodemailer
 
 ## Sneak Peek of Website Pages ✨:
 

@@ -4,6 +4,7 @@ import { mechanicActions } from "../slices/mechanicSlice";
 import { authActions } from "../slices/authSlice";
 import { searchActions } from "../slices/searchSlice";
 import { ratingActions } from "../slices/ratingSlice";
+import { refreshToken } from "./authApiCall";
 
 // /api/mechanic/:id
 export function fetchMechanic(id) {
@@ -41,7 +42,15 @@ export function updateMechanic(id, newData) {
       dispatch(authActions.updateUser(data.data));
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(updateMechanic(id, newData));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -61,7 +70,15 @@ export function deleteMechanic(id) {
       dispatch(ratingActions.deleteRatingsRelatedToWorkshop(id));
       toast.success(data.message);
     } catch (error) {
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(deleteMechanic(id));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -90,8 +107,18 @@ export function uploadWorkshopImg(id, workshopImg) {
       user.profilePhoto = data?.profilePhoto;
       localStorage.setItem("userInfo", JSON.stringify(user));
     } catch (error) {
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(uploadWorkshopImg(id, workshopImg));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
+    } finally {
       dispatch(mechanicActions.clearLoading());
-      toast.error(error.response.data.message);
+
     }
   };
 }

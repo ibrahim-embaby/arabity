@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import request from "../../utils/request";
 import { messageActions } from "../slices/messageSlice";
+import { refreshToken } from "./authApiCall";
 
 export function createMessage(messageInfo) {
   return async (dispatch, getState) => {
@@ -14,8 +15,15 @@ export function createMessage(messageInfo) {
       });
       dispatch(messageActions.addMessageToMessages(data));
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(createMessage(messageInfo));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
@@ -33,8 +41,15 @@ export function fetchMessages(conversationId) {
 
       dispatch(messageActions.setMessages(data));
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      if (error.response.status === 401) {
+        await dispatch(refreshToken())
+        await dispatch(fetchMessages(conversationId));
+        return;
+
+      } else {
+        console.log(error);
+        toast.error(error.response.data.message);
+      }
     }
   };
 }
