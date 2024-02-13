@@ -58,7 +58,7 @@ function App() {
         />
         <Route path="/search/workshops" element={<SearchResults />} />
         <Route path="/mechanic/profile/:id" element={user && !user.isAccountVerified ? <VerifyAccount /> : <MechanicProfile />} />
-        <Route path="/posts" element={<Posts />} />
+        <Route path="/posts" element={user && user.isAccountVerified ? <Posts /> : <Navigate to={"/"} />} />
         <Route
           path="/conversations"
           element={user && user.isAccountVerified ? <Conversations /> : <Navigate to={"/"} />}
