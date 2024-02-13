@@ -1,19 +1,14 @@
 import { useState } from "react";
 import "./forms.css";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loginUser, loginMechanic } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import { useTranslation } from "react-i18next";
 import LoginForm from "./LoginForm";
+import { toast } from "react-toastify";
 
 function Login() {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [workshopOwnerEmail, setWorkshopOwnerEmail] = useState("");
-  const [workshopOwnerPassword, setWorkshopOwnerPassword] = useState("");
 
   const [visibleForm, setVisibleForm] = useState(1);
   const { t, i18n } = useTranslation();
@@ -21,24 +16,14 @@ function Login() {
 
   const loginFormHandler = (e) => {
     e.preventDefault();
-    if (email.trim() === "") return toast.error("قم بإدخال البريد الإلكتروني");
-    if (password.trim() === "") return toast.error("قم بإدخال كلمة المرور ");
+    const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData);
 
-    dispatch(loginUser({ email, password }));
-  };
+    if (payload?.email === "") return toast.error("please enter your email");
+    if (payload?.password === "")
+      return toast.error("please enter your password");
 
-  const loginMechanicFormHandler = (e) => {
-    e.preventDefault();
-    if (workshopOwnerEmail.trim() === "")
-      return toast.error("قم بإدخال البريد الإلكتروني");
-    if (workshopOwnerPassword.trim() === "")
-      return toast.error("قم بإدخال كلمة المرور ");
-    dispatch(
-      loginMechanic({
-        email: workshopOwnerEmail,
-        password: workshopOwnerPassword,
-      })
-    );
+    dispatch(visibleForm === 1 ? loginUser(payload) : loginMechanic(payload));
   };
 
   return (
@@ -53,23 +38,7 @@ function Login() {
           visibleForm={visibleForm}
           setVisibleForm={setVisibleForm}
         />
-        {visibleForm === 1 ? (
-          <LoginForm
-            loginFunc={loginFormHandler}
-            userEmail={email}
-            setUserEmail={setEmail}
-            userPassword={password}
-            setUserPassword={setPassword}
-          />
-        ) : (
-          <LoginForm
-            loginFunc={loginMechanicFormHandler}
-            userEmail={workshopOwnerEmail}
-            setUserEmail={setWorkshopOwnerEmail}
-            userPassword={workshopOwnerPassword}
-            setUserPassword={setWorkshopOwnerPassword}
-          />
-        )}
+        <LoginForm loginFunc={loginFormHandler} />
       </div>
     </div>
   );
