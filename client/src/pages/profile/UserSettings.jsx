@@ -1,32 +1,37 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../redux/apiCalls/profileApiCall";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 function UserProfileSettings() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
   const handleUserSettingsForm = (e) => {
     e.preventDefault();
-    if (!username && !password && !mobile) {
-      return toast.warn(t("edit_one_field_at_least"));
+    const formData = new FormData(e.target);
+
+    const data = {};
+
+    if (formData.get("username")) {
+      data.username = formData.get("username");
     }
-    const userInfo = {
-      username,
-      password,
-      mobile,
-    };
 
-    dispatch(updateUserProfile(userInfo));
+    if (formData.get("password")) {
+      if (formData.get("password").length < 5)
+        return toast.error("password can't be less than 5 characters");
+      data.password = formData.get("password");
+    }
 
-    setUsername("");
-    setPassword("");
-    setMobile("");
+    if (formData.get("mobile")) {
+      data.mobile = formData.get("mobile");
+    }
+
+    if (Object.keys(data).length) {
+      dispatch(updateUserProfile(data));
+    } else {
+      toast.warn(t("edit_one_field_at_least"));
+    }
   };
 
   return (
@@ -54,22 +59,19 @@ function UserProfileSettings() {
 
           <div className="user-profile-settings-form-inputs">
             <input
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
               type="text"
               placeholder={t("user_settings_name_placeholder")}
               className="user-profile-settings-form-item-input"
             />
             <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
               type="password"
               placeholder={t("password")}
               className="user-profile-settings-form-item-input"
             />
             <input
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
+              name="mobile"
               type="text"
               placeholder={t("user_settings_mobile_placeholder")}
               className="user-profile-settings-form-item-input"
@@ -77,7 +79,7 @@ function UserProfileSettings() {
           </div>
         </div>
 
-        <button type="submit" className="user-profile-settings-form-btn">
+        <button className="user-profile-settings-form-btn">
           {t("user_settings_edit")}
         </button>
       </form>

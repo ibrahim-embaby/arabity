@@ -33,6 +33,7 @@ function ResetPassword() {
             onChange={(e) => setNewPassword(e.target.value)}
             required
             className="reset-password-input"
+            min={5}
           />
           {passwordVisible ? (
             <VisibilityOffIcon

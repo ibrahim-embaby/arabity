@@ -131,16 +131,15 @@ module.exports.updateMechanicCtrl = asyncHandler(async (req, res) => {
     if (!mechanicExist)
       return res.status(404).json({ message: req.t("no_workshop") });
 
-    let hashedPassword;
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
-      hashedPassword = await bcrypt.hash(req.body.password, salt);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      req.body.password = hashedPassword;
     }
-    const updatedMechanic = await Mechanic.findByIdAndUpdate(
-      id,
-      { ...req.body, password: hashedPassword },
-      { new: true }
-    )
+
+    const updatedMechanic = await Mechanic.findByIdAndUpdate(id, req.body, {
+      new: true,
+    })
       .select("-password")
       .populate({
         path: "mechanicRatings",

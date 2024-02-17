@@ -1,6 +1,10 @@
 const asyncHandler = require("express-async-handler");
-const { User } = require("../models/User");
 const bcrypt = require("bcrypt");
+const { User } = require("../models/User");
+const { Post } = require("../models/Post");
+const { Comment } = require("../models/Comment");
+const { Conversation } = require("../models/Conversation");
+const Message = require("../models/Message");
 
 /**
  * @desc get user profile
@@ -43,6 +47,10 @@ module.exports.deleteUserCtrl = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: req.t("user_not_found") });
   }
   await User.findByIdAndDelete(id);
+  await Post.deleteMany({ doc: id });
+  await Comment.deleteMany({ doc: id });
+  await Conversation.deleteMany({ userId: id });
+  // await Message.deleteMany({ sentBy: id });
   res.status(200).json({ message: req.t("user_deleted") });
 });
 
@@ -59,33 +67,26 @@ module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: req.t("user_not_found") });
   }
 
-  const { username, password, mobile } = req.body;
-
-  let newPassword;
-  if (password) {
+  // Check if the request body contains a new password
+  if (req.body.password) {
     const salt = await bcrypt.genSalt(10);
-    newPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hashedPassword;
   }
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-    {
-      ...(username && { username }),
-      ...(newPassword && { password: newPassword }),
-      ...(mobile && { mobile }),
-    },
-    {
-      new: true,
-    }
-  );
-  const token = updatedUser.generateAuthToken();
+
+  // Update user object with the new data
+  const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
+    new: true,
+  });
+
   res.status(200).json({
     data: {
       id: updatedUser._id,
-      token,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       username: updatedUser.username,
       mobile: updatedUser.mobile,
+      isAccountVerified: updatedUser.isAccountVerified,
       password: updatedUser.password,
     },
     message: req.t("data_updated"),

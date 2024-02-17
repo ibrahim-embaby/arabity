@@ -574,11 +574,20 @@ module.exports.resetPasswordCtrl = asyncHandler(async (req, res, next) => {
             token: req.body.token,
           });
           if (verificationToken) {
-            if (req.body.password) {
+            const { password } = req.body;
+            if (password) {
+              if (password.length < 5)
+                return next(
+                  new ErrorResponse(
+                    "password can't be less than 5 characters",
+                    400
+                  )
+                );
               const user =
                 (await User.findById(decode.id)) ||
                 (await Mechanic.findById(decode.id));
-              user.password = req.body.password;
+              user.password = password;
+              user.markModified("password");
               await user.save();
               await VerificationToken.deleteMany({
                 userId: decode.id,
