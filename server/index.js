@@ -11,6 +11,7 @@ const { configI18n } = require("./config/i18n");
 const cookieParser = require("cookie-parser");
 
 const { notFound, errorHandler } = require("./middlewares/error");
+const allowedOrigins = require("./utils/allowedOrigins");
 
 // connection to DB
 connectToDb(process.env.MONGO_URI);
@@ -28,7 +29,7 @@ app.use(helmet());
 // Cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: allowedOrigins,
     credentials: true,
   })
 );
@@ -58,7 +59,7 @@ const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: allowedOrigins,
   },
 });
 
