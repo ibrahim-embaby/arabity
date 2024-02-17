@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 import formatTime from "../../utils/formatTime";
 import { useTranslation } from "react-i18next";
 import limitText from "../../utils/limitText";
+import { Helmet } from "react-helmet-async";
 
 function Conversations() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { conversations, loading } = useSelector((state) => state.conversation);
   const { t, i18n } = useTranslation();
-  document.title = t("user_conversations_page_title");
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
@@ -27,6 +27,13 @@ function Conversations() {
       className="conversations"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
+      <Helmet>
+        <title>{t("user_conversations_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Conversations Page, here you can find your all conversations"
+        />
+      </Helmet>
       <div className="container">
         <h2 className="conversations-page-title">{t("user_conversations")}</h2>
         {loading ? (

@@ -3,10 +3,10 @@ import "./contact-us.css";
 // import LinkedIn from "@mui/icons-material/LinkedIn";
 // import GitHubIcon from "@mui/icons-material/GitHub";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 function ContactUs() {
   const { t, i18n } = useTranslation();
-  document.title = t("about_us_title");
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
   }, []);
@@ -15,6 +15,13 @@ function ContactUs() {
       className="contact-us"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
+      <Helmet>
+        <title>{t("about_us_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - About Us Page, here you can find all data about us"
+        />
+      </Helmet>
       <div className="contact-us-item about-app">
         <h3 className="contact-us-item-title">{t("about_app_title")}</h3>
         <p className="contact-us-item-desc">{t("about_app_desc")}</p>

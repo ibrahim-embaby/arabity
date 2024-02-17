@@ -11,12 +11,12 @@ import { toast } from "react-toastify";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
 import formatTime from "../../utils/formatTime";
 import { io } from "socket.io-client";
-import { production } from "../../utils/constants";
 import { useTranslation } from "react-i18next";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import TagFacesIcon from "@mui/icons-material/TagFaces";
 import i18ns from "@emoji-mart/data/i18n/ar.json";
+import { Helmet } from "react-helmet-async";
 
 function Message() {
   const dispatch = useDispatch();
@@ -30,16 +30,13 @@ function Message() {
   const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
   const { t, i18n } = useTranslation();
-  document.title = t("user_messages_page_title");
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
   }, []);
 
   useEffect(() => {
-    socket.current = io(
-      production ? "https://arabity.onrender.com" : "http://localhost:8000"
-    );
+    socket.current = io(process.env.REACT_APP_SERVER_URL);
     dispatch(fetchMessages(conversationId));
   }, []);
 
@@ -114,6 +111,13 @@ function Message() {
 
   return (
     <div className="message">
+      <Helmet>
+        <title>{t("user_messages_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Message Page, Chat with any mechanic"
+        />
+      </Helmet>
       {user.id === conversationId.substring(0, 24) ||
       user.id === conversationId.substring(24, 48) ? (
         <div className="message-container">

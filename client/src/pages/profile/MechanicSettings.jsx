@@ -9,13 +9,13 @@ import { useParams } from "react-router-dom";
 import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 import BranchesList from "../../components/branch-list/BranchList";
-import CircularProgress from "@mui/joy/CircularProgress";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
+import { Loading } from "../../components/loading/Loading";
 
 function MechanicSettings() {
   const [currentComponent, setCurrentComponent] = useState(1);
   const { t, i18n } = useTranslation();
-  document.title = t("admin_page_title");
 
   const { user } = useSelector((state) => state.auth);
   const { mechanic, loading } = useSelector((state) => state.mechanic);
@@ -144,15 +144,15 @@ function MechanicSettings() {
         className="container"
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
       >
+        <Helmet>
+          <title>{t("user_settings_page_title")}</title>
+          <meta
+            name="description"
+            content="Arabity - Mechanic Settings Page, this is your settings page, you can edit your username, password, and mechanic data"
+          />
+        </Helmet>
         {loading && !mechanic ? (
-          <div
-            className="loading-page"
-            style={{
-              minHeight: "calc(100vh - var(--difference-value))",
-            }}
-          >
-            <CircularProgress color="primary" />
-          </div>
+          <Loading />
         ) : (
           <div className="mechanic-profile-settings-wrapper">
             <div className="mechanic-settings-sidebar">

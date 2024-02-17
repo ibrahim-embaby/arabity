@@ -5,7 +5,6 @@ import {
   fetchMechanic,
   uploadWorkshopImg,
 } from "../../redux/apiCalls/mechanicApiCall";
-import CircularProgress from "@mui/joy/CircularProgress";
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
@@ -19,6 +18,8 @@ import "react-medium-image-zoom/dist/styles.css";
 import Post from "../../components/post/Post";
 import CreatePost from "../../components/post/CreatePost";
 import { fetchUserPosts } from "../../redux/apiCalls/postApiCall";
+import { Helmet } from "react-helmet-async";
+import { Loading } from "../../components/loading/Loading";
 
 function WorkshopProfile() {
   const dispatch = useDispatch();
@@ -32,8 +33,6 @@ function WorkshopProfile() {
   const { user } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { t, i18n } = useTranslation();
-
-  document.title = t("workshop_profile_page_title");
 
   useEffect(() => {
     setTab("mechanic_data");
@@ -95,212 +94,221 @@ function WorkshopProfile() {
     setTab("mechanic_posts");
     dispatch(fetchUserPosts(id));
   };
-  return loading ? (
-    <div
-      className="loading-page"
-      style={{
-        minHeight: "calc(100vh - var(--difference-value))",
-      }}
-    >
-      <CircularProgress color="primary" />
-    </div>
-  ) : (
-    <div
-      className="mechanic-profile"
-      style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
-    >
-      <div className="container">
-        <div className="mechanic-profile-wrapper">
-          <div className="mechanic-profile-top">
-            <div className="mechanic-profile-image-wrapper">
-              <Zoom>
-                <img
-                  src={
-                    workshopImg
-                      ? URL.createObjectURL(workshopImg)
-                      : mechanic?.profilePhoto.url
-                      ? mechanic?.profilePhoto.url
-                      : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
-                  }
-                  alt=""
-                  className="mechanic-profile-image"
-                />
-              </Zoom>
-              {user?.id === id && (
-                <form onSubmit={handleUploadWorkshopImg}>
-                  <label htmlFor="file" className="edit-profile-pic">
-                    <CameraIcon />
-                  </label>
-                  <input
-                    type="file"
-                    hidden
-                    id="file"
-                    onChange={(e) => {
-                      setWorkshopImg(e.target.files[0]);
-                    }}
-                  />
-                  {workshopImg && (
-                    <button type="submit" className="upload-workshop-img-btn">
-                      {t("upload")}
-                    </button>
+  return (
+    <>
+      <Helmet>
+        <title>{t("workshop_profile_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Mechanic Page, this mechanic page, you can find all mechanic details"
+        />
+      </Helmet>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div
+          className="mechanic-profile"
+          style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+        >
+          <div className="container">
+            <div className="mechanic-profile-wrapper">
+              <div className="mechanic-profile-top">
+                <div className="mechanic-profile-image-wrapper">
+                  <Zoom>
+                    <img
+                      src={
+                        workshopImg
+                          ? URL.createObjectURL(workshopImg)
+                          : mechanic?.profilePhoto.url
+                          ? mechanic?.profilePhoto.url
+                          : "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
+                      }
+                      alt=""
+                      className="mechanic-profile-image"
+                    />
+                  </Zoom>
+                  {user?.id === id && (
+                    <form onSubmit={handleUploadWorkshopImg}>
+                      <label htmlFor="file" className="edit-profile-pic">
+                        <CameraIcon />
+                      </label>
+                      <input
+                        type="file"
+                        hidden
+                        id="file"
+                        onChange={(e) => {
+                          setWorkshopImg(e.target.files[0]);
+                        }}
+                      />
+                      {workshopImg && (
+                        <button
+                          type="submit"
+                          className="upload-workshop-img-btn"
+                        >
+                          {t("upload")}
+                        </button>
+                      )}
+                    </form>
                   )}
-                </form>
-              )}
-            </div>
-            <p className="workshop-name">{mechanic?.workshopName}</p>
-
-            <RatingMui rating={avgRating} />
-          </div>
-          <div className="mechanic-profile-info-wrapper">
-            <div className="mechanic-profile-info">
-              <div className="tabs">
-                <div
-                  onClick={() => setTab("mechanic_data")}
-                  className="mechanic-data-tab mechanic-tab"
-                  style={{ backgroundColor: tab === "mechanic_data" && "#ddd" }}
-                >
-                  {t("mechanic_data")}
                 </div>
-                <div
-                  onClick={handleMechanicPosts}
-                  className="mechanic-posts-tab mechanic-tab"
-                  style={{
-                    backgroundColor: tab === "mechanic_posts" && "#ddd",
-                  }}
-                >
-                  {t("posts_title")}
+                <p className="workshop-name">{mechanic?.workshopName}</p>
+
+                <RatingMui rating={avgRating} />
+              </div>
+              <div className="mechanic-profile-info-wrapper">
+                <div className="mechanic-profile-info">
+                  <div className="tabs">
+                    <div
+                      onClick={() => setTab("mechanic_data")}
+                      className="mechanic-data-tab mechanic-tab"
+                      style={{
+                        backgroundColor: tab === "mechanic_data" && "#ddd",
+                      }}
+                    >
+                      {t("mechanic_data")}
+                    </div>
+                    <div
+                      onClick={handleMechanicPosts}
+                      className="mechanic-posts-tab mechanic-tab"
+                      style={{
+                        backgroundColor: tab === "mechanic_posts" && "#ddd",
+                      }}
+                    >
+                      {t("posts_title")}
+                    </div>
+                  </div>
+                  {tab === "mechanic_data" ? (
+                    <>
+                      <div className="mechanic-profile-info-desc mechanic-profile-info-item">
+                        <span className="mechanic-profile-info-title">
+                          {t("workshop_desc_title")}
+                        </span>
+                        {mechanic?.workshopDescription ? (
+                          <div className="workshop-desc">
+                            {mechanic?.workshopDescription}
+                          </div>
+                        ) : (
+                          <p className="no-workshop-desc">
+                            {t("no_workshop_desc")}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="mechanic-profile-info-item">
+                        <span className="mechanic-profile-info-title">
+                          {t("workshop_services")}
+                        </span>
+                        <div className="mechanic-profile-info-services">
+                          {mechanic?.workshopServices.map((service, index) => (
+                            <p
+                              key={service._id}
+                              className="service-tag"
+                              onClick={() => searchTagHandler(service, "")}
+                            >
+                              {service.label[i18n.language]}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mechanic-profile-info-item">
+                        <span className="mechanic-profile-info-title">
+                          {t("workshop_cars")}
+                        </span>
+                        <div className="mechanic-profile-info-services">
+                          {mechanic?.cars.map((car, index) => (
+                            <p
+                              key={car._id}
+                              onClick={() => searchTagHandler("", car)}
+                              className="service-tag"
+                            >
+                              {car.label[i18n.language]}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mechanic-profile-info-item">
+                        <span className="mechanic-profile-info-title">
+                          {t("workshop_branches")} (
+                          {mechanic?.workshopBranches.length})
+                        </span>
+                        <div className="mechanic-profile-info-branches">
+                          {mechanic?.workshopBranches.map((branch, index) => (
+                            <div
+                              key={index}
+                              className="mechanic-profile-info-branch"
+                            >
+                              <h5 className="mechanic-profile-info-branch-title">
+                                <LocationOnIcon />
+                                {branch.province.label[i18n.language]} -{" "}
+                                {branch.city.label[i18n.language]}
+                              </h5>
+                              <p className="branch-address">
+                                {t("workshop_address")}: {branch.address}
+                              </p>
+                              <p className="branch-mobile">
+                                {t("workshop_mobile")}: {branch.mobile}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="mechanic-profile-info-item mechanic-profile-info-ratings">
+                        <span className="mechanic-profile-info-title">
+                          {t("workshop_ratings")} (
+                          {mechanic?.mechanicRatings.length})
+                        </span>
+                        {user &&
+                          !user.workshopName &&
+                          !mechanic?.mechanicRatings.filter(
+                            (item) => item.user?._id === user.id
+                          ).length && <AddRating id={id} />}
+
+                        {mechanic?.mechanicRatings.length
+                          ? mechanic?.mechanicRatings.map((r, index) => (
+                              <RatingComponent key={index} userRate={r} />
+                            ))
+                          : t("no_workshop_ratings")}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="mechanic_posts">
+                      {user?.id === id && <CreatePost privacy={"restricted"} />}
+                      <hr />
+                      {postLoading ? (
+                        <p>{t("loading")}</p>
+                      ) : posts.length ? (
+                        posts.map((post) => <Post key={post._id} post={post} />)
+                      ) : (
+                        <p>{t("no_posts")}</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <div className="mechanic-profile-contact">
+                  <h4> {t("contact_information")}</h4>
+                  <p className="mechanic-profile-contact-item">
+                    {mechanic?.username}
+                  </p>
+
+                  {(!user || !user.workshopName) && (
+                    <p
+                      className="mechanic-profile-contact-btn"
+                      onClick={handleCreateConversation}
+                    >
+                      {t("send_message_btn")}
+                    </p>
+                  )}
                 </div>
               </div>
-              {tab === "mechanic_data" ? (
-                <>
-                  <div className="mechanic-profile-info-desc mechanic-profile-info-item">
-                    <span className="mechanic-profile-info-title">
-                      {t("workshop_desc_title")}
-                    </span>
-                    {mechanic?.workshopDescription ? (
-                      <div className="workshop-desc">
-                        {mechanic?.workshopDescription}
-                      </div>
-                    ) : (
-                      <p className="no-workshop-desc">
-                        {t("no_workshop_desc")}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="mechanic-profile-info-item">
-                    <span className="mechanic-profile-info-title">
-                      {t("workshop_services")}
-                    </span>
-                    <div className="mechanic-profile-info-services">
-                      {mechanic?.workshopServices.map((service, index) => (
-                        <p
-                          key={service._id}
-                          className="service-tag"
-                          onClick={() => searchTagHandler(service, "")}
-                        >
-                          {service.label[i18n.language]}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mechanic-profile-info-item">
-                    <span className="mechanic-profile-info-title">
-                      {t("workshop_cars")}
-                    </span>
-                    <div className="mechanic-profile-info-services">
-                      {mechanic?.cars.map((car, index) => (
-                        <p
-                          key={car._id}
-                          onClick={() => searchTagHandler("", car)}
-                          className="service-tag"
-                        >
-                          {car.label[i18n.language]}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mechanic-profile-info-item">
-                    <span className="mechanic-profile-info-title">
-                      {t("workshop_branches")} (
-                      {mechanic?.workshopBranches.length})
-                    </span>
-                    <div className="mechanic-profile-info-branches">
-                      {mechanic?.workshopBranches.map((branch, index) => (
-                        <div
-                          key={index}
-                          className="mechanic-profile-info-branch"
-                        >
-                          <h5 className="mechanic-profile-info-branch-title">
-                            <LocationOnIcon />
-                            {branch.province.label[i18n.language]} -{" "}
-                            {branch.city.label[i18n.language]}
-                          </h5>
-                          <p className="branch-address">
-                            {t("workshop_address")}: {branch.address}
-                          </p>
-                          <p className="branch-mobile">
-                            {t("workshop_mobile")}: {branch.mobile}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mechanic-profile-info-item mechanic-profile-info-ratings">
-                    <span className="mechanic-profile-info-title">
-                      {t("workshop_ratings")} (
-                      {mechanic?.mechanicRatings.length})
-                    </span>
-                    {user &&
-                      !user.workshopName &&
-                      !mechanic?.mechanicRatings.filter(
-                        (item) => item.user?._id === user.id
-                      ).length && <AddRating id={id} />}
-
-                    {mechanic?.mechanicRatings.length
-                      ? mechanic?.mechanicRatings.map((r, index) => (
-                          <RatingComponent key={index} userRate={r} />
-                        ))
-                      : t("no_workshop_ratings")}
-                  </div>
-                </>
-              ) : (
-                <div className="mechanic_posts">
-                  {user?.id === id && <CreatePost privacy={"restricted"} />}
-                  <hr />
-                  {postLoading ? (
-                    <p>{t("loading")}</p>
-                  ) : posts.length ? (
-                    posts.map((post) => <Post key={post._id} post={post} />)
-                  ) : (
-                    <p>{t("no_posts")}</p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="mechanic-profile-contact">
-              <h4> {t("contact_information")}</h4>
-              <p className="mechanic-profile-contact-item">
-                {mechanic?.username}
-              </p>
-
-              {(!user || !user.workshopName) && (
-                <p
-                  className="mechanic-profile-contact-btn"
-                  onClick={handleCreateConversation}
-                >
-                  {t("send_message_btn")}
-                </p>
-              )}
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

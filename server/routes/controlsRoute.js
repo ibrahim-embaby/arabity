@@ -15,20 +15,26 @@ const router = require("express").Router();
 // PROVINCE ROUTES
 
 // /api/controls/provinces
-router.route("/provinces").post(addProvinceCtrl).get(getProvincesCtrl);
+router
+  .route("/provinces")
+  .post(verifyTokenAndAdmin, addProvinceCtrl)
+  .get(getProvincesCtrl);
 
 // /api/controls/provinces/:id
 router.route("/province/:id").get(getSingleProvinceCtrl);
 
 // /api/controls/cities
-router.route("/cities").post(addCityCtrl);
+router.route("/cities").post(verifyTokenAndAdmin, addCityCtrl);
 
 // CAR ROUTES
 // /api/controls/cars
-router.route("/cars").post(addCarCtrl).get(getCarsCtrl);
+router.route("/cars").post(verifyTokenAndAdmin, addCarCtrl).get(getCarsCtrl);
 
 // SERVICES ROUTES
 // /api/controls/services
-router.route("/services").post(addServiceCtrl).get(getServicesCtrl);
+router
+  .route("/services")
+  .post(verifyTokenAndAdmin, addServiceCtrl)
+  .get(getServicesCtrl);
 
 module.exports = router;

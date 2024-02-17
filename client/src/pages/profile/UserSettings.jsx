@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../redux/apiCalls/profileApiCall";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 function UserProfileSettings() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [mobile, setMobile] = useState("");
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  document.title = t("user_settings_page_title");
 
   const handleUserSettingsForm = (e) => {
     e.preventDefault();
@@ -34,6 +34,13 @@ function UserProfileSettings() {
       className="user-profile-settings"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
+      <Helmet>
+        <title>{t("user_settings_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - User Settings Page, this is your settings page, you can edit your username, password, and mobile number"
+        />
+      </Helmet>
       <form
         onSubmit={handleUserSettingsForm}
         className="user-profile-settings-form"

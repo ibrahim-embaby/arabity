@@ -3,13 +3,13 @@ import { fetchWorkshops } from "../../redux/apiCalls/searchApiCall";
 import SearchItem from "./SearchItem";
 import "./search.css";
 import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@mui/joy/CircularProgress";
 import { useLocation, useSearchParams } from "react-router-dom";
-// import Pagination from "../../components/pagination/Pagination";
 import { useTranslation } from "react-i18next";
 import SearchSidebar from "./SearchSidebar";
 import { Pagination } from "@mui/material";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
+import { Helmet } from "react-helmet-async";
+import { Loading } from "../../components/loading/Loading";
 
 function SearchResults() {
   const { searchResults, loading, searchResultsCount } = useSelector(
@@ -29,7 +29,6 @@ function SearchResults() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
   const { t, i18n } = useTranslation();
-  document.title = t("search_page_title");
 
   const RESULTS_PER_PAGE = 10;
   const pages = Math.ceil((searchResultsCount ?? 0) / RESULTS_PER_PAGE);
@@ -76,6 +75,13 @@ function SearchResults() {
       className="search-results"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
+      <Helmet>
+        <title>{t("search_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Search Page, here you can find all search results"
+        />
+      </Helmet>
       <div className="container">
         <div className="search-results-wrapper">
           <SearchSidebar
@@ -103,9 +109,7 @@ function SearchResults() {
             )}
             <div className="search-results-main-items">
               {loading ? (
-                <div className="loading-page">
-                  <CircularProgress color="primary" />
-                </div>
+                <Loading />
               ) : searchResults.length ? (
                 searchResults.map((item) => (
                   <SearchItem key={item.id} item={item} />

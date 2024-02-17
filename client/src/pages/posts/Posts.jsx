@@ -5,7 +5,8 @@ import { fetchAllPosts } from "../../redux/apiCalls/postApiCall";
 import Post from "../../components/post/Post";
 import { useTranslation } from "react-i18next";
 import CreatePost from "../../components/post/CreatePost";
-import CircularProgress from "@mui/joy/CircularProgress";
+import { Helmet } from "react-helmet-async";
+import { Loading } from "../../components/loading/Loading";
 
 function Posts() {
   const dispatch = useDispatch();
@@ -18,6 +19,13 @@ function Posts() {
   }, []);
   return (
     <div className="posts">
+      <Helmet>
+        <title>{t("posts_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Posts Page, here you can reach other users/mechanics posts"
+        />
+      </Helmet>
       <div
         style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
         className="posts-container"
@@ -30,9 +38,12 @@ function Posts() {
         <p className="posts-title">{t("posts_title")}</p>
 
         {postLoading ? (
-          <div className="posts-loading">
-            <CircularProgress color="primary" />
-          </div>
+          <Loading
+            style={{
+              height: "0",
+              minHeight: "0",
+            }}
+          />
         ) : (
           posts?.map((post) => (
             <Fragment key={post._id}>

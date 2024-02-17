@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchUserPosts } from "../../redux/apiCalls/postApiCall";
 import Post from "../../components/post/Post";
+import { Helmet } from "react-helmet-async";
 
 function Profile() {
   const { t, i18n } = useTranslation();
@@ -35,7 +36,6 @@ function Profile() {
   const { ratings, loading } = useSelector((state) => state.rating);
   const { posts, postLoading } = useSelector((state) => state.post);
   const { id } = useParams();
-  document.title = t("user_profile_page_title");
 
   useEffect(() => {
     dispatch(fetchUserProfile(id));
@@ -51,6 +51,13 @@ function Profile() {
       className="profile"
       style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
     >
+      <Helmet>
+        <title>{t("user_profile_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - User Page, this is your profile page, you can find your posts and ratings"
+        />
+      </Helmet>
       <div className="profile-sidebar">
         <div className="sidebar-account-info">
           <p className="sidebar-account-username">{user.username}</p>

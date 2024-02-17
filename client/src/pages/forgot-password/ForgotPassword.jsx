@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../redux/apiCalls/authApiCall";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function ForgotPassword() {
   const dispatch = useDispatch();
@@ -13,8 +15,17 @@ function ForgotPassword() {
     dispatch(forgotPassword(email));
     setEmail("");
   };
+
+  const { t } = useTranslation();
   return (
     <div className="forgot-password">
+      <Helmet>
+        <title>{t("Forgot Password")}</title>
+        <meta
+          name="description"
+          content="Arabity - Forgot Password Page, here you can send an email to reset your password"
+        />
+      </Helmet>
       <form onSubmit={handleForgotPassword} className="forgot-password-form">
         <h1 className="forgot-password-title">Reset your password</h1>
         <p className="forgot-password-desc">

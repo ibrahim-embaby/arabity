@@ -1,9 +1,9 @@
 const otpGenerator = require("otp-generator");
 const crypto = require("crypto");
 const sendEmail = require("./sendEmail");
-const accountSid = "ACdbb5a7b3acd3c8d71a7c71e4b63f3615";
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const verifySid = "VAac9b38951a1917a0e49a1a073b98784a";
+const verifySid = process.env.TWILIO_VERIFY_SID;
 const client = require("twilio")(accountSid, authToken);
 
 async function createEmailOtp(params, callback) {

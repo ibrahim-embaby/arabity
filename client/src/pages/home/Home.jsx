@@ -9,35 +9,8 @@ import MessageIcon from "@mui/icons-material/Message";
 import appVision from "../../assets/app-vision.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
-import CircularProgress from "@mui/joy/CircularProgress";
-// import Testimonial from "./Testimonial";
-
-// import user1 from "../../assets/user-1.jpg";
-// import user2 from "../../assets/user-2.jpg";
-// import user3 from "../../assets/user-3.jpg";
-// import user4 from "../../assets/user-4.jpg";
-
-// const testimonials = [
-//   {
-//     img: user1,
-//     text: "Lorem ipsum dolor sit amet,\
-//      consectetur adipisicing elit. Repudiandae tempora\
-//       similique quidem omnis quam nemo deleniti vel autem iure, \
-//       rem asperiores, ipsa quasi temporibus vero eum quisquam at. Magni, porro!",
-//   },
-//   {
-//     img: user2,
-//     text: "good",
-//   },
-//   {
-//     img: user3,
-//     text: "good",
-//   },
-//   {
-//     img: user4,
-//     text: "good",
-//   },
-// ];
+import { Helmet } from "react-helmet-async";
+import { Loading } from "../../components/loading/Loading";
 
 function Home() {
   const navigate = useNavigate();
@@ -45,7 +18,6 @@ function Home() {
   const [car, setCar] = useState(null);
   const [province, setProvince] = useState(null);
   const { t, i18n } = useTranslation();
-  document.title = t("home_page_title");
 
   const dispatch = useDispatch();
   const { services, provinces, cars, loading } = useSelector(
@@ -82,221 +54,206 @@ function Home() {
     });
   };
 
-  return loading ? (
-    <div
-      className="loading-page"
-      style={{
-        minHeight: "calc(100vh - var(--difference-value))",
-      }}
-    >
-      <CircularProgress color="primary" />
-    </div>
-  ) : (
-    <div className="home">
-      <section className="home-top">
-        <div className="home-top-wrapper">
-          <h1 className="home-top-title">{t("home_top_section_title")}</h1>
-          <form
-            className="search-bar"
-            onSubmit={searchFormHandler}
+  return (
+    <>
+      <Helmet>
+        <title>{t("home_page_title")}</title>
+        <meta
+          name="description"
+          content="Arabity - Home Page, search for the closest mechanic to you"
+        />
+      </Helmet>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="home">
+          <section className="home-top">
+            <div className="home-top-wrapper">
+              <h1 className="home-top-title">{t("home_top_section_title")}</h1>
+              <form
+                className="search-bar"
+                onSubmit={searchFormHandler}
+                style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+              >
+                <div className="search-bar-inputs-wrapper">
+                  <div
+                    className="search-bar-select-wrapper"
+                    style={{
+                      backgroundColor: service && "#ffe285",
+                      border: service && "black",
+                    }}
+                  >
+                    <select
+                      className="search-bar-item"
+                      value={service ? JSON.stringify(service) : ""}
+                      onChange={(e) => setService(JSON.parse(e.target.value))}
+                      style={{
+                        backgroundColor: service && "#ffe285",
+                        color: service && "black",
+                      }}
+                    >
+                      <option
+                        className="search-bar-item-option"
+                        value={""}
+                        disabled
+                      >
+                        {t("service_select")}
+                      </option>
+                      {services?.map((service) => (
+                        <option
+                          className="search-bar-item-option"
+                          key={service.value}
+                          value={JSON.stringify(service)}
+                        >
+                          {service.label[i18n.language]}
+                        </option>
+                      ))}
+                    </select>
+                    {service && (
+                      <HighlightOffIcon
+                        sx={{
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setService("")}
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className="search-bar-select-wrapper"
+                    style={{
+                      backgroundColor: car && "#ffe285",
+                      border: car && "none",
+                    }}
+                  >
+                    <select
+                      className="search-bar-item"
+                      value={car ? JSON.stringify(car) : ""}
+                      onChange={(e) => setCar(JSON.parse(e.target.value))}
+                      style={{
+                        backgroundColor: car && "#ffe285",
+                        color: car && "black",
+                      }}
+                    >
+                      <option
+                        className="search-bar-item-option"
+                        value={""}
+                        disabled
+                      >
+                        {t("car_select")}
+                      </option>
+                      {cars.map((car) => (
+                        <option
+                          className="search-bar-item-option"
+                          key={car.value}
+                          value={JSON.stringify(car)}
+                        >
+                          {car.label[i18n.language]}
+                        </option>
+                      ))}
+                    </select>
+                    {car && (
+                      <HighlightOffIcon
+                        sx={{
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setCar("")}
+                      />
+                    )}
+                  </div>
+
+                  <div
+                    className="search-bar-select-wrapper"
+                    style={{
+                      backgroundColor: province && "#ffe285",
+                      border: province && "none",
+                    }}
+                  >
+                    <select
+                      className="search-bar-item"
+                      value={province ? JSON.stringify(province) : ""}
+                      onChange={(e) => setProvince(JSON.parse(e.target.value))}
+                      style={{
+                        backgroundColor: province && "#ffe285",
+                        color: province && "black",
+                      }}
+                    >
+                      <option
+                        className="search-bar-item-option"
+                        value={""}
+                        disabled
+                      >
+                        {t("province_select")}
+                      </option>
+                      {provinces.map((province) => (
+                        <option
+                          className="search-bar-item-option"
+                          key={province.value}
+                          value={JSON.stringify(province)}
+                        >
+                          {province.label[i18n.language]}
+                        </option>
+                      ))}
+                    </select>
+                    {province && (
+                      <HighlightOffIcon
+                        sx={{
+                          color: "red",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setProvince("")}
+                      />
+                    )}
+                  </div>
+                </div>
+                <button className="search-bar-btn" type="submit">
+                  {t("search_btn")}
+                </button>
+              </form>
+            </div>
+          </section>
+          <div
+            className="container"
             style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
           >
-            <div className="search-bar-inputs-wrapper">
-              <div
-                className="search-bar-select-wrapper"
-                style={{
-                  backgroundColor: service && "#ffe285",
-                  border: service && "black",
-                }}
-              >
-                <select
-                  className="search-bar-item"
-                  value={service ? JSON.stringify(service) : ""}
-                  onChange={(e) => setService(JSON.parse(e.target.value))}
-                  style={{
-                    backgroundColor: service && "#ffe285",
-                    color: service && "black",
-                  }}
-                >
-                  <option
-                    className="search-bar-item-option"
-                    value={""}
-                    disabled
-                  >
-                    {t("service_select")}
-                  </option>
-                  {services?.map((service) => (
-                    <option
-                      className="search-bar-item-option"
-                      key={service.value}
-                      value={JSON.stringify(service)}
-                    >
-                      {service.label[i18n.language]}
-                    </option>
-                  ))}
-                </select>
-                {service && (
-                  <HighlightOffIcon
-                    sx={{
-                      color: "red",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setService("")}
+            <div className="home-sections-wrapper">
+              <section className="home-app-features">
+                <div className="home-app-features-item">
+                  <PersonAddAltIcon className="home-app-features-item-icon" />
+                  <p>{t("home_card_create_account")}</p>
+                </div>
+
+                <div className="home-app-features-item">
+                  <SearchIcon className="home-app-features-item-icon" />
+                  <p>{t("home_card_browse")}</p>
+                </div>
+
+                <div className="home-app-features-item ">
+                  <MessageIcon className="home-app-features-item-icon" />
+                  <p>{t("home_card_contact")}</p>
+                </div>
+              </section>
+
+              <section className="home-about-app">
+                <div className="home-about-app-right">
+                  <img
+                    className="home-about-app-right-img"
+                    src={appVision}
+                    alt=""
                   />
-                )}
-              </div>
-
-              <div
-                className="search-bar-select-wrapper"
-                style={{
-                  backgroundColor: car && "#ffe285",
-                  border: car && "none",
-                }}
-              >
-                <select
-                  className="search-bar-item"
-                  value={car ? JSON.stringify(car) : ""}
-                  onChange={(e) => setCar(JSON.parse(e.target.value))}
-                  style={{
-                    backgroundColor: car && "#ffe285",
-                    color: car && "black",
-                  }}
-                >
-                  <option
-                    className="search-bar-item-option"
-                    value={""}
-                    disabled
-                  >
-                    {t("car_select")}
-                  </option>
-                  {cars.map((car) => (
-                    <option
-                      className="search-bar-item-option"
-                      key={car.value}
-                      value={JSON.stringify(car)}
-                    >
-                      {car.label[i18n.language]}
-                    </option>
-                  ))}
-                </select>
-                {car && (
-                  <HighlightOffIcon
-                    sx={{
-                      color: "red",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setCar("")}
-                  />
-                )}
-              </div>
-
-              <div
-                className="search-bar-select-wrapper"
-                style={{
-                  backgroundColor: province && "#ffe285",
-                  border: province && "none",
-                }}
-              >
-                <select
-                  className="search-bar-item"
-                  value={province ? JSON.stringify(province) : ""}
-                  onChange={(e) => setProvince(JSON.parse(e.target.value))}
-                  style={{
-                    backgroundColor: province && "#ffe285",
-                    color: province && "black",
-                  }}
-                >
-                  <option
-                    className="search-bar-item-option"
-                    value={""}
-                    disabled
-                  >
-                    {t("province_select")}
-                  </option>
-                  {provinces.map((province) => (
-                    <option
-                      className="search-bar-item-option"
-                      key={province.value}
-                      value={JSON.stringify(province)}
-                    >
-                      {province.label[i18n.language]}
-                    </option>
-                  ))}
-                </select>
-                {province && (
-                  <HighlightOffIcon
-                    sx={{
-                      color: "red",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setProvince("")}
-                  />
-                )}
-              </div>
+                </div>
+                <div className="home-about-app-left">
+                  <p>{t("our_vision_desc")}</p>
+                  <p>{t("our_vision_desc")}</p>
+                </div>
+              </section>
             </div>
-            <button className="search-bar-btn" type="submit">
-              {t("search_btn")}
-            </button>
-          </form>
-        </div>
-      </section>
-      <div
-        className="container"
-        style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
-      >
-        <div className="home-sections-wrapper">
-          <section className="home-app-features">
-            <div className="home-app-features-item">
-              <PersonAddAltIcon className="home-app-features-item-icon" />
-              <p>{t("home_card_create_account")}</p>
-            </div>
-
-            <div className="home-app-features-item">
-              <SearchIcon className="home-app-features-item-icon" />
-              <p>{t("home_card_browse")}</p>
-            </div>
-
-            <div className="home-app-features-item ">
-              <MessageIcon className="home-app-features-item-icon" />
-              <p>{t("home_card_contact")}</p>
-            </div>
-          </section>
-
-          <section className="home-about-app">
-            <div className="home-about-app-right">
-              <img
-                className="home-about-app-right-img"
-                src={appVision}
-                alt=""
-              />
-            </div>
-            <div className="home-about-app-left">
-              <p>{t("our_vision_desc")}</p>
-              <p>{t("our_vision_desc")}</p>
-            </div>
-          </section>
-
-          {/* <section className="testimonial">
-          <div className="testimonial-wrapper">
-            <Testimonial />
           </div>
-        </section> */}
-          {/* <section className="testimonial">
-          <div className="testimonial-wrapper">
-            {testimonials.map((testimonial, index) => (
-              <Testimonial
-                key={index}
-                img={testimonial.img}
-                text={testimonial.text}
-                visible={visible}
-                index={index}
-              />
-            ))}
-          </div>
-        </section> */}
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

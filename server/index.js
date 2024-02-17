@@ -10,21 +10,10 @@ const i18nextMiddleware = require("i18next-http-middleware");
 const { configI18n } = require("./config/i18n");
 const cookieParser = require("cookie-parser");
 
-const userRoute = require("./routes/userRoute");
-const authRoute = require("./routes/authRoute");
-const searchRoute = require("./routes/searchRoute");
-const mechanicRoute = require("./routes/mechanicRoute");
-const rateRoute = require("./routes/rateRoute");
-const messagesRoute = require("./routes/messageRoutes");
-const postRoutes = require("./routes/postRoutes");
-const conversationsRoute = require("./routes/conversationRoute");
-const controlsRoute = require("./routes/controlsRoute");
-const commentRoute = require("./routes/commentRoute");
-const production = require("./utils/constants");
 const { notFound, errorHandler } = require("./middlewares/error");
 
 // connection to DB
-connectToDb();
+connectToDb(process.env.MONGO_URI);
 
 // i18n configuration
 configI18n();
@@ -39,11 +28,7 @@ app.use(helmet());
 // Cors
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://arabity-fzmr.onrender.com",
-      "https://arabity.netlify.app",
-    ],
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -52,16 +37,16 @@ app.use(
 app.use(i18nextMiddleware.handle(i18next));
 
 // Routes
-app.use("/api/user", userRoute);
-app.use("/api/auth", authRoute);
-app.use("/api/search", searchRoute);
-app.use("/api/mechanic", mechanicRoute);
-app.use("/api/ratings", rateRoute);
-app.use("/api/messages", messagesRoute);
-app.use("/api/posts", postRoutes);
-app.use("/api/conversations", conversationsRoute);
-app.use("/api/controls", controlsRoute);
-app.use("/api/comments", commentRoute);
+app.use("/api/user", require("./routes/userRoute"));
+app.use("/api/auth", require("./routes/authRoute"));
+app.use("/api/search", require("./routes/searchRoute"));
+app.use("/api/mechanic", require("./routes/mechanicRoute"));
+app.use("/api/ratings", require("./routes/rateRoute"));
+app.use("/api/messages", require("./routes/messageRoutes"));
+app.use("/api/posts", require("./routes/postRoutes"));
+app.use("/api/conversations", require("./routes/conversationRoute"));
+app.use("/api/controls", require("./routes/controlsRoute"));
+app.use("/api/comments", require("./routes/commentRoute"));
 
 app.use(notFound);
 app.use(errorHandler);
@@ -73,9 +58,7 @@ const server = app.listen(PORT, console.log(`server is running on ${PORT}`));
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: production
-      ? "https://arabity-fzmr.onrender.com"
-      : "http://localhost:3000",
+    origin: process.env.CLIENT_URL,
   },
 });
 

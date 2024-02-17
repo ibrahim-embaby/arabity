@@ -1,9 +1,9 @@
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import Login from "./pages/forms/Login";
+// import Login from "./pages/forms/Login";
 import Register from "./pages/forms/Register";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -24,6 +24,8 @@ import VerifyAccount from "./pages/verify-email/VerifyAccount";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/forgot-password/ResetPassword";
 
+const Login = lazy(() => import("./pages/forms/Login"));
+
 function App() {
   const { user } = useSelector((state) => state.auth);
 
@@ -32,7 +34,12 @@ function App() {
       <ToastContainer theme="colored" position="top-center" />
       <Header />
       <Routes>
-        <Route path="/" element={user && !user.isAccountVerified ? <VerifyAccount /> : <Home />} />
+        <Route
+          path="/"
+          element={
+            user && !user.isAccountVerified ? <VerifyAccount /> : <Home />
+          }
+        />
         <Route
           path="/login"
           element={user ? <Navigate to={"/"} /> : <Login />}
@@ -41,7 +48,16 @@ function App() {
           path="/register"
           element={user ? <Navigate to={"/"} /> : <Register />}
         />
-        <Route path="/profile/:id" element={user && user.isAccountVerified ? <UserProfile /> : <Navigate to={"/"} />} />
+        <Route
+          path="/profile/:id"
+          element={
+            user && user.isAccountVerified ? (
+              <UserProfile />
+            ) : (
+              <Navigate to={"/"} />
+            )
+          }
+        />
         <Route
           path="/profile/:id/settings"
           element={
@@ -57,20 +73,48 @@ function App() {
           }
         />
         <Route path="/search/workshops" element={<SearchResults />} />
-        <Route path="/mechanic/profile/:id" element={user && !user.isAccountVerified ? <VerifyAccount /> : <MechanicProfile />} />
-        <Route path="/posts" element={user && !user.isAccountVerified ? <Navigate to={"/"} /> : <Posts />} />
+        <Route
+          path="/mechanic/profile/:id"
+          element={
+            user && !user.isAccountVerified ? (
+              <VerifyAccount />
+            ) : (
+              <MechanicProfile />
+            )
+          }
+        />
+        <Route
+          path="/posts"
+          element={
+            user && !user.isAccountVerified ? <Navigate to={"/"} /> : <Posts />
+          }
+        />
         <Route
           path="/conversations"
-          element={user && user.isAccountVerified ? <Conversations /> : <Navigate to={"/"} />}
+          element={
+            user && user.isAccountVerified ? (
+              <Conversations />
+            ) : (
+              <Navigate to={"/"} />
+            )
+          }
         />
         <Route
           path="/message/:conversationId"
-          element={user && user.isAccountVerified ? <Message /> : <Navigate to={"/"} />}
+          element={
+            user && user.isAccountVerified ? <Message /> : <Navigate to={"/"} />
+          }
         />
         <Route path="/about-us" element={<ContactUs />} />
         <Route path="/account/activate/:token" element={<AccountVerified />} />
-        <Route path="/forgot-password" element={user ? <Navigate to={'/'} /> : <ForgotPassword />} />
-        <Route path="/reset-password/:token" element={!user ? <ResetPassword /> : <Navigate to={"/"} />} />
+        <Route
+          path="/forgot-password"
+          element={user ? <Navigate to={"/"} /> : <ForgotPassword />}
+        />
+        <Route
+          path="/reset-password/:token"
+          element={!user ? <ResetPassword /> : <Navigate to={"/"} />}
+        />
         <Route
           path="/admin"
           element={

@@ -13,10 +13,9 @@ const {
 } = require("../models/Mechanic");
 const VerificationToken = require("../models/VerificationToken");
 const ErrorResponse = require("../utils/ErrorResponse");
-const crypto = require('crypto')
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
-const production = require("../utils/constants");
 
 /**
  * @desc register user
@@ -57,11 +56,11 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: emailToken,
-      operationType: "VERIFY_ACC"
+      operationType: "VERIFY_ACC",
     });
 
     // making the frontend link
-    const link = `${production ? process.env.CLIENT_PROD_URL : process.env.CLIENT_DEV_URL}#/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -129,7 +128,7 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
       token: accessToken,
       profilePhoto: user.profilePhoto,
-    })
+    });
   } catch (error) {
     next(error);
   }
@@ -179,11 +178,11 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
     const verifiactionToken = await VerificationToken.create({
       userId: mechanic._id,
       token: emailToken,
-      operationType: "VERIFY_ACC"
+      operationType: "VERIFY_ACC",
     });
 
     // making the frontend link
-    const link = `${production ? process.env.CLIENT_PROD_URL : process.env.CLIENT_DEV_URL}#/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -199,7 +198,7 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
       message: `We've sent you an email at ${mechanic.email}`,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
@@ -252,12 +251,11 @@ module.exports.loginMechanicCtrl = asyncHandler(async (req, res, next) => {
       token: accessToken,
       workshopName: mechanic.workshopName,
       profilePhoto: mechanic.profilePhoto,
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
-
 
 /**
  * @desc Refresh token
@@ -279,8 +277,11 @@ module.exports.refreshTokenCtrl = asyncHandler(async (req, res, next) => {
       async (err, decoded) => {
         if (err) return next(new ErrorResponse(req.t("session_expired"), 403));
 
-        const foundUser = await User.findById(decoded.id) || await Mechanic.findById(decoded.id);
-        if (!foundUser) return next(new ErrorResponse(req.t("user_not_found"), 404));
+        const foundUser =
+          (await User.findById(decoded.id)) ||
+          (await Mechanic.findById(decoded.id));
+        if (!foundUser)
+          return next(new ErrorResponse(req.t("user_not_found"), 404));
 
         const { accessToken, refreshToken } = foundUser.getSignedToken();
 
@@ -310,17 +311,13 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
   async (req, res, next) => {
     const { email } = req.body;
     if (!email) {
-      return next(new ErrorResponse("email is required", 400))
+      return next(new ErrorResponse("email is required", 400));
     }
     try {
-      const user = await User.findOne({ email }) || await Mechanic.findOne({ email })
+      const user =
+        (await User.findOne({ email })) || (await Mechanic.findOne({ email }));
       if (!user) {
-        return next(
-          new ErrorResponse(
-            req.t("user_not_found"),
-            404
-          )
-        );
+        return next(new ErrorResponse(req.t("user_not_found"), 404));
       }
 
       if (user.isAccountVerified) {
@@ -338,17 +335,17 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
         },
         process.env.ACTIVATION_SECRET_KEY,
         {
-          expiresIn: "1h"
+          expiresIn: "1h",
         }
       );
       const verifiactionToken = await VerificationToken.create({
         userId: user._id,
         token: emailToken,
-        operationType: "VERIFY_ACC"
+        operationType: "VERIFY_ACC",
       });
 
       // making the frontend link
-      const link = `${production ? process.env.CLIENT_PROD_URL : process.env.CLIENT_DEV_URL}#/account/activate/${verifiactionToken.token}`;
+      const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
       // sending  verification mail
       await sendEmail(
         user.email,
@@ -385,34 +382,40 @@ module.exports.verifyEmailCtrl = asyncHandler(async (req, res, next) => {
           const verificationToken = await VerificationToken.findOne({
             userId: decode.id,
             token: req.body.token,
-            operationType: "VERIFY_ACC"
+            operationType: "VERIFY_ACC",
           });
-          const user = await User.findById(decode.id) || await Mechanic.findById(decode.id);
+          const user =
+            (await User.findById(decode.id)) ||
+            (await Mechanic.findById(decode.id));
           if (verificationToken && !user?.isAccountVerified) {
             user.isAccountVerified = true;
             await user.save();
             await VerificationToken.deleteMany({
               userId: user._id,
-              operationType: "VERIFY_ACC"
+              operationType: "VERIFY_ACC",
             });
 
-            res
-              .status(200)
-              .json({
-                success: true, message: req.t("account_verified"), data: {
-                  id: user._id,
-                  username: user.username,
-                  email: user.email,
-                  isAccountVerified: user.isAccountVerified,
-                  isAdmin: user.isAdmin,
-                  workshopName: user.workshopName,
-                  profilePhoto: user.profilePhoto,
-                }
-              });
+            res.status(200).json({
+              success: true,
+              message: req.t("account_verified"),
+              data: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                isAccountVerified: user.isAccountVerified,
+                isAdmin: user.isAdmin,
+                workshopName: user.workshopName,
+                profilePhoto: user.profilePhoto,
+              },
+            });
           } else if (user?.isAccountVerified) {
-            return next(new ErrorResponse(req.t("account_already_verified"), 400));
+            return next(
+              new ErrorResponse(req.t("account_already_verified"), 400)
+            );
           } else if (!verificationToken) {
-            return next(new ErrorResponse(req.t("invalid_verification_token"), 404))
+            return next(
+              new ErrorResponse(req.t("invalid_verification_token"), 404)
+            );
           }
         }
       }
@@ -503,15 +506,14 @@ module.exports.verifyOtpCtrl = asyncHandler(async (req, res, next) => {
 module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
   if (!email) {
-    return next(new ErrorResponse("email is required", 400))
+    return next(new ErrorResponse("email is required", 400));
   }
   try {
     // get the user from db by email
-    const user = await User.findOne({ email }) || await Mechanic.findOne({ email });
+    const user =
+      (await User.findOne({ email })) || (await Mechanic.findOne({ email }));
     if (!user) {
-      return next(
-        new ErrorResponse(req.t("user_not_found"), 404)
-      );
+      return next(new ErrorResponse(req.t("user_not_found"), 404));
     }
     // creating verification token
     const randomstring = crypto.randomBytes(20).toString("hex");
@@ -528,11 +530,11 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: resetPasswordToken,
-      operationType: "RESET_PASS"
+      operationType: "RESET_PASS",
     });
 
     // create reset password frontend link
-    const link = `${production ? process.env.CLIENT_PROD_URL : process.env.CLIENT_DEV_URL}#/reset-password/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/#/reset-password/${verifiactionToken.token}`;
     // creating html template
     await sendEmail(
       user.email,
@@ -573,12 +575,14 @@ module.exports.resetPasswordCtrl = asyncHandler(async (req, res, next) => {
           });
           if (verificationToken) {
             if (req.body.password) {
-              const user = await User.findById(decode.id) || await Mechanic.findById(decode.id);
+              const user =
+                (await User.findById(decode.id)) ||
+                (await Mechanic.findById(decode.id));
               user.password = req.body.password;
               await user.save();
               await VerificationToken.deleteMany({
                 userId: decode.id,
-                operationType: "RESET_PASS"
+                operationType: "RESET_PASS",
               });
               res.status(200).json({
                 success: true,
@@ -606,7 +610,9 @@ module.exports.resetPasswordCtrl = asyncHandler(async (req, res, next) => {
  */
 module.exports.getCurrentUser = asyncHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id) || await Mechanic.findById(req.user.id)
+    const user =
+      (await User.findById(req.user.id)) ||
+      (await Mechanic.findById(req.user.id));
     if (!user) {
       return res.status(404).json({
         message: "user not found, try to create a new account",
@@ -621,7 +627,7 @@ module.exports.getCurrentUser = asyncHandler(async (req, res, next) => {
       isAccountVerified: user.isAccountVerified,
       isAdmin: user.isAdmin,
       profilePhoto: user.profilePhoto,
-    })
+    });
   } catch (error) {
     next(error);
   }
