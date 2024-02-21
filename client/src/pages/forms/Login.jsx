@@ -6,6 +6,8 @@ import SwitchBar from "../../components/switch-bar/SwitchBar";
 import { useTranslation } from "react-i18next";
 import LoginForm from "./LoginForm";
 import { toast } from "react-toastify";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import PersonIcon from "@mui/icons-material/Person";
 
 function Login() {
   const dispatch = useDispatch();
@@ -33,10 +35,23 @@ function Login() {
     >
       <div className="form">
         <SwitchBar
-          option1={t("login_as_user")}
-          option2={t("login_as_workshop_owner")}
+          options={[t("login_as_user"), t("login_as_workshop_owner")]}
           visibleForm={visibleForm}
           setVisibleForm={setVisibleForm}
+          icons={[
+            <PersonIcon
+              style={{
+                fontSize: "35px",
+                color: visibleForm === 1 ? "white" : "#333",
+              }}
+            />,
+            <EngineeringIcon
+              style={{
+                fontSize: "35px",
+                color: visibleForm === 2 ? "white" : "#333",
+              }}
+            />,
+          ]}
         />
         <LoginForm loginFunc={loginFormHandler} />
       </div>

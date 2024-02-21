@@ -19,13 +19,14 @@ function SearchItem({ item }) {
       setAvgRating(sum / item?.mechanicRatings.length);
     }
   }, [item.mechanicRatings.length]);
+  console.log(item.profilePhoto);
   return (
     <Link to={`/mechanic/profile/${item._id}`} className="search-item">
       <div className="image-wrapper">
         <img
           className="workshop-image"
           src={
-            item.profilePhoto.url ||
+            item.profilePhoto?.url ||
             "https://st2.depositphotos.com/1007566/12186/v/600/depositphotos_121865140-stock-illustration-man-avatar-mechanic-isolated.jpg"
           }
           alt=""

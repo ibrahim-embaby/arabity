@@ -1,4 +1,4 @@
-import CircularProgress from "@mui/joy/CircularProgress";
+import { CircularProgress } from "@mui/material";
 
 export const Loading = ({ style }) => {
   return (

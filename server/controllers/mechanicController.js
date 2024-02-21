@@ -8,6 +8,9 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const { Conversation } = require("../models/Conversation");
+const Message = require("../models/Message");
+
 /**
  * @desc get workshop owner
  * @route /api/mechanic/:id
@@ -65,6 +68,10 @@ module.exports.deleteMechanicCtrl = asyncHandler(async (req, res) => {
   }
   await Mechanic.deleteOne({ _id: mechanic._id });
   await MechanicRating.deleteMany({ mechanic: mechanic._id });
+  await Conversation.deleteMany({ mechanicId: mechanic._id });
+  await Message.deleteMany({ $in: { conversationId: mechanic._id } });
+  const regex = new RegExp(`${mechanic._id}$`, "i");
+  await Message.deleteMany({ conversationId: regex });
   return res.status(200).json({ message: req.t("account_deleted") });
 });
 

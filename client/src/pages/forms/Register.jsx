@@ -10,6 +10,8 @@ import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
 import { useTranslation } from "react-i18next";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 import BranchesList from "../../components/branch-list/BranchList";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import PersonIcon from "@mui/icons-material/Person";
 
 function Register() {
   const dispatch = useDispatch();
@@ -133,10 +135,23 @@ function Register() {
     >
       <div className="form">
         <SwitchBar
-          option1={t("register_as_user")}
-          option2={t("register_as_workshop_owner")}
+          options={[t("register_as_user"), t("register_as_workshop_owner")]}
           visibleForm={visibleForm}
           setVisibleForm={setVisibleForm}
+          icons={[
+            <PersonIcon
+              style={{
+                fontSize: "35px",
+                color: visibleForm === 1 ? "white" : "#333",
+              }}
+            />,
+            <EngineeringIcon
+              style={{
+                fontSize: "35px",
+                color: visibleForm === 2 ? "white" : "#333",
+              }}
+            />,
+          ]}
         />
         {visibleForm === 1 ? (
           <form className="register-form" onSubmit={registerFormHandler}>

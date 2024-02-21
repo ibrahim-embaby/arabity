@@ -8,6 +8,7 @@ const validateObjectId = require("../middlewares/validateObjectId");
 const {
   verifyToken,
   verifyTokenAndAdmin,
+  verifyTokenAndAuthorization,
 } = require("../middlewares/verifyToken");
 
 const router = require("express").Router();
@@ -19,7 +20,7 @@ router.get("/", verifyTokenAndAdmin, getUsersCtrl);
 router
   .route("/profile/:id")
   .get(validateObjectId, verifyToken, getUserCtrl)
-  .delete(validateObjectId, verifyTokenAndAdmin, deleteUserCtrl);
+  .delete(validateObjectId, verifyTokenAndAuthorization, deleteUserCtrl);
 
 // /api/user/profile/
 router.route("/profile/").put(verifyToken, updateUserCtrl);

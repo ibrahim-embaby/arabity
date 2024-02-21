@@ -5,6 +5,8 @@ const { Post } = require("../models/Post");
 const { Comment } = require("../models/Comment");
 const { Conversation } = require("../models/Conversation");
 const Message = require("../models/Message");
+const { MechanicRating } = require("../models/MechanicRating");
+const ErrorResponse = require("../utils/ErrorResponse");
 
 /**
  * @desc get user profile
@@ -32,26 +34,6 @@ module.exports.getUsersCtrl = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: req.t("no_users") });
   }
   res.status(200).json(users);
-});
-
-/**
- * @desc delete single user
- * @route /api/user/profile/:id
- * @method DELETE
- * @access private ( user himslef & admin)
- */
-module.exports.deleteUserCtrl = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findById(id);
-  if (!user) {
-    return res.status(404).json({ message: req.t("user_not_found") });
-  }
-  await User.findByIdAndDelete(id);
-  await Post.deleteMany({ doc: id });
-  await Comment.deleteMany({ doc: id });
-  await Conversation.deleteMany({ userId: id });
-  // await Message.deleteMany({ sentBy: id });
-  res.status(200).json({ message: req.t("user_deleted") });
 });
 
 /**
@@ -91,4 +73,30 @@ module.exports.updateUserCtrl = asyncHandler(async (req, res) => {
     },
     message: req.t("data_updated"),
   });
+});
+
+/**
+ * @desc delete single user
+ * @route /api/user/profile/:id
+ * @method DELETE
+ * @access private ( user himslef & admin)
+ */
+module.exports.deleteUserCtrl = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return next(new ErrorResponse(req.t("user_not_found"), 404));
+    }
+    await User.findByIdAndDelete(id);
+    await Post.deleteMany({ doc: id });
+    await Comment.deleteMany({ doc: id });
+    await Conversation.deleteMany({ userId: id });
+    await MechanicRating.deleteMany({ user: id });
+    const regex = new RegExp(`^${id}`, "i");
+    await Message.deleteMany({ conversationId: regex });
+    res.status(200).json({ message: req.t("user_deleted") });
+  } catch (error) {
+    next(error);
+  }
 });

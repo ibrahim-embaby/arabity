@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
+
 // verify token
 function verifyToken(req, res, next) {
   const authToken = req.headers.authorization;

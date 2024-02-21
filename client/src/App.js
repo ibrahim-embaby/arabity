@@ -1,9 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-// import Login from "./pages/forms/Login";
+import Login from "./pages/forms/Login";
 import Register from "./pages/forms/Register";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -23,8 +23,6 @@ import AccountVerified from "./pages/verify-email/AccountVerified";
 import VerifyAccount from "./pages/verify-email/VerifyAccount";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/forgot-password/ResetPassword";
-
-const Login = lazy(() => import("./pages/forms/Login"));
 
 function App() {
   const { user } = useSelector((state) => state.auth);

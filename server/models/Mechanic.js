@@ -64,7 +64,7 @@ const MechanicSchema = new mongoose.Schema(
     ],
     isAccountVerified: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // reports: [
     //   {

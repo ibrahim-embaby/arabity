@@ -14,7 +14,7 @@ function Admin() {
   const [currentComponent, setCurrentComponent] = useState(1);
 
   const dispatch = useDispatch();
-  const { workshopsCount } = useSelector((state) => state.workshopOwner);
+  const { workshopsCount } = useSelector((state) => state.mechanic);
   const { users } = useSelector((state) => state.profile);
   const { t } = useTranslation();
   document.title = t("admin_page_title");

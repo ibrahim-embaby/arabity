@@ -9,8 +9,7 @@
   background-color: black;
 }
 
-.switch-bar .option1,
-.switch-bar .option2 {
+.switch-bar .option {
   flex: 1;
   cursor: pointer;
   display: flex;
@@ -18,12 +17,15 @@
   align-items: center;
   padding: 10px;
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 2px;
 }
 
-.switch-bar .option1:hover,
-.switch-bar .option2:hover {
-  background-color: rgba(254, 94, 80, 0.2);
+.switch-bar .option:hover {
+  background-color: #ddd;
 }
 
 /* Media Query */
