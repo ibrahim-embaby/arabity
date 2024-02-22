@@ -91,6 +91,8 @@ CLIENT_DEV_URL=http://localhost:3000/
 CLIENT_PROD_URL= your frontend production link
 SEND_IN_BLUE_USERNAME= your sendinblue username
 SEND_IN_BLUE_PASSWORD= your sendinblue password
+REDIS_HOST= your redis host
+REDIS_PASSWORD= your redis password
 ```
 
 ### Install Dependencies (frontend & backend)

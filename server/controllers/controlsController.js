@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
-const { validateCreateProvince, Province } = require("../models/Province");
+const { Province, validateCreateProvince } = require("../models/Province");
 const { Car, validateCar } = require("../models/Car");
 const { Service, validateService } = require("../models/Service");
-const { validateCreateCity, City } = require("../models/City");
+const { City, validateCreateCity } = require("../models/City");
 
 /* ============= PROVINCE CONTROLLERS ============= */
 /**
@@ -35,10 +35,13 @@ module.exports.addProvinceCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getProvincesCtrl = asyncHandler(async (req, res) => {
   try {
-    const provinces = await Province.find().populate({
-      path: "cities",
-      select: "label value _id -province",
-    });
+    const provinces = await Province.find()
+      .populate({
+        path: "cities",
+        select: "label value _id -province",
+      })
+      .cache();
+
     res.status(200).json(provinces);
   } catch (error) {
     console.log(error);
@@ -113,7 +116,7 @@ module.exports.addCarCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getCarsCtrl = asyncHandler(async (req, res) => {
   try {
-    const cars = await Car.find();
+    const cars = await Car.find().cache();
 
     res.status(200).json(cars);
   } catch (error) {
@@ -121,6 +124,7 @@ module.exports.getCarsCtrl = asyncHandler(async (req, res) => {
     res.status(500).json({ message: req.t("server_error") });
   }
 });
+
 /* ============= SERVICE CONTROLLERS ============= */
 /**
  * @desc add new car
@@ -150,7 +154,7 @@ module.exports.addServiceCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getServicesCtrl = asyncHandler(async (req, res) => {
   try {
-    const services = await Service.find();
+    const services = await Service.find().cache();
 
     res.status(200).json(services);
   } catch (error) {

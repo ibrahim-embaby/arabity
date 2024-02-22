@@ -12,6 +12,7 @@ const cookieParser = require("cookie-parser");
 
 const { notFound, errorHandler } = require("./middlewares/error");
 const allowedOrigins = require("./utils/allowedOrigins");
+require("./config/cache");
 
 // connection to DB
 connectToDb(process.env.MONGO_URI);

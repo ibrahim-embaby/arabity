@@ -1,4 +1,4 @@
-import "./TagSelectInput.css";
+import "./tag-select-input.css";
 import SelectedTags from "./SelectedTags";
 import { useTranslation } from "react-i18next";
 

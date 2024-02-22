@@ -6,7 +6,7 @@ import {
   updateMechanic,
 } from "../../redux/apiCalls/mechanicApiCall";
 import { useParams } from "react-router-dom";
-import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
+import TagSelectInput from "../../components/tag-select-input/TagSelectInput";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 import BranchesList from "../../components/branch-list/BranchList";
 import { toast } from "react-toastify";

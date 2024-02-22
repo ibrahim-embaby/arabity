@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
-import TagSelectInput from "../../components/TagSelectInput/TagSelectInput";
+import TagSelectInput from "../../components/tag-select-input/TagSelectInput";
 import { useTranslation } from "react-i18next";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 import BranchesList from "../../components/branch-list/BranchList";
