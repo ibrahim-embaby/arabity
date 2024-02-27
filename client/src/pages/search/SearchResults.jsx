@@ -87,14 +87,14 @@ function SearchResults() {
           <SearchSidebar
             params={params}
             service={service}
-            services={services}
+            services={Array.from(services)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
             setService={setService}
             province={province}
-            provinces={provinces}
+            provinces={Array.from(provinces)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
             setProvince={setProvince}
             setPage={setPage}
             car={car}
-            cars={cars}
+            cars={Array.from(cars)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
             setCar={setCar}
             t={t}
             resetFormHandler={resetFormHandler}

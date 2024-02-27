@@ -12,7 +12,7 @@ export function fetchWorkshops(
     try {
       dispatch(searchActions.setLoading());
       const { data } = await request.get(
-        `/api/search/workshop?car=${car}&service=${service}&province=${province}&page=${page}`
+        `/api/search/mehcanics?car=${car}&service=${service}&province=${province}&page=${page}`
       );
       dispatch(searchActions.setSearchResults(data.workshops));
       dispatch(searchActions.setSearchResultsCount(data.count));

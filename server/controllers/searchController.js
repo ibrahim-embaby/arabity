@@ -1,12 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const { Mechanic } = require("../models/Mechanic");
 /**
- * @desc get all workshops
- * @route /api/search/workshop
+ * @desc get all mehcanics
+ * @route /api/search/mehcanics
  * @method GET
  * @access public
  */
-module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res, next) => {
+module.exports.getAllMehcanicsCtrl = asyncHandler(async (req, res, next) => {
   const { province, car, service, page } = req.query;
   const pageSize = 10;
   const currentPage = parseInt(page, 10) || 1;
@@ -22,8 +22,16 @@ module.exports.getAllWorkshopsCtrl = asyncHandler(async (req, res, next) => {
     workshops = await Mechanic.find(query)
       .select("-password")
       .populate("mechanicRatings")
-      .populate("cars")
-      .populate("workshopServices")
+      .populate({
+        path: "cars", options: {
+          limit: 3
+        }
+      })
+      .populate({
+        path: "workshopServices", options: {
+          limit: 3
+        }
+      })
       .populate({
         path: "workshopBranches",
         populate: [

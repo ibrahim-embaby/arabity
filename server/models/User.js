@@ -16,6 +16,8 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      regex:
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     password: {
       type: String,
@@ -82,21 +84,20 @@ UserSchema.methods.getSignedToken = function () {
   return { accessToken, refreshToken };
 };
 
-UserSchema.methods.getActivationToken = async function () {
+UserSchema.methods.getToken = async function () {
   const randomstring = crypto.randomBytes(20).toString("hex");
-  const resetPasswordToken = jwt.sign(
+  const token = jwt.sign(
     {
       randomstring,
       id: this._id,
-      email: this.email,
     },
     process.env.ACTIVATION_SECRET_KEY,
     {
-      expiresIn: "1d",
+      expiresIn: "30m",
     }
   );
 
-  return resetPasswordToken;
+  return token;
 };
 
 const User = mongoose.model("User", UserSchema);
@@ -105,7 +106,13 @@ const User = mongoose.model("User", UserSchema);
 function validateRegisterUser(obj) {
   const schema = Joi.object({
     username: Joi.string().trim().min(1).required(),
-    email: Joi.string().trim().required().email(),
+    email: Joi.string()
+      .trim()
+      .required()
+      .email()
+      .regex(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ),
     password: Joi.string().trim().min(5).required(),
     mobile: Joi.string().trim().min(11).max(14).required(),
   });

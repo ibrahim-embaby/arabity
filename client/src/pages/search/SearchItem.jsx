@@ -19,7 +19,7 @@ function SearchItem({ item }) {
       setAvgRating(sum / item?.mechanicRatings.length);
     }
   }, [item.mechanicRatings.length]);
-  console.log(item.profilePhoto);
+
   return (
     <Link to={`/mechanic/profile/${item._id}`} className="search-item">
       <div className="image-wrapper">

@@ -42,17 +42,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // creating new verifiaction token and save it to db
-    const randomstring = crypto.randomBytes(20).toString("hex");
-    const emailToken = jwt.sign(
-      {
-        randomstring,
-        id: user._id,
-      },
-      process.env.ACTIVATION_SECRET_KEY,
-      {
-        expiresIn: "30m",
-      }
-    );
+    const emailToken = user.getToken();
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: emailToken,
@@ -164,17 +154,7 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // creating new verifiaction token and save it to db
-    const randomstring = crypto.randomBytes(20).toString("hex");
-    const emailToken = jwt.sign(
-      {
-        randomstring,
-        id: mechanic._id,
-      },
-      process.env.ACTIVATION_SECRET_KEY,
-      {
-        expiresIn: "30m",
-      }
-    );
+    const emailToken = mechanic.getToken();
     const verifiactionToken = await VerificationToken.create({
       userId: mechanic._id,
       token: emailToken,
@@ -327,17 +307,7 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
         });
       }
 
-      const randomstring = crypto.randomBytes(20).toString("hex");
-      const emailToken = jwt.sign(
-        {
-          randomstring,
-          id: user._id,
-        },
-        process.env.ACTIVATION_SECRET_KEY,
-        {
-          expiresIn: "1h",
-        }
-      );
+      const emailToken = user.getToken();
       const verifiactionToken = await VerificationToken.create({
         userId: user._id,
         token: emailToken,
@@ -516,17 +486,7 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
       return next(new ErrorResponse(req.t("user_not_found"), 404));
     }
     // creating verification token
-    const randomstring = crypto.randomBytes(20).toString("hex");
-    const resetPasswordToken = jwt.sign(
-      {
-        randomstring,
-        id: user._id,
-      },
-      process.env.RESET_PASSWORD_SECRET_KEY,
-      {
-        expiresIn: "30min",
-      }
-    );
+    const resetPasswordToken = user.getToken();
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: resetPasswordToken,

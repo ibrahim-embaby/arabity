@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchUserPosts } from "../../redux/apiCalls/postApiCall";
 import Post from "../../components/post/Post";
 import { Helmet } from "react-helmet-async";
+import SwitchBar from "../../components/switch-bar/SwitchBar";
 
 function Profile() {
   const { t, i18n } = useTranslation();
@@ -29,9 +30,7 @@ function Profile() {
   const [currentComponent, setCurrentComponent] = useState(
     sidebarItems[0].value
   );
-  const [selectedComponent, setSelectedComponent] = useState(
-    sidebarItems[0].value
-  );
+
   const { user } = useSelector((state) => state.auth);
   const { ratings, loading } = useSelector((state) => state.rating);
   const { posts, postLoading } = useSelector((state) => state.post);
@@ -69,13 +68,9 @@ function Profile() {
             <p
               className="profile-sidebar-item"
               key={item.value}
-              onClick={() => {
-                setCurrentComponent(item.value);
-                setSelectedComponent(item.value);
-              }}
+              onClick={() => setCurrentComponent(item.value)}
               style={{
-                backgroundColor:
-                  item.value === selectedComponent && "#ffd1d1da",
+                backgroundColor: item.value === currentComponent && "#ffd1d1da",
               }}
             >
               {item.title}
@@ -83,8 +78,21 @@ function Profile() {
           ))}
         </div>
       </div>
+
       <div className="container">
         <div className="profile-data">
+          <div className="profile-data-account-info">
+            <p className="sidebar-account-username">{user.username}</p>
+            <p className="sidebar-account-email">{user.email}</p>
+          </div>
+
+          <div className="profile-data-switchbar">
+            <SwitchBar
+              options={sidebarItems}
+              visibleOption={currentComponent}
+              setVisibleOption={setCurrentComponent}
+            />
+          </div>
           {currentComponent === 1 ? (
             <div className="user-ratings-wrapper">
               <h2>{t("profile_ratings")}</h2>
@@ -121,7 +129,11 @@ function Profile() {
                   {postLoading ? (
                     <p>{t("loading")}</p>
                   ) : posts.length ? (
-                    posts.map((post) => <Post key={post._id} post={post} />)
+                    posts.map((post) => (
+                      <div className="profile-user-post-wrapper">
+                        <Post key={post._id} post={post} />
+                      </div>
+                    ))
                   ) : (
                     <p>{t("no_posts")}</p>
                   )}

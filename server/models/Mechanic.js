@@ -15,6 +15,8 @@ const MechanicSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
+      regex:
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     password: {
       type: String,
@@ -126,27 +128,32 @@ MechanicSchema.methods.getSignedToken = function () {
   return { accessToken, refreshToken };
 };
 
-MechanicSchema.methods.getActivationToken = async function () {
+MechanicSchema.methods.getToken = async function () {
   const randomstring = crypto.randomBytes(20).toString("hex");
-  const resetPasswordToken = jwt.sign(
+  const token = jwt.sign(
     {
       randomstring,
       id: this._id,
-      email: this.email,
     },
     process.env.ACTIVATION_SECRET_KEY,
     {
-      expiresIn: "1d",
+      expiresIn: "30m",
     }
   );
 
-  return resetPasswordToken;
+  return token;
 };
 
 function validateCreateMechanic(obj) {
   const schema = Joi.object({
     username: Joi.string().min(1).required(),
-    email: Joi.string().min(1).required().email(),
+    email: Joi.string()
+      .min(1)
+      .required()
+      .email()
+      .regex(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ),
     password: Joi.string().min(1).required(),
     workshopName: Joi.string().min(1).required(),
     workshopBranches: Joi.array()

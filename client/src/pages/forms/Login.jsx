@@ -10,10 +10,21 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import PersonIcon from "@mui/icons-material/Person";
 
 function Login() {
+  const { t, i18n } = useTranslation();
+
+  const loginOptions = [
+    {
+      title: t("login_as_user"),
+      value: 1,
+    },
+    {
+      title: t("login_as_workshop_owner"),
+      value: 2,
+    },
+  ];
   const dispatch = useDispatch();
 
-  const [visibleForm, setVisibleForm] = useState(1);
-  const { t, i18n } = useTranslation();
+  const [visibleForm, setVisibleForm] = useState(loginOptions[0].value);
   document.title = t("login_page_title");
 
   const loginFormHandler = (e) => {
@@ -35,9 +46,9 @@ function Login() {
     >
       <div className="form">
         <SwitchBar
-          options={[t("login_as_user"), t("login_as_workshop_owner")]}
-          visibleForm={visibleForm}
-          setVisibleForm={setVisibleForm}
+          options={loginOptions}
+          visibleOption={visibleForm}
+          setVisibleOption={setVisibleForm}
           icons={[
             <PersonIcon
               style={{

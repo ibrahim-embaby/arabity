@@ -14,8 +14,19 @@ import EngineeringIcon from "@mui/icons-material/Engineering";
 import PersonIcon from "@mui/icons-material/Person";
 
 function Register() {
-  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+
+  const registerOptions = [
+    {
+      title: t("register_as_user"),
+      value: 1,
+    },
+    {
+      title: t("register_as_workshop_owner"),
+      value: 2,
+    },
+  ];
+  const dispatch = useDispatch();
   document.title = t("register_page_title");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -34,7 +45,7 @@ function Register() {
   const [selectServices, setSelectServices] = useState([]);
   const [selectCars, setSelectCars] = useState([]);
 
-  const [visibleForm, setVisibleForm] = useState(1);
+  const [visibleForm, setVisibleForm] = useState(registerOptions[0].value);
 
   const { services, cars, provinces } = useSelector((state) => state.controls);
 
@@ -135,9 +146,9 @@ function Register() {
     >
       <div className="form">
         <SwitchBar
-          options={[t("register_as_user"), t("register_as_workshop_owner")]}
-          visibleForm={visibleForm}
-          setVisibleForm={setVisibleForm}
+          options={registerOptions}
+          visibleOption={visibleForm}
+          setVisibleOption={setVisibleForm}
           icons={[
             <PersonIcon
               style={{

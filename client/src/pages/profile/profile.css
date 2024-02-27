@@ -36,6 +36,14 @@
   display: flex;
 }
 
+.profile-data-switchbar {
+  display: none;
+}
+
+.profile-data-account-info {
+  display: none;
+}
+
 .user-ratings-wrapper {
   display: flex;
   flex-direction: column;
@@ -68,6 +76,13 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 10px;
+  align-items: center;
+}
+
+.profile-user-post-wrapper {
+  max-width: 500px;
+  width: 100%;
 }
 
 /* workshop Owner profile */
@@ -385,8 +400,8 @@
 .mechanic-profile-branch {
   display: block;
 }
-/* Media Query */
 
+/* Media Query */
 @media (max-width: 720px) {
   .profile-bottom {
     flex-direction: column;
@@ -417,5 +432,28 @@
   .user-profile-settings-form-btn {
     font-size: 15px;
     padding: 5px;
+  }
+  .profile-sidebar {
+    display: none;
+  }
+  .profile-data {
+    flex-direction: column;
+  }
+  .profile-data-switchbar {
+    display: unset;
+  }
+  .profile-data-account-info {
+    display: unset;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-user-ratings {
+    justify-content: center;
+  }
+
+  .user-rating {
+    width: 80%;
   }
 }

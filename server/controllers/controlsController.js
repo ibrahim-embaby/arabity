@@ -36,11 +36,11 @@ module.exports.addProvinceCtrl = asyncHandler(async (req, res) => {
 module.exports.getProvincesCtrl = asyncHandler(async (req, res) => {
   try {
     const provinces = await Province.find()
+      .select("_id label value isActive")
       .populate({
         path: "cities",
         select: "label value _id -province",
-      })
-      .cache();
+      }).cache();
 
     res.status(200).json(provinces);
   } catch (error) {
@@ -116,7 +116,7 @@ module.exports.addCarCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getCarsCtrl = asyncHandler(async (req, res) => {
   try {
-    const cars = await Car.find().cache();
+    const cars = await Car.find().select("_id label value isActive").cache();
 
     res.status(200).json(cars);
   } catch (error) {
@@ -154,7 +154,7 @@ module.exports.addServiceCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getServicesCtrl = asyncHandler(async (req, res) => {
   try {
-    const services = await Service.find().cache();
+    const services = await Service.find().select("_id label value isActive").cache();
 
     res.status(200).json(services);
   } catch (error) {
