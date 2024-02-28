@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { createPost } from "../../redux/apiCalls/postApiCall";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 function CreatePost({ privacy }) {
   const [post, setPost] = useState("");

@@ -5,7 +5,6 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import Login from "./pages/forms/Login";
 import Register from "./pages/forms/Register";
-import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import UserProfile from "./pages/profile/UserProfile";
 import SearchResults from "./pages/search/SearchResults";
@@ -23,13 +22,21 @@ import AccountVerified from "./pages/verify-email/AccountVerified";
 import VerifyAccount from "./pages/verify-email/VerifyAccount";
 import ForgotPassword from "./pages/forgot-password/ForgotPassword";
 import ResetPassword from "./pages/forgot-password/ResetPassword";
+import { Toaster } from "sonner";
+import { useTranslation } from "react-i18next";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
 
+  const { i18n } = useTranslation();
   return (
     <Suspense fallback={null}>
-      <ToastContainer theme="colored" position="top-center" />
+      <Toaster
+        position={i18n.language === "ar" ? "bottom-right" : "bottom-left"}
+        richColors
+        duration={1500}
+        dir={i18n.language === "ar" && "rtl"}
+      />
       <Header />
       <Routes>
         <Route

@@ -8,7 +8,7 @@ import {
 import AddRating from "../../components/rating/AddRating";
 import RatingComponent from "../../components/rating/RatingComponent";
 import { createConversation } from "../../redux/apiCalls/conversationApiCall";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import RatingMui from "../../components/rating/RatingMui";
 import { useTranslation } from "react-i18next";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -37,6 +37,9 @@ function WorkshopProfile() {
   useEffect(() => {
     setTab("mechanic_data");
     dispatch(fetchMechanic(id));
+  }, [id]);
+
+  useEffect(() => {
     if (mechanic?.mechanicRatings?.length) {
       let sum = 0;
       for (let i = 0; i < mechanic?.mechanicRatings?.length; i++) {
@@ -46,7 +49,7 @@ function WorkshopProfile() {
     } else {
       setAvgRating(0);
     }
-  }, [id, mechanic?.mechanicRatings?.length, dispatch]);
+  }, [mechanic?.mechanicRatings?.length]);
 
   const searchTagHandler = (service, car) => {
     const queryParams = new URLSearchParams();

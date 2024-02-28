@@ -40,7 +40,8 @@ module.exports.getProvincesCtrl = asyncHandler(async (req, res) => {
       .populate({
         path: "cities",
         select: "label value _id -province",
-      }).cache();
+      })
+      .cache();
 
     res.status(200).json(provinces);
   } catch (error) {
@@ -154,7 +155,9 @@ module.exports.addServiceCtrl = asyncHandler(async (req, res) => {
  */
 module.exports.getServicesCtrl = asyncHandler(async (req, res) => {
   try {
-    const services = await Service.find().select("_id label value isActive").cache();
+    const services = await Service.find()
+      .select("_id label value isActive")
+      .cache();
 
     res.status(200).json(services);
   } catch (error) {

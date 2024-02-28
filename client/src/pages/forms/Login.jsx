@@ -5,7 +5,7 @@ import { loginUser, loginMechanic } from "../../redux/apiCalls/authApiCall";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import { useTranslation } from "react-i18next";
 import LoginForm from "./LoginForm";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import PersonIcon from "@mui/icons-material/Person";
 

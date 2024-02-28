@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { mechanicActions } from "../slices/mechanicSlice";
 import { authActions } from "../slices/authSlice";
@@ -43,10 +43,9 @@ export function updateMechanic(id, newData) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(updateMechanic(id, newData));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -71,10 +70,9 @@ export function deleteMechanic(id) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(deleteMechanic(id));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -108,17 +106,15 @@ export function uploadWorkshopImg(id, workshopImg) {
       localStorage.setItem("userInfo", JSON.stringify(user));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(uploadWorkshopImg(id, workshopImg));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(mechanicActions.clearLoading());
-
     }
   };
 }

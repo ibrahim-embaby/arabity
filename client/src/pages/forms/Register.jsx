@@ -4,7 +4,7 @@ import {
   registerMechanic,
 } from "../../redux/apiCalls/authApiCall";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import SwitchBar from "../../components/switch-bar/SwitchBar";
 import TagSelectInput from "../../components/tag-select-input/TagSelectInput";
 import { useTranslation } from "react-i18next";

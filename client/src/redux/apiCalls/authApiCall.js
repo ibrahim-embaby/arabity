@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { authActions } from "../slices/authSlice";
 import { profileActions } from "../slices/profileSlice";
@@ -44,7 +44,7 @@ export function loginUser(user) {
 export function fetchMe() {
   return async (dispatch, getState) => {
     try {
-      dispatch(authActions.setLoading())
+      dispatch(authActions.setLoading());
       const { data } = await request.get("/api/auth/me", {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
@@ -53,11 +53,11 @@ export function fetchMe() {
         withCredentials: true,
       });
       dispatch(authActions.setUser(data));
-      dispatch(authActions.clearLoading())
+      dispatch(authActions.clearLoading());
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-      dispatch(authActions.clearLoading())
+      dispatch(authActions.clearLoading());
     }
   };
 }
@@ -68,7 +68,7 @@ export function logoutUser() {
     dispatch(profileActions.clearProfile());
     dispatch(ratingActions.clearRatings());
     dispatch(messageActions.clearMessages());
-    await request.get('/api/auth/signout', { withCredentials: true })
+    await request.get("/api/auth/signout", { withCredentials: true });
     dispatch(authActions.logout());
   };
 }
@@ -112,18 +112,22 @@ export function loginMechanic(user) {
 export function sendVerificationMail(email) {
   return async (dispatch) => {
     try {
-      const { data } = await request.post("/api/auth/send-verification-mail", {
-        email
-      }, {
-        headers: {
-          Cookie: document.cookie.i18next,
+      const { data } = await request.post(
+        "/api/auth/send-verification-mail",
+        {
+          email,
         },
-        withCredentials: true,
-      });
-      toast.success(data.message)
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
     } catch (error) {
       if (error.response.status === 404) {
-        await dispatch(logoutUser())
+        await dispatch(logoutUser());
       }
       toast.error(error.response.data.message);
     }
@@ -134,22 +138,26 @@ export function sendVerificationMail(email) {
 export function verifyEmail(token) {
   return async (dispatch) => {
     try {
-      dispatch(authActions.setLoading())
-      const { data } = await request.post("/api/auth/verify-email", {
-        token
-      }, {
-        headers: {
-          Cookie: document.cookie.i18next,
+      dispatch(authActions.setLoading());
+      const { data } = await request.post(
+        "/api/auth/verify-email",
+        {
+          token,
         },
-        withCredentials: true,
-      });
-      dispatch(authActions.verifyAccount(data.data))
-      dispatch(authActions.clearLoading())
-      toast.success(data.message)
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(authActions.verifyAccount(data.data));
+      dispatch(authActions.clearLoading());
+      toast.success(data.message);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
-      dispatch(authActions.clearLoading())
+      dispatch(authActions.clearLoading());
     }
   };
 }
@@ -158,15 +166,19 @@ export function verifyEmail(token) {
 export function forgotPassword(email) {
   return async () => {
     try {
-      const { data } = await request.post("/api/auth/forgot-password", {
-        email
-      }, {
-        headers: {
-          Cookie: document.cookie.i18next,
+      const { data } = await request.post(
+        "/api/auth/forgot-password",
+        {
+          email,
         },
-        withCredentials: true,
-      });
-      toast.success(data.message)
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -177,15 +189,20 @@ export function forgotPassword(email) {
 export function resetPassword(token, password) {
   return async () => {
     try {
-      const { data } = await request.post("/api/auth/reset-password", {
-        token, password
-      }, {
-        headers: {
-          Cookie: document.cookie.i18next,
+      const { data } = await request.post(
+        "/api/auth/reset-password",
+        {
+          token,
+          password,
         },
-        withCredentials: true,
-      });
-      toast.success(data.message)
+        {
+          headers: {
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
+      );
+      toast.success(data.message);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -196,11 +213,13 @@ export function resetPassword(token, password) {
 export function refreshToken() {
   return async (dispatch) => {
     try {
-      const { data } = await request.get("/api/auth/refresh-token", { withCredentials: true });
-      dispatch(authActions.updateToken(data.token))
+      const { data } = await request.get("/api/auth/refresh-token", {
+        withCredentials: true,
+      });
+      dispatch(authActions.updateToken(data.token));
     } catch (error) {
       if (error.response.status === 403 || error.response.status === 404) {
-        await dispatch(logoutUser())
+        await dispatch(logoutUser());
       }
       toast.error(error.response.data.message);
     }

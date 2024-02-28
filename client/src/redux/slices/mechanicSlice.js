@@ -18,9 +18,11 @@ const mechanicSlice = createSlice({
       state.mechanic.mechanicRatings.push(action.payload);
     },
     clearRatingFromMechanic(state, action) {
-      state.mechanic.mechanicRatings = state.mechanic.mechanicRatings.filter(
-        (rate) => rate._id !== action.payload
-      );
+      if (state.mechanic && state.mechanic.mechanicRatings) {
+        state.mechanic.mechanicRatings = state.mechanic.mechanicRatings.filter(
+          (rate) => rate._id !== action.payload
+        );
+      }
     },
     setWorkshopsCount(state, action) {
       state.workshopsCount = action.payload;

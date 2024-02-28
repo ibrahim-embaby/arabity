@@ -23,14 +23,16 @@ module.exports.getAllMehcanicsCtrl = asyncHandler(async (req, res, next) => {
       .select("-password")
       .populate("mechanicRatings")
       .populate({
-        path: "cars", options: {
-          limit: 3
-        }
+        path: "cars",
+        options: {
+          limit: 3,
+        },
       })
       .populate({
-        path: "workshopServices", options: {
-          limit: 3
-        }
+        path: "workshopServices",
+        options: {
+          limit: 3,
+        },
       })
       .populate({
         path: "workshopBranches",

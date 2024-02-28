@@ -15,7 +15,7 @@ const PostSchema = new mongoose.Schema(
     },
     text: {
       type: String,
-      min: 3,
+      min: 1,
       required: true,
     },
     likes: {
@@ -46,8 +46,16 @@ PostSchema.virtual("comments", {
 
 function validateCreatePost(object) {
   const schema = Joi.object({
-    text: Joi.string().required(),
+    text: Joi.string().min(1).required(),
     privacy: Joi.string().lowercase().valid("restricted", "public").required(),
+  });
+
+  return schema.validate(object);
+}
+
+function validateUpdatePost(object) {
+  const schema = Joi.object({
+    text: Joi.string().min(1),
   });
 
   return schema.validate(object);
@@ -58,4 +66,5 @@ const Post = mongoose.model("Post", PostSchema);
 module.exports = {
   Post,
   validateCreatePost,
+  validateUpdatePost,
 };

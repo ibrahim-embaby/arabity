@@ -87,14 +87,20 @@ function SearchResults() {
           <SearchSidebar
             params={params}
             service={service}
-            services={Array.from(services)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
+            services={Array.from(services)?.sort((a, b) =>
+              a.label[i18n.language] > b.label[i18n.language] ? 1 : -1
+            )}
             setService={setService}
             province={province}
-            provinces={Array.from(provinces)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
+            provinces={Array.from(provinces)?.sort((a, b) =>
+              a.label[i18n.language] > b.label[i18n.language] ? 1 : -1
+            )}
             setProvince={setProvince}
             setPage={setPage}
             car={car}
-            cars={Array.from(cars)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)}
+            cars={Array.from(cars)?.sort((a, b) =>
+              a.label[i18n.language] > b.label[i18n.language] ? 1 : -1
+            )}
             setCar={setCar}
             t={t}
             resetFormHandler={resetFormHandler}
@@ -134,7 +140,6 @@ function SearchResults() {
                 }}
               />
             )}
-            {/* <Pagination page={page} setPage={setPage} pages={pages} /> */}
           </div>
         </div>
       </div>

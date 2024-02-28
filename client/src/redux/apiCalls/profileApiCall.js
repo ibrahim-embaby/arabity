@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { profileActions } from "../slices/profileSlice";
 import { authActions } from "../slices/authSlice";
@@ -18,10 +18,9 @@ export function fetchUserProfile(id) {
       dispatch(profileActions.setProfile(data));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchUserProfile(id));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -44,10 +43,9 @@ export function fetchAllUsers() {
       dispatch(profileActions.setUsers(data));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchAllUsers());
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -72,10 +70,9 @@ export function deleteUser(id) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(deleteUser(id));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -100,10 +97,9 @@ export function updateUserProfile(userInfo) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(updateUserProfile(userInfo));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);

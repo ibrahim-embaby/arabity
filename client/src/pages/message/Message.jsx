@@ -7,7 +7,7 @@ import {
 } from "../../redux/apiCalls/messageApiCall";
 import { useParams } from "react-router-dom";
 import MessageBox from "../../components/message-box/MessageBox";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
 import formatTime from "../../utils/formatTime";
 import { io } from "socket.io-client";

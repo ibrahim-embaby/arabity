@@ -2,7 +2,7 @@ import "./forgot-password.css";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../redux/apiCalls/authApiCall";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 

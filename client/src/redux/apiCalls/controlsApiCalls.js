@@ -1,6 +1,6 @@
 import request from "../../utils/request";
 import { controlsActions } from "../slices/controlsSlice";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export function fetchControls() {
   return async (dispatch) => {

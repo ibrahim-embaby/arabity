@@ -8,18 +8,23 @@ import { conversationReducer } from "./slices/conversationSlice";
 import { mechanicReducer } from "./slices/mechanicSlice";
 import { postReducer } from "./slices/postSlice";
 import { controlsReducer } from "./slices/controlsSlice";
-const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    profile: profileReducer,
-    search: searchReducer,
-    mechanic: mechanicReducer,
-    rating: ratingReducer,
-    message: messageReducer,
-    conversation: conversationReducer,
-    post: postReducer,
-    controls: controlsReducer,
+import { composeWithDevTools } from "@redux-devtools/extension";
+
+const store = configureStore(
+  {
+    reducer: {
+      auth: authReducer,
+      profile: profileReducer,
+      search: searchReducer,
+      mechanic: mechanicReducer,
+      rating: ratingReducer,
+      message: messageReducer,
+      conversation: conversationReducer,
+      post: postReducer,
+      controls: controlsReducer,
+    },
   },
-});
+  composeWithDevTools()
+);
 
 export default store;

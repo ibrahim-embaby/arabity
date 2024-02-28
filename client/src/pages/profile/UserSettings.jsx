@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "../../redux/apiCalls/profileApiCall";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Helmet } from "react-helmet-async";
 function UserProfileSettings() {
   const dispatch = useDispatch();

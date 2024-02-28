@@ -47,12 +47,13 @@
 .user-ratings-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 .profile-user-ratings {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  padding: 10px 0px;
 }
 .user-rating {
   display: flex;
@@ -70,7 +71,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 .profile-user-posts {
   display: flex;

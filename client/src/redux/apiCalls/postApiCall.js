@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { postActions } from "../slices/postSlice";
 import { refreshToken } from "./authApiCall";
@@ -24,17 +24,15 @@ export function createPost(text, privacy) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(createPost(text, privacy));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(postActions.clearPostLoading());
-
     }
   };
 }
@@ -82,29 +80,27 @@ export function fetchUserPosts(userId) {
       dispatch(postActions.clearPostLoading());
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchUserPosts(userId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(postActions.clearPostLoading());
-
     }
   };
 }
 
 // /api/posts/:postId
-export function updatePost(postId, text, privacy) {
+export function updatePost(postId, text) {
   return async (dispatch, getState) => {
     try {
       dispatch(postActions.setPostLoading());
       const { data } = await request.put(
         `/api/posts/${postId}`,
-        { text, privacy },
+        { text },
         {
           headers: {
             Authorization: "Bearer " + getState().auth.user.token,
@@ -118,17 +114,15 @@ export function updatePost(postId, text, privacy) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
-        await dispatch(updatePost(postId, text, privacy));
+        await dispatch(refreshToken());
+        await dispatch(updatePost(postId, text));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(postActions.clearPostLoading());
-
     }
   };
 }
@@ -150,17 +144,15 @@ export function deletePost(postId) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(deletePost(postId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(postActions.clearPostLoading());
-
     }
   };
 }
@@ -179,10 +171,9 @@ export function likePost(postId) {
       dispatch(postActions.likePost(data.data));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(likePost(postId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -205,10 +196,9 @@ export function unlikePost(postId) {
       dispatch(postActions.unlikePost(data.data));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(unlikePost(postId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);

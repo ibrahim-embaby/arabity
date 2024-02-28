@@ -1,5 +1,9 @@
 const asyncHandler = require("express-async-handler");
-const { validateCreatePost, Post } = require("../models/Post");
+const {
+  validateCreatePost,
+  validateUpdatePost,
+  Post,
+} = require("../models/Post");
 const { Comment } = require("../models/Comment");
 
 /**
@@ -130,7 +134,11 @@ module.exports.getSinglePostCtrl = asyncHandler(async (req, res) => {
 module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
   try {
     const { postId } = req.params;
-    const { text, privacy } = req.body;
+    const { text } = req.body;
+
+    const { error } = validateUpdatePost(req.body);
+    if (error)
+      return res.status(400).json({ message: error.details[0].message });
 
     const post = await Post.findById(postId);
     if (!post)
@@ -141,7 +149,7 @@ module.exports.updateSinglePostCtrl = asyncHandler(async (req, res) => {
     }
     const updatedPost = await Post.findByIdAndUpdate(
       postId,
-      { text, privacy },
+      { text },
       { new: true }
     )
       .populate("doc", "username _id profilePhoto workshopName")

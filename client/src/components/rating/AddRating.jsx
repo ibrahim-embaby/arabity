@@ -3,7 +3,7 @@ import Rating from "@mui/material/Rating";
 import { useState } from "react";
 import { rateMechanic } from "../../redux/apiCalls/ratingApiCall";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
@@ -33,8 +33,8 @@ function AddRating({ id }) {
 
   const rateFormHandler = (e) => {
     e.preventDefault();
-    if (!text.trim()) return toast.info("من فضلك اكتب سبب تقييمك");
-    if (rate === 0) return toast.error("من فضلك اختر تقييما");
+    if (!text.trim()) return toast.warning("من فضلك اكتب سبب تقييمك");
+    if (rate === 0) return toast.warning("من فضلك اختر تقييما");
 
     dispatch(rateMechanic(rate, id, text));
     setRate(0);

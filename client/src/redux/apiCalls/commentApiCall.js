@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { postActions } from "../slices/postSlice";
 import request from "../../utils/request";
 import { refreshToken } from "./authApiCall";
@@ -24,10 +24,9 @@ export function createComment(post, comment) {
       dispatch(postActions.updatePost(newPost));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(createComment(post, comment));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -69,10 +68,9 @@ export function updateComment(post, comment) {
       dispatch(postActions.updatePost(newPost));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(updateComment(post, comment));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -100,10 +98,9 @@ export function deleteComment(post, commentId) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(deleteComment(post, commentId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);

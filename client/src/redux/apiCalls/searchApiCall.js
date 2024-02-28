@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { searchActions } from "../slices/searchSlice";
 

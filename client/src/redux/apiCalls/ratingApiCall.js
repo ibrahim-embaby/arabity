@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { mechanicActions } from "../slices/mechanicSlice";
 import { ratingActions } from "../slices/ratingSlice";
@@ -25,10 +25,9 @@ export function rateMechanic(rating, mechanic, text) {
       toast.success(data.message);
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(rateMechanic(rating, mechanic, text));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -49,16 +48,16 @@ export function deleteRating(id) {
         withCredentials: true,
       });
       dispatch(ratingActions.deleteRating(data.ratingId));
+      dispatch(mechanicActions.clearRatingFromMechanic(data.ratingId));
       toast.success(data.message);
     } catch (error) {
-      if (error.response.status === 401) {
-        await dispatch(refreshToken())
+      if (error?.response?.status === 401) {
+        await dispatch(refreshToken());
         await dispatch(deleteRating(id));
         return;
-
       } else {
         console.log(error);
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message || "error");
       }
     }
   };
@@ -81,17 +80,15 @@ export function fetchSingleUserRatings(userId) {
       dispatch(ratingActions.clearLoading());
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchSingleUserRatings(userId));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
     } finally {
       dispatch(ratingActions.clearLoading());
-
     }
   };
 }
@@ -110,10 +107,9 @@ export function fetchAllRatings() {
       dispatch(ratingActions.setRatings(data));
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchAllRatings());
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);

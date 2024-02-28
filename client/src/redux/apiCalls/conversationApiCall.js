@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import request from "../../utils/request";
 import { conversationActions } from "../slices/conversationSlice";
 import { refreshToken } from "./authApiCall";
@@ -15,10 +15,9 @@ export function createConversation(conversationInfo) {
       });
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(createConversation(conversationInfo));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -50,10 +49,9 @@ export function fetchOtherUserData(userId, type) {
       }
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchOtherUserData(userId, type));
         return;
-
       } else {
         console.log(error);
         toast.error(error.response.data.message);
@@ -77,18 +75,15 @@ export function fetchUserConversations(userId) {
       dispatch(conversationActions.clearLoading());
     } catch (error) {
       if (error.response.status === 401) {
-        await dispatch(refreshToken())
+        await dispatch(refreshToken());
         await dispatch(fetchUserConversations(userId));
         return;
-      }
-      else {
+      } else {
         console.log(error);
         toast.error(error.response.data.message);
       }
-
     } finally {
       dispatch(conversationActions.clearLoading());
     }
-
   };
 }

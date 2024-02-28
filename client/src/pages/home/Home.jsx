@@ -99,15 +99,21 @@ function Home() {
                       >
                         {t("service_select")}
                       </option>
-                      {Array.from(services)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)?.map((service) => (
-                        <option
-                          className="search-bar-item-option"
-                          key={service.value}
-                          value={JSON.stringify(service)}
-                        >
-                          {service.label[i18n.language]}
-                        </option>
-                      ))}
+                      {Array.from(services)
+                        ?.sort((a, b) =>
+                          a.label[i18n.language] > b.label[i18n.language]
+                            ? 1
+                            : -1
+                        )
+                        ?.map((service) => (
+                          <option
+                            className="search-bar-item-option"
+                            key={service.value}
+                            value={JSON.stringify(service)}
+                          >
+                            {service.label[i18n.language]}
+                          </option>
+                        ))}
                     </select>
                     {service && (
                       <HighlightOffIcon
@@ -143,15 +149,21 @@ function Home() {
                       >
                         {t("car_select")}
                       </option>
-                      {Array.from(cars)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)?.map((car) => (
-                        <option
-                          className="search-bar-item-option"
-                          key={car.value}
-                          value={JSON.stringify(car)}
-                        >
-                          {car.label[i18n.language]}
-                        </option>
-                      ))}
+                      {Array.from(cars)
+                        ?.sort((a, b) =>
+                          a.label[i18n.language] > b.label[i18n.language]
+                            ? 1
+                            : -1
+                        )
+                        ?.map((car) => (
+                          <option
+                            className="search-bar-item-option"
+                            key={car.value}
+                            value={JSON.stringify(car)}
+                          >
+                            {car.label[i18n.language]}
+                          </option>
+                        ))}
                     </select>
                     {car && (
                       <HighlightOffIcon
@@ -187,15 +199,21 @@ function Home() {
                       >
                         {t("province_select")}
                       </option>
-                      {Array.from(provinces)?.sort((a, b) => (a.label[i18n.language] > b.label[i18n.language]) ? 1 : -1)?.map((province) => (
-                        <option
-                          className="search-bar-item-option"
-                          key={province.value}
-                          value={JSON.stringify(province)}
-                        >
-                          {province.label[i18n.language]}
-                        </option>
-                      ))}
+                      {Array.from(provinces)
+                        ?.sort((a, b) =>
+                          a.label[i18n.language] > b.label[i18n.language]
+                            ? 1
+                            : -1
+                        )
+                        ?.map((province) => (
+                          <option
+                            className="search-bar-item-option"
+                            key={province.value}
+                            value={JSON.stringify(province)}
+                          >
+                            {province.label[i18n.language]}
+                          </option>
+                        ))}
                     </select>
                     {province && (
                       <HighlightOffIcon

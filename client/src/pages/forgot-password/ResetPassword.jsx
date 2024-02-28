@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { resetPassword } from "../../redux/apiCalls/authApiCall";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useTranslation } from "react-i18next";

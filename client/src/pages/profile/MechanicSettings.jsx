@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import TagSelectInput from "../../components/tag-select-input/TagSelectInput";
 import { fetchControls } from "../../redux/apiCalls/controlsApiCalls";
 import BranchesList from "../../components/branch-list/BranchList";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { Helmet } from "react-helmet-async";
 import { Loading } from "../../components/loading/Loading";
 
