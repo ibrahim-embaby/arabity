@@ -154,7 +154,7 @@ function validateCreateMechanic(obj) {
       .regex(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       ),
-    password: Joi.string().min(1).required(),
+    password: Joi.string().min(8).required(),
     workshopName: Joi.string().min(1).required(),
     workshopBranches: Joi.array()
       .items(
@@ -175,7 +175,7 @@ function validateCreateMechanic(obj) {
 function validateUpdateMechanic(obj) {
   const schema = Joi.object({
     username: Joi.string().min(1),
-    password: Joi.string().min(1),
+    password: Joi.string().min(8),
     workshopName: Joi.string().min(1),
     workshopBranches: Joi.array().items(
       Joi.object({
@@ -194,8 +194,14 @@ function validateUpdateMechanic(obj) {
 
 function validateLoginMechanic(obj) {
   const schema = Joi.object({
-    email: Joi.string().min(1).required().email(),
-    password: Joi.string().min(1).required(),
+    email: Joi.string()
+      .min(1)
+      .required()
+      .email()
+      .regex(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ),
+    password: Joi.string().min(8).required(),
   });
   return schema.validate(obj);
 }

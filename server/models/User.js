@@ -113,7 +113,7 @@ function validateRegisterUser(obj) {
       .regex(
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       ),
-    password: Joi.string().trim().min(5).required(),
+    password: Joi.string().trim().min(8).required(),
     mobile: Joi.string().trim().min(11).max(14).required(),
   });
   return schema.validate(obj);
@@ -123,7 +123,7 @@ function validateRegisterUser(obj) {
 function validateLoginUser(obj) {
   const schema = Joi.object({
     email: Joi.string().trim().required().email(),
-    password: Joi.string().trim().min(5).required(),
+    password: Joi.string().trim().min(8).required(),
   });
   return schema.validate(obj);
 }
