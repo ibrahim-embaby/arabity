@@ -85,14 +85,14 @@ UserSchema.methods.getSignedToken = function () {
   return { accessToken, refreshToken };
 };
 
-UserSchema.methods.getToken = async function () {
+UserSchema.methods.getToken = function (secret) {
   const randomstring = crypto.randomBytes(20).toString("hex");
   const token = jwt.sign(
     {
       randomstring,
       id: this._id,
     },
-    process.env.ACTIVATION_SECRET_KEY,
+    secret,
     {
       expiresIn: "30m",
     }

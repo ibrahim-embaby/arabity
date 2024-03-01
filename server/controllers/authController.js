@@ -13,7 +13,6 @@ const {
 } = require("../models/Mechanic");
 const VerificationToken = require("../models/VerificationToken");
 const ErrorResponse = require("../utils/ErrorResponse");
-const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
 
@@ -27,11 +26,11 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
   try {
     const { error } = validateRegisterUser(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return next(new ErrorResponse(error.details[0].message, 400));
     }
     let user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(500).json({ message: req.t("account_exist") });
+      return next(new ErrorResponse(req.t("account_exist"), 500));
     }
 
     user = await User.create({
@@ -42,7 +41,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // creating new verifiaction token and save it to db
-    const emailToken = user.getToken();
+    const emailToken = user.getToken(process.env.ACTIVATION_SECRET_KEY);
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: emailToken,
@@ -82,20 +81,18 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res, next) => {
   try {
     const { error } = validateLoginUser(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return next(new ErrorResponse(error.details[0].message, 400));
     }
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(404).json({
-        message: req.t("incorrect_login_data"),
-      });
+      return next(new ErrorResponse(req.t("incorrect_login_data"), 404));
     }
     const isPasswordMatch = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!isPasswordMatch) {
-      return res.status(400).json({ message: req.t("incorrect_login_data") });
+      return next(new ErrorResponse(req.t("incorrect_login_data"), 400));
     }
 
     const { accessToken, refreshToken } = user.getSignedToken();
@@ -133,14 +130,13 @@ module.exports.loginUserCtrl = asyncHandler(async (req, res, next) => {
 module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
   try {
     const { error } = validateCreateMechanic(req.body);
-
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return next(new ErrorResponse(error.details[0].message, 400));
     }
 
     let mechanic = await Mechanic.findOne({ email: req.body.email });
     if (mechanic) {
-      return res.status(400).json({ message: req.t("account_exist") });
+      return next(new ErrorResponse(req.t("account_exist"), 400));
     }
 
     mechanic = await Mechanic.create({
@@ -154,7 +150,7 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // creating new verifiaction token and save it to db
-    const emailToken = mechanic.getToken();
+    const emailToken = mechanic.getToken(process.env.ACTIVATION_SECRET_KEY);
     const verifiactionToken = await VerificationToken.create({
       userId: mechanic._id,
       token: emailToken,
@@ -192,14 +188,12 @@ module.exports.loginMechanicCtrl = asyncHandler(async (req, res, next) => {
   try {
     const { error } = validateLoginMechanic(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return next(new ErrorResponse(error.details[0].message, 400));
     }
 
     const mechanic = await Mechanic.findOne({ email: req.body.email });
     if (!mechanic) {
-      return res.status(404).json({
-        message: req.t("incorrect_login_data"),
-      });
+      return next(new ErrorResponse(req.t("incorrect_login_data"), 404));
     }
 
     const isPasswordMatch = await bcrypt.compare(
@@ -307,7 +301,7 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
         });
       }
 
-      const emailToken = user.getToken();
+      const emailToken = user.getToken(process.env.ACTIVATION_SECRET_KEY);
       const verifiactionToken = await VerificationToken.create({
         userId: user._id,
         token: emailToken,
@@ -486,7 +480,9 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
       return next(new ErrorResponse(req.t("user_not_found"), 404));
     }
     // creating verification token
-    const resetPasswordToken = user.getToken();
+    const resetPasswordToken = user.getToken(
+      process.env.RESET_PASSWORD_SECRET_KEY
+    );
     const verifiactionToken = await VerificationToken.create({
       userId: user._id,
       token: resetPasswordToken,
@@ -536,10 +532,10 @@ module.exports.resetPasswordCtrl = asyncHandler(async (req, res, next) => {
           if (verificationToken) {
             const { password } = req.body;
             if (password) {
-              if (password.length < 5)
+              if (password.length < 8)
                 return next(
                   new ErrorResponse(
-                    "password can't be less than 5 characters",
+                    "password can't be less than 8 characters",
                     400
                   )
                 );

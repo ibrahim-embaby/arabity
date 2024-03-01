@@ -129,7 +129,7 @@ MechanicSchema.methods.getSignedToken = function () {
   return { accessToken, refreshToken };
 };
 
-MechanicSchema.methods.getToken = async function () {
+MechanicSchema.methods.getToken = function () {
   const randomstring = crypto.randomBytes(20).toString("hex");
   const token = jwt.sign(
     {
