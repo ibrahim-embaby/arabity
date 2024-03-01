@@ -50,7 +50,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // making the frontend link
-    const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -162,7 +162,7 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // making the frontend link
-    const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -315,7 +315,7 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
       });
 
       // making the frontend link
-      const link = `${process.env.CLIENT_URL}/#/account/activate/${verifiactionToken.token}`;
+      const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
       // sending  verification mail
       await sendEmail(
         user.email,
@@ -494,7 +494,7 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // create reset password frontend link
-    const link = `${process.env.CLIENT_URL}/#/reset-password/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/reset-password/${verifiactionToken.token}`;
     // creating html template
     await sendEmail(
       user.email,
