@@ -1,3 +1,0 @@
-https://arabity.netlify.app/
-https://arabity.netlify.app/search/workshops?service=&car=&province=&page=1
-https://arabity.netlify.app/posts

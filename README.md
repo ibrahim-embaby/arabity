@@ -6,6 +6,8 @@ easy to find a reputable mechanic who can get the job done.
 
 [Demo - Visit Now](https://arabity-fzmr.onrender.com) 🚀
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0e7c6d6c-af6c-4f72-a68d-7413e95dd772/deploy-status)](https://app.netlify.com/sites/arabity/deploys)
+
 ## 🖥️ Tech Stack
 
 **Frontend:**
