@@ -60,11 +60,11 @@ export function fetchOtherUserData(userId, type) {
   };
 }
 
-export function fetchUserConversations(userId) {
+export function fetchUserConversations() {
   return async (dispatch, getState) => {
     try {
       dispatch(conversationActions.setLoading());
-      const { data } = await request.get(`/api/conversations/${userId}`, {
+      const { data } = await request.get("/api/conversations", {
         headers: {
           Authorization: "Bearer " + getState().auth.user.token,
           Cookie: document.cookie.i18next,
@@ -74,16 +74,44 @@ export function fetchUserConversations(userId) {
       dispatch(conversationActions.setConversations(data));
       dispatch(conversationActions.clearLoading());
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         await dispatch(refreshToken());
-        await dispatch(fetchUserConversations(userId));
+        await dispatch(fetchUserConversations());
         return;
       } else {
         console.log(error);
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
       }
     } finally {
       dispatch(conversationActions.clearLoading());
+    }
+  };
+}
+
+export function deleteConversation(conversationId) {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await request.delete(
+        `/api/conversations/${conversationId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + getState().auth.user.token,
+            Cookie: document.cookie.i18next,
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(conversationActions.deleteConversation(data.conversationId));
+      toast.success("conversation deleted successfully");
+    } catch (error) {
+      if (error?.response?.status === 401) {
+        await dispatch(refreshToken());
+        await dispatch(deleteConversation(conversationId));
+        return;
+      } else {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "error");
+      }
     }
   };
 }

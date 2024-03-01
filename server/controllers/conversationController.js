@@ -30,25 +30,50 @@ module.exports.createConversationCtrl = asyncHandler(async (req, res) => {
 
 /**
  * @desc get conversations of a user
- * @route /api/conversations/:id
+ * @route /api/conversations
  * @method GET
  * @access private (only user himself)
  */
 module.exports.getUserConversationsCtrl = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
     const conversations = await Conversation.find({
-      $or: [{ userId: id }, { mechanicId: id }],
+      $or: [{ userId: req.user.id }, { mechanicId: req.user.id }],
+      lastMessage: { $exists: true, $ne: null },
     })
       .populate("userId", "username profilePhoto")
       .populate("mechanicId", "username profilePhoto workshopName")
       .sort({ updatedAt: -1 });
 
-    const startedConversations = conversations.filter(
-      (conversation) => conversation.lastMessage
-    );
+    res.status(200).json(conversations);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: req.t("server_error") });
+  }
+});
 
-    res.status(200).json(startedConversations);
+/**
+ * @desc delete conversation
+ * @route /api/conversations/:id
+ * @method DELETE
+ * @access private (only conversation participants)
+ */
+module.exports.deleteConversationCtrl = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const conversation = await Conversation.findOne({ id });
+    if (
+      req.user.id !== conversation.userId.toString() &&
+      req.user.id !== conversation.mechanicId.toString()
+    ) {
+      return res.status(403).json({ message: req.t("forbbiden") });
+    }
+
+    await Message.deleteMany({ conversationId: id });
+    const deletedConversation = await Conversation.findOneAndDelete({ id });
+    res.status(200).json({
+      conversationId: deletedConversation.id,
+      message: "conversation deleted successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: req.t("server_error") });

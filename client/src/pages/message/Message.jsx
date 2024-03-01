@@ -5,7 +5,7 @@ import {
   createMessage,
   fetchMessages,
 } from "../../redux/apiCalls/messageApiCall";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../../components/message-box/MessageBox";
 import { toast } from "sonner";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
@@ -30,6 +30,7 @@ function Message() {
   const socket = useRef(null);
   const { user } = useSelector((state) => state.auth);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 });
@@ -81,6 +82,13 @@ function Message() {
       dispatch(fetchMessages(conversationId));
     });
   }, [conversationId]);
+
+  socket.current?.on("conversationDeleted", (data) => {
+    console.log("message deleted conv");
+    if (data.conversationId === conversationId) {
+      navigate("/conversations");
+    }
+  });
 
   useEffect(() => {
     socket?.current?.emit("addUser", user.id);

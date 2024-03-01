@@ -99,6 +99,13 @@ io.on("connection", (socket) => {
     });
   });
 
+  // delete conversation
+  socket.on("deleteConversation", ({ conversationId, receiverId }) => {
+    const user = getUser(receiverId);
+
+    io.to(user?.socketId).emit("conversationDeleted", { conversationId });
+  });
+
   // user disconnected
   socket.on("disconnect", () => {
     console.log("⚠️ Someone disconnected");

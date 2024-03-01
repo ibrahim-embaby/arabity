@@ -4,20 +4,26 @@
   justify-content: center;
 }
 
-/* .conversations-page-title {
-  padding: 10px 0;
-} */
+.conversation-item-wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  max-width: 400px;
+  border: 1px solid var(--primary-color);
+  padding: 10px;
+  justify-content: space-between;
+  max-width: 500px;
+  margin-bottom: 10px;
+}
 
 .conversation-item {
   display: flex;
   gap: 15px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid var(--primary-color);
   cursor: pointer;
   text-decoration: none;
   color: var(--black-color);
   align-items: center;
+  width: 100%;
 }
 
 .conversation-item-photo-wrapper {

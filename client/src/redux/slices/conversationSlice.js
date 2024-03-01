@@ -14,6 +14,11 @@ const conversationSlice = createSlice({
     setOtherUser(state, action) {
       state.otherUser = action.payload;
     },
+    deleteConversation(state, action) {
+      state.conversations = state.conversations.filter(
+        (c) => c.id !== action.payload
+      );
+    },
     setLoading(state) {
       state.loading = true;
     },
