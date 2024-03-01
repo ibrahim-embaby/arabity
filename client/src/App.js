@@ -132,7 +132,7 @@ function App() {
             )
           }
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*(!(sitemap.txt))" element={<NotFound />} />
       </Routes>
       <Footer />
     </Suspense>
