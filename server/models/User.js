@@ -44,8 +44,8 @@ const UserSchema = new mongoose.Schema(
     profilePhoto: {
       type: Object,
       default: {
-        url: "https://res.cloudinary.com/dotcfrg0k/image/upload/v1706238234/oqjxuv7aof6vo4esteyd.jpg",
-        publicId: "oqjxuv7aof6vo4esteyd",
+        url: "https://arabity.s3.eu-north-1.amazonaws.com/65c7278572dc95b3ed6b40c0/d231a030-ec3a-11ee-8990-d3828d412366.jpeg",
+        key: "65c7278572dc95b3ed6b40c0/d231a030-ec3a-11ee-8990-d3828d412366.jpeg",
       },
     },
     isAccountVerified: {

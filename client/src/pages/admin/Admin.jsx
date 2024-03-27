@@ -16,7 +16,7 @@ function Admin() {
   const dispatch = useDispatch();
   const { workshopsCount } = useSelector((state) => state.mechanic);
   const { users } = useSelector((state) => state.profile);
-  const { t } = useTranslation();
+  const { t,i18n } = useTranslation();
   document.title = t("admin_page_title");
 
   useEffect(() => {
@@ -25,7 +25,8 @@ function Admin() {
   }, [dispatch]);
 
   return (
-    <div className="admin">
+    <div className="admin"                 style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+    >
       <div className="admin-sidebar">
         <div
           onClick={() => setCurrentComponent(1)}

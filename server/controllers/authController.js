@@ -468,14 +468,13 @@ module.exports.verifyOtpCtrl = asyncHandler(async (req, res, next) => {
  * @access public
  */
 module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
-  const { email } = req.body;
+  const { email, userType } = req.body;
   if (!email) {
     return next(new ErrorResponse("email is required", 400));
   }
   try {
     // get the user from db by email
-    const user =
-      (await User.findOne({ email })) || (await Mechanic.findOne({ email }));
+    const user = userType === "user"? await User.findOne({ email }) : await Mechanic.findOne({ email });
     if (!user) {
       return next(new ErrorResponse(req.t("user_not_found"), 404));
     }

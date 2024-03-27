@@ -5,6 +5,7 @@ import { authActions } from "../slices/authSlice";
 import { searchActions } from "../slices/searchSlice";
 import { ratingActions } from "../slices/ratingSlice";
 import { refreshToken } from "./authApiCall";
+import axios from "axios";
 
 // /api/mechanic/:id
 export function fetchMechanic(id) {
@@ -86,24 +87,29 @@ export function uploadWorkshopImg(id, workshopImg) {
   return async (dispatch, getState) => {
     try {
       dispatch(mechanicActions.setLoading());
-      const { data } = await request.post(
-        `/api/mechanic/${id}/photo`,
-        workshopImg,
-        {
-          headers: {
-            Authorization: "Bearer " + getState().auth.user.token,
-            "Content-Type": "multipart/form-data",
-            Cookie: document.cookie.i18next,
-          },
-          withCredentials: true,
-        }
-      );
-      dispatch(mechanicActions.setMechanicPhoto(data.profilePhoto));
+      const uploadConfig = await request.get("/api/upload", {
+        headers: {
+          Authorization: "Bearer " + getState().auth.user.token,
+          Cookie: document.cookie.i18next,
+        },
+        withCredentials: true,
+      });
+
+      const data = await axios.put(`${uploadConfig.data.url}`, workshopImg, {
+        "Content-Type": workshopImg.type,
+      });
+      console.log(data);
       dispatch(mechanicActions.clearLoading());
-      toast.success(data.message);
-      const user = JSON.parse(localStorage.getItem("userInfo"));
-      user.profilePhoto = data?.profilePhoto;
-      localStorage.setItem("userInfo", JSON.stringify(user));
+      await dispatch(
+        updateMechanic(id, {
+          profilePhoto: {
+            url:
+              "https://arabity.s3.eu-north-1.amazonaws.com/" +
+              uploadConfig.data.key,
+            key: uploadConfig.data.key,
+          },
+        })
+      );
     } catch (error) {
       if (error.response.status === 401) {
         await dispatch(refreshToken());

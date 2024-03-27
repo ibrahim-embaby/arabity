@@ -9,10 +9,12 @@ import { useTranslation } from "react-i18next";
 function ForgotPassword() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState("user");
+
   const handleForgotPassword = (e) => {
     e.preventDefault();
     if (!email) return toast.error("email is required");
-    dispatch(forgotPassword(email));
+    dispatch(forgotPassword(email, userType));
     setEmail("");
   };
 
@@ -29,9 +31,31 @@ function ForgotPassword() {
       <form onSubmit={handleForgotPassword} className="forgot-password-form">
         <h1 className="forgot-password-title">Reset your password</h1>
         <p className="forgot-password-desc">
-          Please provide the email address you used when you signed up for your
-          Arabity account.
+          Please choose your identity and provide the email address you used
+          when you signed up for your Arabity account.
         </p>
+        <div className="forgot-password-user-type">
+          <div className="radio-input-wrapper">
+            <input
+              type="radio"
+              name="user-type"
+              id="user"
+              onClick={() => setUserType("user")}
+              defaultChecked={userType === "user"}
+            />
+            <label htmlFor="user">user</label>
+          </div>
+          <div className="radio-input-wrapper">
+            <input
+              type="radio"
+              name="user-type"
+              id="mechanic"
+              onClick={() => setUserType("mechanic")}
+              defaultChecked={userType === "mechanic"}
+            />
+            <label htmlFor="mechanic">mechanic</label>
+          </div>
+        </div>
         <input
           type="email"
           value={email}

@@ -163,13 +163,14 @@ export function verifyEmail(token) {
 }
 
 // /api/auth/forgot-password
-export function forgotPassword(email) {
+export function forgotPassword(email, userType) {
   return async () => {
     try {
       const { data } = await request.post(
         "/api/auth/forgot-password",
         {
           email,
+          userType,
         },
         {
           headers: {

@@ -49,6 +49,7 @@ app.use("/api/posts", require("./routes/postRoutes"));
 app.use("/api/conversations", require("./routes/conversationRoute"));
 app.use("/api/controls", require("./routes/controlsRoute"));
 app.use("/api/comments", require("./routes/commentRoute"));
+app.use("/api/upload", require("./routes/uploadRoutes"));
 
 app.use(notFound);
 app.use(errorHandler);

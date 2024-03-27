@@ -93,3 +93,9 @@
   width: 300px;
   padding: 0 10px;
 }
+
+.manage-services-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

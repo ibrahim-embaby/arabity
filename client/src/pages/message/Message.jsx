@@ -5,7 +5,7 @@ import {
   createMessage,
   fetchMessages,
 } from "../../redux/apiCalls/messageApiCall";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../../components/message-box/MessageBox";
 import { toast } from "sonner";
 import { fetchOtherUserData } from "../../redux/apiCalls/conversationApiCall";
@@ -129,9 +129,15 @@ function Message() {
       {user.id === conversationId.substring(0, 24) ||
       user.id === conversationId.substring(24, 48) ? (
         <div className="message-container">
-          <div
+          <Link
             className="message-bar-info-wrapper"
-            style={{ direction: i18n.language === "en" ? "ltr" : "rtl" }}
+            to={
+              otherUser?.workshopName ? `/mechanic/profile/${otherUser.id}` : ""
+            }
+            style={{
+              direction: i18n.language === "en" ? "ltr" : "rtl",
+              cursor: !otherUser?.workshopName && "default",
+            }}
           >
             <img
               className="message-bar-info-photo"
@@ -141,7 +147,7 @@ function Message() {
             {otherUser?.workshopName
               ? otherUser.workshopName
               : otherUser?.username}
-          </div>
+          </Link>
           <div className="messages-container-body">
             <div ref={messagesContainerRef} className="sent-messages">
               {messages.length > 0 &&

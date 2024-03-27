@@ -84,12 +84,11 @@ function WorkshopProfile() {
     }
   };
 
-  const handleUploadWorkshopImg = (e) => {
+  const handleUploadMechanicImg = (e) => {
     e.preventDefault();
     if (!workshopImg) return toast.error("لا توجد صورة");
-    const formData = new FormData();
-    formData.append("image", workshopImg);
-    dispatch(uploadWorkshopImg(id, formData));
+
+    dispatch(uploadWorkshopImg(id, workshopImg));
     setWorkshopImg(null);
   };
 
@@ -131,7 +130,7 @@ function WorkshopProfile() {
                     />
                   </Zoom>
                   {user?.id === id && (
-                    <form onSubmit={handleUploadWorkshopImg}>
+                    <form onSubmit={handleUploadMechanicImg}>
                       <label htmlFor="file" className="edit-profile-pic">
                         <CameraIcon />
                       </label>
