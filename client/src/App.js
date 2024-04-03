@@ -25,18 +25,24 @@ import ResetPassword from "./pages/forgot-password/ResetPassword";
 import { Toaster } from "sonner";
 import { useTranslation } from "react-i18next";
 
+function Toast() {
+  const { i18n } = useTranslation();
+
+  return (
+    <Toaster
+      position={i18n.language === "ar" ? "bottom-right" : "bottom-left"}
+      richColors
+      duration={1500}
+      dir={i18n.language === "ar" && "rtl"}
+    />
+  );
+}
 function App() {
   const { user } = useSelector((state) => state.auth);
 
-  const { i18n } = useTranslation();
   return (
     <Suspense fallback={null}>
-      <Toaster
-        position={i18n.language === "ar" ? "bottom-right" : "bottom-left"}
-        richColors
-        duration={1500}
-        dir={i18n.language === "ar" && "rtl"}
-      />
+      <Toast />
       <Header />
       <Routes>
         <Route

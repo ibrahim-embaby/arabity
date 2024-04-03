@@ -19,7 +19,7 @@ i18n
     debug: false,
     whitelist: availableLanguages,
     interpolation: {
-      escapeValue: false, // no need for react. it escapes by default
+      escapeValue: false,
     },
   });
 

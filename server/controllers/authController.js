@@ -474,7 +474,10 @@ module.exports.forgotPasswordCtrl = asyncHandler(async (req, res, next) => {
   }
   try {
     // get the user from db by email
-    const user = userType === "user"? await User.findOne({ email }) : await Mechanic.findOne({ email });
+    const user =
+      userType === "user"
+        ? await User.findOne({ email })
+        : await Mechanic.findOne({ email });
     if (!user) {
       return next(new ErrorResponse(req.t("user_not_found"), 404));
     }
