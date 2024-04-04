@@ -1,8 +1,13 @@
 # Arabity
 
-Arabity is designed to connect car owners with qualified mechanics in their
-area. Whether you need routine maintenance, or repairs, our platform makes it
-easy to find a reputable mechanic who can get the job done.
+Arabity connects car owners with qualified mechanics for routine maintenance or
+repairs.
+
+Whether you need routine maintenance such as oil changes and brake inspections,
+or more extensive repairs, Arabity makes it easy to connect with reputable
+mechanics who have the skills and expertise to get the job done right. By using
+Arabity, car owners can feel confident that their vehicles are in good hands and
+receive top-notch service.
 
 [Demo - Visit Now](https://arabity-fzmr.onrender.com) 🚀
 
@@ -15,7 +20,6 @@ easy to find a reputable mechanic who can get the job done.
 ![reactjs](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)&nbsp;
 ![react-router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)&nbsp;
 ![redux-toolkit](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)&nbsp;
-![mui](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=mui&logoColor=white)&nbsp;
 ![PWA](https://img.shields.io/badge/pwa-570fc2?style=for-the-badge&logo=PWA&logoColor=white)&nbsp;
 
 **Backend:**
@@ -24,6 +28,7 @@ easy to find a reputable mechanic who can get the job done.
 ![expressjs](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
 ![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)&nbsp;
 ![jwt](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)&nbsp;
+![amazons3](https://img.shields.io/badge/Amazon%20S3-569a31?style=for-the-badge&logo=amazons3&logoColor=white)&nbsp;
 
 **Realtime Communication:**
 
@@ -82,19 +87,25 @@ Create a .env file in the server folder and add the following
 ```
 PORT=8000
 MONGO_URI= your mongodb uri
-CLOUDINARY_CLOUD_NAME= your cloudinary Cloud name
-CLOUDINARY_API_KEY= your cloudinary API key
-CLOUDINARY_API_SECRET= your cloudinary API secret
 ACCESS_TOKEN_SECRET=access_token_secret
 REFRESH_TOKEN_SECRET=refresh_token_secret
 ACTIVATION_SECRET_KEY=activation_secret_key
 RESET_PASSWORD_SECRET_KEY=reset_password_secret_key
-CLIENT_DEV_URL=http://localhost:3000/
-CLIENT_PROD_URL= your frontend production link
+CLIENT_URL=http://localhost:3000
 SEND_IN_BLUE_USERNAME= your sendinblue username
 SEND_IN_BLUE_PASSWORD= your sendinblue password
 REDIS_HOST= your redis host
 REDIS_PASSWORD= your redis password
+AWS_IAM_ACCESS_KEY= your Aws IAM access key
+AWS_IAM_SECRET_ACCESS_KEY= your Aws IAM secret access key
+AWS_S3_BUCKET_NAME= your Aws S3 bucket name
+AWS_S3_BUCKET_REGION= your Aws S3 region
+```
+
+Create a .env file in the client folder and add the following
+
+```
+REACT_APP_SERVER_URL=http://localhost:8000
 ```
 
 ### Install Dependencies (frontend & backend)
@@ -122,4 +133,4 @@ If you want to contact me, you can reach me through below handles.
 
 [![linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ibrahim-embaby)
 
-© 2023 Ibrahim Mohamed
+© 2024 Ibrahim Mohamed
