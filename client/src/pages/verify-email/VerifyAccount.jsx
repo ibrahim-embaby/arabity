@@ -9,7 +9,7 @@ function VerifyAccount() {
   const dispatch = useDispatch();
 
   const sendAnotherVerificationMail = () => {
-    dispatch(sendVerificationMail(user?.email));
+    dispatch(sendVerificationMail(user?.email, user.workshopName? "mechanic": "user"));
   };
   return user?.isAccountVerified ? (
     <Navigate to={"/"} />

@@ -3,10 +3,12 @@ const { createSlice } = require("@reduxjs/toolkit");
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined"
-      ? JSON.parse(localStorage.getItem("userInfo"))
-      : null,
-    loading: false
+    user:
+      localStorage.getItem("userInfo") &&
+      localStorage.getItem("userInfo") !== "undefined"
+        ? JSON.parse(localStorage.getItem("userInfo"))
+        : null,
+    loading: false,
   },
   reducers: {
     setUser(state, action) {
@@ -27,19 +29,22 @@ const authSlice = createSlice({
       state.user = updatedUserData;
     },
     verifyAccount(state, action) {
-      let user = localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined" ? JSON.parse(localStorage.getItem('userInfo')) : null
-      if (user) {
-        user = action.payload
+      if (state.user) {
+        const user = action.payload;
         localStorage.setItem("userInfo", JSON.stringify(user));
-        state.user = JSON.parse(localStorage.getItem("userInfo"))
+        state.user = user;
       }
     },
     updateToken(state, action) {
-      let user = localStorage.getItem("userInfo") && localStorage.getItem("userInfo") !== "undefined" ? JSON.parse(localStorage.getItem('userInfo')) : null
+      let user =
+        localStorage.getItem("userInfo") &&
+        localStorage.getItem("userInfo") !== "undefined"
+          ? JSON.parse(localStorage.getItem("userInfo"))
+          : null;
       if (user) {
-        user = { ...user, token: action.payload }
+        user = { ...user, token: action.payload };
         localStorage.setItem("userInfo", JSON.stringify(user));
-        state.user = JSON.parse(localStorage.getItem("userInfo"))
+        state.user = JSON.parse(localStorage.getItem("userInfo"));
       }
     },
     logout(state) {

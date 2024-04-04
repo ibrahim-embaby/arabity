@@ -117,7 +117,10 @@ function App() {
           }
         />
         <Route path="/about-us" element={<ContactUs />} />
-        <Route path="/account/activate/:token" element={<AccountVerified />} />
+        <Route
+          path="/account/activate/:userType/:token"
+          element={<AccountVerified />}
+        />
         <Route
           path="/forgot-password"
           element={user ? <Navigate to={"/"} /> : <ForgotPassword />}

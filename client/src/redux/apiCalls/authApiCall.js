@@ -109,13 +109,14 @@ export function loginMechanic(user) {
 }
 
 // /api/auth/send-verification-mail
-export function sendVerificationMail(email) {
+export function sendVerificationMail(email, userType) {
   return async (dispatch) => {
     try {
       const { data } = await request.post(
         "/api/auth/send-verification-mail",
         {
           email,
+          userType,
         },
         {
           headers: {
@@ -135,7 +136,7 @@ export function sendVerificationMail(email) {
 }
 
 // /api/auth/verify-email
-export function verifyEmail(token) {
+export function verifyEmail(token, userType) {
   return async (dispatch) => {
     try {
       dispatch(authActions.setLoading());
@@ -143,6 +144,7 @@ export function verifyEmail(token) {
         "/api/auth/verify-email",
         {
           token,
+          userType,
         },
         {
           headers: {
@@ -151,7 +153,17 @@ export function verifyEmail(token) {
           withCredentials: true,
         }
       );
+
+      let user =
+        localStorage.getItem("userInfo") &&
+        localStorage.getItem("userInfo") !== "undefined"
+          ? JSON.parse(localStorage.getItem("userInfo"))
+          : null;
+      if (user && user.email !== data.data?.email) {
+        dispatch(logoutUser());
+      }
       dispatch(authActions.verifyAccount(data.data));
+
       dispatch(authActions.clearLoading());
       toast.success(data.message);
     } catch (error) {

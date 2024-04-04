@@ -20,7 +20,7 @@ function Users({ users }) {
         <tbody className="users-table-body">
           {users?.map((user) => (
             <tr key={user._id} className="users-table-body-row">
-              <td className="users-table-body-item">{user._id}</td>
+              <td className="users-table-body-item">{user.email}</td>
               <td className="users-table-body-item">{user.username}</td>
               <td className="users-table-body-item">
                 {!user.isAdmin && (

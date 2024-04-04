@@ -5,11 +5,11 @@ import { verifyEmail } from "../../redux/apiCalls/authApiCall";
 import CircularProgress from "@mui/joy/CircularProgress";
 
 function AccountVerified() {
-  const { token } = useParams();
+  const { userType, token } = useParams();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
   useEffect(() => {
-    dispatch(verifyEmail(token));
+    dispatch(verifyEmail(token, userType));
   }, [token]);
   return loading ? (
     <div

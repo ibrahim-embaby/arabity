@@ -52,10 +52,10 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "id",
+    id: "email",
     numeric: false,
     disablePadding: true,
-    label: "المعرف",
+    label: "البريد الإلكتروني",
   },
   {
     id: "workshopName",
@@ -195,22 +195,28 @@ EnhancedTableToolbar.propTypes = {
   title: PropTypes.string.isRequired,
 };
 
-export default function EnhancedTable({ data, title }) {
+export default function EnhancedTable({
+  data,
+  title,
+  workshopsCount,
+  currentPage,
+  setCurrentPage,
+}) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  function createData(id, workshopName) {
+  function createData(email, workshopName) {
     return {
-      id,
+      email,
       workshopName,
     };
   }
-
-  const rows = data?.map((d) => createData(d._id, d.workshopName));
+  const rows = data?.map((d) => createData(d.email, d.workshopName));
+  console.log(rows);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -248,12 +254,13 @@ export default function EnhancedTable({ data, title }) {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    console.log(newPage);
+    setCurrentPage(newPage + 1);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setCurrentPage(1);
   };
 
   const handleChangeDense = (event) => {
@@ -263,18 +270,18 @@ export default function EnhancedTable({ data, title }) {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = 0;
+  // currentPage - 1 > 0
+  //   ? Math.max(1, currentPage * rowsPerPage - rows.length)
+  //   : 1;
 
-  const visibleRows = useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  );
-
+  const visibleRows = useMemo(() => {
+    return stableSort(rows, getComparator(order, orderBy)).slice(
+      (currentPage - 1) * rowsPerPage,
+      (currentPage - 1) * rowsPerPage + rowsPerPage
+    );
+  }, [order, orderBy, currentPage, rowsPerPage]);
+  console.log("visibleRows", visibleRows);
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -324,7 +331,7 @@ export default function EnhancedTable({ data, title }) {
                       scope="row"
                       padding="none"
                     >
-                      {row.id}
+                      {row.email}
                     </TableCell>
                     <TableCell align="right">{row.workshopName}</TableCell>
                   </TableRow>
@@ -343,11 +350,11 @@ export default function EnhancedTable({ data, title }) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[10, 25]}
           component="div"
-          count={rows.length}
+          count={workshopsCount}
           rowsPerPage={rowsPerPage}
-          page={page}
+          page={currentPage - 1}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

@@ -49,7 +49,7 @@ module.exports.registerUserCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // making the frontend link
-    const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/account/activate/user/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -158,7 +158,7 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
     });
 
     // making the frontend link
-    const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
+    const link = `${process.env.CLIENT_URL}/account/activate/mechanic/${verifiactionToken.token}`;
 
     // sending verification mail
     await sendEmail(
@@ -283,13 +283,15 @@ module.exports.refreshTokenCtrl = asyncHandler(async (req, res, next) => {
  */
 module.exports.sendVerificationMailCtrl = asyncHandler(
   async (req, res, next) => {
-    const { email } = req.body;
+    const { email, userType } = req.body;
     if (!email) {
       return next(new ErrorResponse("email is required", 400));
     }
     try {
       const user =
-        (await User.findOne({ email })) || (await Mechanic.findOne({ email }));
+        userType === "user"
+          ? await User.findOne({ email })
+          : await Mechanic.findOne({ email });
       if (!user) {
         return next(new ErrorResponse(req.t("user_not_found"), 404));
       }
@@ -309,7 +311,7 @@ module.exports.sendVerificationMailCtrl = asyncHandler(
       });
 
       // making the frontend link
-      const link = `${process.env.CLIENT_URL}/account/activate/${verifiactionToken.token}`;
+      const link = `${process.env.CLIENT_URL}/account/activate/${userType}/${verifiactionToken.token}`;
       // sending  verification mail
       await sendEmail(
         user.email,
@@ -349,8 +351,9 @@ module.exports.verifyEmailCtrl = asyncHandler(async (req, res, next) => {
             operationType: "VERIFY_ACC",
           });
           const user =
-            (await User.findById(decode.id)) ||
-            (await Mechanic.findById(decode.id));
+            req.body.userType === "user"
+              ? await User.findById(decode.id)
+              : await Mechanic.findById(decode.id);
           if (verificationToken && !user?.isAccountVerified) {
             user.isAccountVerified = true;
             await user.save();
