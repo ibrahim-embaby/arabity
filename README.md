@@ -9,7 +9,7 @@ mechanics who have the skills and expertise to get the job done right. By using
 Arabity, car owners can feel confident that their vehicles are in good hands and
 receive top-notch service.
 
-[Demo - Visit Now](https://arabity-fzmr.onrender.com) 🚀
+[Demo - Visit Now](https://arabity.netlify.app) 🚀
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/0e7c6d6c-af6c-4f72-a68d-7413e95dd772/deploy-status)](https://app.netlify.com/sites/arabity/deploys)
 
