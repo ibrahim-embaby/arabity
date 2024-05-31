@@ -235,7 +235,7 @@ function Register() {
                 <div className="form-group-input-wrapper">
                   <label htmlFor="workshopOwnerEmail"> {t("email")}</label>
                   <input
-                    type="email"
+                    type="text"
                     id="workshopOwnerEmail"
                     value={workshopOwnerEmail}
                     onChange={(e) => setWorkshopOwnerEmail(e.target.value)}

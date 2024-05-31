@@ -10,11 +10,13 @@ const {
   Mechanic,
   validateCreateMechanic,
   validateLoginMechanic,
+  checkUserEmailOrPhone,
 } = require("../models/Mechanic");
 const VerificationToken = require("../models/VerificationToken");
 const ErrorResponse = require("../utils/ErrorResponse");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
+const { createTwilioOtp } = require("../utils/otp");
 
 /**
  * @desc register user
@@ -134,6 +136,8 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
       return next(new ErrorResponse(error.details[0].message, 400));
     }
 
+    const userEmailOrPhone = checkUserEmailOrPhone(req.body.email);
+
     let mechanic = await Mechanic.findOne({ email: req.body.email });
     if (mechanic) {
       return next(new ErrorResponse(req.t("account_exist"), 400));
@@ -149,30 +153,43 @@ module.exports.registerMechanicCtrl = asyncHandler(async (req, res, next) => {
       cars: req.body.cars,
     });
 
-    // creating new verifiaction token and save it to db
-    const emailToken = mechanic.getToken(process.env.ACTIVATION_SECRET_KEY);
-    const verifiactionToken = await VerificationToken.create({
-      userId: mechanic._id,
-      token: emailToken,
-      operationType: "VERIFY_ACC",
-    });
+    if (userEmailOrPhone === "email") {
+      // creating new verifiaction token and save it to db
+      const emailToken = mechanic.getToken(process.env.ACTIVATION_SECRET_KEY);
+      const verifiactionToken = await VerificationToken.create({
+        userId: mechanic._id,
+        token: emailToken,
+        operationType: "VERIFY_ACC",
+      });
 
-    // making the frontend link
-    const link = `${process.env.CLIENT_URL}/account/activate/mechanic/${verifiactionToken.token}`;
+      // making the frontend link
+      const link = `${process.env.CLIENT_URL}/account/activate/mechanic/${verifiactionToken.token}`;
 
-    // sending verification mail
-    await sendEmail(
-      mechanic.email,
-      link,
-      mechanic.workshopName,
-      "Verify Your Account ",
-      "varificationmail"
-    );
+      // sending verification mail
+      await sendEmail(
+        mechanic.email,
+        link,
+        mechanic.workshopName,
+        "Verify Your Account ",
+        "varificationmail"
+      );
+      res.status(201).json({
+        success: true,
+        message: `We've sent you an email at ${mechanic.email}`,
+      });
+    } else if (userEmailOrPhone === "phone") {
+      createTwilioOtp({ phone: req.body.email }, (error, results) => {
+        if (error) return next(new ErrorResponse(error, 400));
 
-    res.status(201).json({
-      success: true,
-      message: `We've sent you an email at ${mechanic.email}`,
-    });
+        return res.status(200).json({
+          success: true,
+          message: "otp created successfully",
+          data: results,
+        });
+      });
+    } else {
+      return next(new ErrorResponse(req.t(userEmailOrPhone), 400));
+    }
   } catch (error) {
     next(error);
   }

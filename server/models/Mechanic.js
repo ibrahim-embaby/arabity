@@ -16,8 +16,6 @@ const MechanicSchema = new mongoose.Schema(
       required: true,
       trim: true,
       unique: true,
-      regex:
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
     password: {
       type: String,
@@ -145,16 +143,31 @@ MechanicSchema.methods.getToken = function (secret) {
   return token;
 };
 
+function checkUserEmailOrPhone(userInput) {
+  // Function to check if the input is an email
+  const isEmail = (input) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(input);
+  };
+
+  const isPhone = (input) => {
+    const mobileRegex = /^(?:\+\d{1,3}\s?)?\d{10}$/;
+    return mobileRegex.test(input);
+  };
+
+  if (isEmail(userInput)) {
+    return "email";
+  } else if (isPhone(userInput)) {
+    return "phone";
+  } else {
+    return "Invalid input. Please enter a valid email or phone number.";
+  }
+}
+
 function validateCreateMechanic(obj) {
   const schema = Joi.object({
     username: Joi.string().min(1).required(),
-    email: Joi.string()
-      .min(1)
-      .required()
-      .email()
-      .regex(
-        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      ),
+    email: Joi.string().min(1).required(),
     password: Joi.string().min(8).required(),
     workshopName: Joi.string().min(1).required(),
     workshopBranches: Joi.array()
@@ -191,7 +204,7 @@ function validateUpdateMechanic(obj) {
     workshopDescription: Joi.string().allow(""),
     profilePhoto: Joi.object({
       url: Joi.string(),
-      key: Joi.string()
+      key: Joi.string(),
     }),
   });
   return schema.validate(obj);
@@ -218,4 +231,5 @@ module.exports = {
   validateCreateMechanic,
   validateLoginMechanic,
   validateUpdateMechanic,
+  checkUserEmailOrPhone,
 };
